@@ -1,0 +1,275 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="chrome=1"> -->
+    <title>angular-confirm.js | The multipurpose alert & confirm</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="description"
+          content="A multipurpose alert, confirm plugin, alternative to the native alert() and confirm() functions. Supports features like auto-close, themes, animations, and more.">
+    <link rel="canonical"
+          href="https://craftpip.github.io/angular-confirm"/>
+    <link rel="icon"
+          type="img/ico"
+          href="http://craftpip.com/i/apple-touch-icon-57x57.png">
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=UTF-8"/>
+    <meta name="robots"
+          content="index,follow,noodp,noydir"/>
+    <meta name="google-site-verification"
+          content="T_M_Ym5DQ-cEQQhx_jswyCBTssIdgtewICcvb3sgh8g"/>
+    <meta name="Keywords"
+          content="angular.confirm, angular confirm, angular alert, angular prompt, angular dialog, javascript, bootstrap"/>
+    <link rel="apple-touch-icon"
+          sizes="57x57"
+          href="http://craftpip.com/i/apple-touch-icon-57x57.png"/>
+    <link rel="apple-touch-icon"
+          sizes="72x72"
+          href="http://craftpip.com/i/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon"
+          sizes="114x114"
+          href="http://craftpip.com/i/apple-touch-icon-114x114.png"/>
+    <link rel="apple-touch-icon"
+          sizes="144x144"
+          href="http://craftpip.com/i/apple-touch-icon-144x144.png"/>
+    <link rel="apple-touch-icon"
+          href="http://craftpip.com/i/apple-touch-icon-57x57.png"/>
+    <meta property="og:title"
+          content="angular-confirm.js | The multipurpose alert &amp; confirm"/>
+    <meta property="og:type"
+          content="website"/>
+    <meta property="og:image"
+          content="http://craftpip.com/i/apple-touch-icon-57x57.png"/>
+    <meta property="og:url"
+          content="https://craftpip.github.io/angular-confirm"/>
+    <meta property="og:description"
+          content="A multipurpose alert & confirm plugin, alternative to the native alert() and confirm() functions. Supports features like auto-close, themes, animations, and more."/>
+    <meta property="og:site_name"
+          content="craftpip.github.io"/>
+
+    <!--<link rel="stylesheet"-->
+    <!--href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">-->
+    <!--<link rel="stylesheet"-->
+    <!--href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+    <link rel="stylesheet"
+          href="asd.css">
+    <!---->
+    <!---->
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+    <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>-->
+    <script src="asd.js"></script>
+    <!---->
+    <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.3/jquery.sticky.min.js"></script>-->
+    <!---->
+
+    <link rel="stylesheet"
+          href="demo/libs/default.min.css">
+    <script src="demo/libs/pretty.js"></script>
+
+    <link rel="stylesheet"
+          href="demo/demo.min.css">
+
+
+    <script>
+        var version = '1.0.0';
+    </script>
+    <style type="text/css">
+        .space10 {
+            height: 10px;
+        }
+
+        body {
+            font-family: Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif;
+            position: relative;
+        }
+    </style>
+
+    <!-- Add the minified version of files from the /dist/ folder. -->
+    <!-- angular-confirm files -->
+    <link rel="stylesheet"
+          type="text/css"
+          href="css/angular-confirm.css"/>
+    <script type="text/javascript"
+            src="js/angular-confirm.js"></script>
+    <!--END angular-confirm files-->
+
+</head>
+<body data-spy="scroll"
+      data-target=".navbar">
+<header class="navbar navbar-static-top navbar-default navheader">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#bs-navbar"
+                    aria-controls="bs-navbar"
+                    aria-expanded="false"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+            <!--<a href="/"-->
+            <!--class="navbar-brand">angular-confirm</a>-->
+            <a class="navbar-brand"
+               href="http://craftpip.github.io"><span class="craftpip-logo"></span></a>
+        </div>
+        <nav id="bs-navbar"
+             class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class=""><a href="http://github.com/craftpip/angular-confirm"><i class="fa fa-github"></i> Project home</a></li>
+                <li class=""><a href="http://github.com/craftpip/angular-confirm/issues/new">Suggest feature</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#"
+                       class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false">Versions <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://craftpip.github.io/angular-confirm/v1.0">v1.0</a></li>
+                    </ul>
+                </li>
+                <!--<li>-->
+                <!--<a class="github-button"-->
+                <!--href="https://github.com/craftpip/angular-confirm"-->
+                <!--data-style="mega"-->
+                <!--data-count-href="/craftpip/angular-confirm/stargazers"-->
+                <!--data-count-api="/repos/craftpip/angular-confirm#stargazers_count"-->
+                <!--data-count-aria-label="# stargazers on GitHub"-->
+                <!--aria-label="Star craftpip/angular-confirm on GitHub">Star</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a class="twitter-follow-button"-->
+                <!--data-show-count="false"-->
+                <!--data-size="large"-->
+                <!--href="https://twitter.com/craftpip"-->
+                <!--data-show-count="false"-->
+                <!--data-lang="en">-->
+                <!--Follow @craftpip-->
+                <!--</a>-->
+                <!--</li>-->
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="header"
+     id="content"
+     tabindex="-1">
+    <div class="container">
+        <h1 style="margin-top: 7px;"
+            class="text-center">
+            <img style="width: 400px;"
+                 src="jquery-confirm.png"
+                 alt="ANGULAR-CONFIRM"/>
+        </h1>
+
+        <p>
+            <em>alerts</em>, <em>confirms</em> and <em>dialogs</em> in <strong>one</strong>.
+        </p>
+    </div>
+</div>
+<!--<div style="height:50px"></div>-->
+<div class="container"
+     ng-app="application"
+     ng-controller="main">
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <div class="space10"></div>
+            <div class="space10"></div>
+            <p>
+                <strong>angular-confirm v<span class="version"></span> docs</strong><br>
+                <a href="https://github.com/craftpip/angular-confirm">
+                    view on <i class="fa fa-github"></i> Github
+                </a>
+            </p>
+            <a href="https://github.com/craftpip/angular-confirm/zipball/master"
+               class="btn btn-download btn-lg btn-block">
+                Download latest
+            </a>
+            <a href="https://github.com/craftpip/angular-confirm/releases"
+               class="btn btn-download btn-block">
+                View all releases
+            </a>
+
+            <div class="spacer15"></div>
+            <p class="text-right">
+                <code>version <span class="version"></span></code>
+            </p>
+
+            <div class="spacer15"></div>
+            <div id="my-nav">
+                <ul class="nav nav-list">
+                    <li>
+                        <a href="#quickfeatures"> Quick features</a>
+                        <ul class="nav nav-list">
+                            <li>
+                                <a href="#installation"> Installation</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9 col-sm-12">
+            <!-- introduction -->
+            <section>
+                <header>
+                    <h3>Welcome to angular-confirm!</h3>
+
+                    <p>
+                        Easy to use and highly flexible! <br/>
+                        A jQuery plugin that provides great set of features like,
+                        Auto-close, Ajax-loading, Themes, Animations and more. <br>
+                        This plugin is actively developed, I would love you have your suggestions.
+                    </p>
+                    <a href="https://github.com/craftpip/angular-confirm/issues"
+                       target="empty"
+                       class="btn btn-success"><i class="fa fa-bug fa-fw"></i> Please post your Suggestions here.</a>
+                </header>
+            </section>
+            <hr>
+            <section id="quickfeatures">
+                <h1>Quick features</h1>
+
+                <p>These features can practically be used like so.</p>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-block"
+                                ng-click="example1()">Alerts
+                        </button>
+                        <p class="text-success">Elegant Alerts.</p>
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="text-right footer">
+                <div class="spacer15"></div>
+                <p>
+                    Thanks for making it to the end of the document. <br>
+                    Your support and suggestions matter the most!
+                </p>
+                <a href="https://github.com/craftpip/angular-confirm/issues/new"
+                   target="empty"
+                   class="btn btn-success">Please post your <br> Questions / Suggestions / Issues.</a>
+                <h4>Made by <a href="http://twitter.com/craftpip">@craftpip</a> with passion. </h4>
+
+                <div class="spacer15"></div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"
+        src="demo/demo.min.js"></script>
+
+<script type="text/javascript"
+        src="app.js"></script>
+
+</body>
+</html>
