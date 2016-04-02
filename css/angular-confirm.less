@@ -17,7 +17,7 @@
   }
 }
 
-body[class*="ng-confirm-noscroll-"]{
+body[class*="ng-confirm-noscroll-"] {
   overflow: hidden !important;
 }
 
@@ -31,16 +31,34 @@ body[class*="ng-confirm-noscroll-"]{
   font-family: inherit;
   overflow: hidden;
 
+  .transition {
+    transition-property: all;
+  }
+
   .ng-confirm-bg {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 1;
-    transition: opacity .4s;
-    &.ng-hide{
+    opacity: 0;
+    &:before{
+      position: absolute;
+      content: '';
+      height: 50px;
+      width: 50px;
+      left: 50%;
+      margin-left: -25px;
+      top: 50%;
+      margin-top: -25px;
+      border-radius: 50px;
+      border: solid 4px transparent;
+      border-bottom-color: white;
       opacity: 0;
+    }
+    &.loading:before{
+      opacity: 1;
+      animation: ng-confirm-rotate .6s infinite linear;
     }
   }
   .ng-confirm-scrollpane {
@@ -59,7 +77,7 @@ body[class*="ng-confirm-noscroll-"]{
     position: relative;
     outline: none;
     padding: 15px 15px 0;
-
+    opacity: 0;
 
     &.loading {
       min-height: 120px;
@@ -93,7 +111,6 @@ body[class*="ng-confirm-noscroll-"]{
       }
     }
 
-
     div.closeIcon {
       height: 20px;
       width: 20px;
@@ -105,19 +122,20 @@ body[class*="ng-confirm-noscroll-"]{
       text-align: center;
       transition: opacity .3s ease-in;
       font-size: 27px !important;
-      line-height: 14px !important;
+      line-height: 20px !important;
+      font-family: sans-serif;
 
-      &:empty{
+      &:empty {
         display: none;
       }
 
-      .fa{
+      .fa {
         font-size: 16px;
       }
-      .glyphicon{
+      .glyphicon {
         font-size: 16px;
       }
-      .zmdi{
+      .zmdi {
         font-size: 16px;
       }
 
@@ -156,20 +174,22 @@ body[class*="ng-confirm-noscroll-"]{
     }
     div.content-pane {
       margin-bottom: 15px;
-      height: auto;
-      //transition: height .4s ease-in;
+      height: 0px;
       display: inline-block;
       width: 100%;
       position: relative;
+      overflow: hidden;
 
       .content {
-        position: absolute;
-        top: 0;
-        left: 0;
+        //position: absolute;
+        //top: 0;
+        //left: 0;
         //transition: all .2s ease-in;
-        right: 0;
+        //right: 0;
+        width: 100%;
+        height: auto;
 
-        img{
+        img {
           width: 100%;
           height: auto;
         }
@@ -180,7 +200,7 @@ body[class*="ng-confirm-noscroll-"]{
     }
     .buttons {
       padding-bottom: 11px;
-      > button{
+      > button {
         margin-bottom: 4px;
         margin-left: 2px;
         margin-right: 2px;
@@ -202,7 +222,7 @@ body[class*="ng-confirm-noscroll-"]{
 
   &.ng-confirm-white {
     .ng-confirm-bg {
-      background-color: #444;
+      background-color: rgba(0,0,0,.3);
     }
     .ng-confirm-box {
       box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
@@ -233,15 +253,20 @@ body[class*="ng-confirm-noscroll-"]{
     }
   }
 
-  &.ng-confirm-black {
+  &.ng-confirm-dark {
     .ng-confirm-bg {
-      background-color: darkslategray;
+      background-color: rgba(0,0,0,.6);
     }
     .ng-confirm-box {
       box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
       background: #444;
       border-radius: 5px;
-      color: white;
+      *:not(input):not(textarea){
+        color: white;
+      }
+      input, textarea{
+        color: initial;
+      }
 
       .buttons {
         float: right;
@@ -266,9 +291,7 @@ body[class*="ng-confirm-noscroll-"]{
           }
         }
       }
-
     }
-
   }
 
   .ng-confirm-box.hilight {
@@ -293,15 +316,15 @@ body[class*="ng-confirm-noscroll-"]{
 }
 
 /*Transition rules*/
-.ng-confirm {
-  perspective: 400px;
 
-  .ng-confirm-box {
-    opacity: 1;
-    transition-property: all;
-  }
-}
-
+//.ng-confirm {
+//  perspective: 400px;
+//
+//  .ng-confirm-box {
+//    opacity: 1;
+//    transition-property: all;
+//  }
+//}
 
 .ng-confirm.ng-confirm-supervan {
   .ng-confirm-bg {
@@ -310,25 +333,30 @@ body[class*="ng-confirm-noscroll-"]{
   .ng-confirm-box {
     background-color: transparent;
 
+    *:not(input):not(textarea){
+      color: white;
+    }
+    input, textarea{
+      color: initial;
+    }
+
     div.closeIcon {
       color: white;
     }
 
     div.title-c {
       text-align: center;
-      color: white;
       font-size: 28px;
       font-weight: normal;
       > * {
         padding-bottom: 25px;
       }
     }
-    div.content-pane{
+    div.content-pane {
       margin-bottom: 25px;
     }
     div.content {
       text-align: center;
-      color: white;
 
       &:empty {
         &:before {
@@ -361,27 +389,28 @@ body[class*="ng-confirm-noscroll-"]{
     }
   }
 }
+
 .ng-confirm.ng-confirm-material {
   .ng-confirm-bg {
-    background-color: rgba(0,0,0,.67);
+    background-color: rgba(0, 0, 0, .67);
   }
   .ng-confirm-box {
     background-color: white;
-    box-shadow: 0 7px 8px -4px rgba(0,0,0,.2),0 13px 19px 2px rgba(0,0,0,.14),0 5px 24px 4px rgba(0,0,0,.12);
+    box-shadow: 0 7px 8px -4px rgba(0, 0, 0, .2), 0 13px 19px 2px rgba(0, 0, 0, .14), 0 5px 24px 4px rgba(0, 0, 0, .12);
     padding: 30px 25px 10px 25px;
 
     div.closeIcon {
-      color: rgba(0,0,0,.87);
+      color: rgba(0, 0, 0, .87);
     }
 
     div.title-c {
-      color: rgba(0,0,0,.87);
+      color: rgba(0, 0, 0, .87);
       font-size: 22px;
       font-weight: bold;
     }
     div.content {
       text-align: left;
-      color: rgba(0,0,0,.87);
+      color: rgba(0, 0, 0, .87);
 
       &:empty {
         &:before {
@@ -408,9 +437,10 @@ body[class*="ng-confirm-noscroll-"]{
     }
   }
 }
+
 .ng-confirm.ng-confirm-bootstrap {
   .ng-confirm-bg {
-    background-color: rgba(0,0,0,.21);
+    background-color: rgba(0, 0, 0, .21);
   }
 
   .ng-confirm-box {
@@ -430,7 +460,7 @@ body[class*="ng-confirm-noscroll-"]{
       padding-left: 15px;
       padding-right: 15px;
     }
-    div.content-pane{
+    div.content-pane {
 
     }
     div.content {
@@ -452,8 +482,8 @@ body[class*="ng-confirm-noscroll-"]{
       padding: 0px 0 0px;
       margin: -5px 0 0px;
       border-top: solid 1px #ddd;
-      overflow:hidden;
-      border-radius:  0 0 4px 4px;
+      overflow: hidden;
+      border-radius: 0 0 4px 4px;
 
       button {
         font-weight: 500;

@@ -40,18 +40,36 @@ body[class*="ng-confirm-noscroll-"] {
   font-family: inherit;
   overflow: hidden;
 }
+.ng-confirm .transition {
+  -webkit-transition-property: all;
+          transition-property: all;
+}
 .ng-confirm .ng-confirm-bg {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  opacity: 1;
-  -webkit-transition: opacity .4s;
-          transition: opacity .4s;
-}
-.ng-confirm .ng-confirm-bg.ng-hide {
   opacity: 0;
+}
+.ng-confirm .ng-confirm-bg:before {
+  position: absolute;
+  content: '';
+  height: 50px;
+  width: 50px;
+  left: 50%;
+  margin-left: -25px;
+  top: 50%;
+  margin-top: -25px;
+  border-radius: 50px;
+  border: solid 4px transparent;
+  border-bottom-color: white;
+  opacity: 0;
+}
+.ng-confirm .ng-confirm-bg.loading:before {
+  opacity: 1;
+  -webkit-animation: ng-confirm-rotate 0.6s infinite linear;
+          animation: ng-confirm-rotate 0.6s infinite linear;
 }
 .ng-confirm .ng-confirm-scrollpane {
   position: fixed;
@@ -71,6 +89,7 @@ body[class*="ng-confirm-noscroll-"] {
   position: relative;
   outline: none;
   padding: 15px 15px 0;
+  opacity: 0;
 }
 .ng-confirm .ng-confirm-box.loading {
   min-height: 120px;
@@ -115,7 +134,8 @@ body[class*="ng-confirm-noscroll-"] {
   -webkit-transition: opacity 0.3s ease-in;
           transition: opacity 0.3s ease-in;
   font-size: 27px !important;
-  line-height: 14px !important;
+  line-height: 20px !important;
+  font-family: sans-serif;
 }
 .ng-confirm .ng-confirm-box div.closeIcon:empty {
   display: none;
@@ -162,16 +182,15 @@ body[class*="ng-confirm-noscroll-"] {
 }
 .ng-confirm .ng-confirm-box div.content-pane {
   margin-bottom: 15px;
-  height: auto;
+  height: 0px;
   display: inline-block;
   width: 100%;
   position: relative;
+  overflow: hidden;
 }
 .ng-confirm .ng-confirm-box div.content-pane .content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  width: 100%;
+  height: auto;
 }
 .ng-confirm .ng-confirm-box div.content-pane .content img {
   width: 100%;
@@ -199,7 +218,7 @@ body[class*="ng-confirm-noscroll-"] {
   right: auto;
 }
 .ng-confirm.ng-confirm-white .ng-confirm-bg {
-  background-color: #444;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 .ng-confirm.ng-confirm-white .ng-confirm-box {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
@@ -226,19 +245,25 @@ body[class*="ng-confirm-noscroll-"] {
 .ng-confirm.ng-confirm-white .ng-confirm-box .buttons button.btn-default:hover {
   background: #ddd;
 }
-.ng-confirm.ng-confirm-black .ng-confirm-bg {
-  background-color: darkslategray;
+.ng-confirm.ng-confirm-dark .ng-confirm-bg {
+  background-color: rgba(0, 0, 0, 0.6);
 }
-.ng-confirm.ng-confirm-black .ng-confirm-box {
+.ng-confirm.ng-confirm-dark .ng-confirm-box {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   background: #444;
   border-radius: 5px;
+}
+.ng-confirm.ng-confirm-dark .ng-confirm-box *:not(input):not(textarea) {
   color: white;
 }
-.ng-confirm.ng-confirm-black .ng-confirm-box .buttons {
+.ng-confirm.ng-confirm-dark .ng-confirm-box input,
+.ng-confirm.ng-confirm-dark .ng-confirm-box textarea {
+  color: initial;
+}
+.ng-confirm.ng-confirm-dark .ng-confirm-box .buttons {
   float: right;
 }
-.ng-confirm.ng-confirm-black .ng-confirm-box .buttons button {
+.ng-confirm.ng-confirm-dark .ng-confirm-box .buttons button {
   border: none;
   background-image: none;
   text-transform: uppercase;
@@ -249,12 +274,12 @@ body[class*="ng-confirm-noscroll-"] {
           transition: background .1s;
   color: white;
 }
-.ng-confirm.ng-confirm-black .ng-confirm-box .buttons button.btn-default {
+.ng-confirm.ng-confirm-dark .ng-confirm-box .buttons button.btn-default {
   box-shadow: none;
   color: #fff;
   background: none;
 }
-.ng-confirm.ng-confirm-black .ng-confirm-box .buttons button.btn-default:hover {
+.ng-confirm.ng-confirm-dark .ng-confirm-box .buttons button.btn-default:hover {
   background: #666;
 }
 .ng-confirm .ng-confirm-box.hilight {
@@ -310,27 +335,24 @@ body[class*="ng-confirm-noscroll-"] {
   }
 }
 /*Transition rules*/
-.ng-confirm {
-  -webkit-perspective: 400px;
-          perspective: 400px;
-}
-.ng-confirm .ng-confirm-box {
-  opacity: 1;
-  -webkit-transition-property: all;
-          transition-property: all;
-}
 .ng-confirm.ng-confirm-supervan .ng-confirm-bg {
   background-color: rgba(54, 70, 93, 0.95);
 }
 .ng-confirm.ng-confirm-supervan .ng-confirm-box {
   background-color: transparent;
 }
+.ng-confirm.ng-confirm-supervan .ng-confirm-box *:not(input):not(textarea) {
+  color: white;
+}
+.ng-confirm.ng-confirm-supervan .ng-confirm-box input,
+.ng-confirm.ng-confirm-supervan .ng-confirm-box textarea {
+  color: initial;
+}
 .ng-confirm.ng-confirm-supervan .ng-confirm-box div.closeIcon {
   color: white;
 }
 .ng-confirm.ng-confirm-supervan .ng-confirm-box div.title-c {
   text-align: center;
-  color: white;
   font-size: 28px;
   font-weight: normal;
 }
@@ -342,7 +364,6 @@ body[class*="ng-confirm-noscroll-"] {
 }
 .ng-confirm.ng-confirm-supervan .ng-confirm-box div.content {
   text-align: center;
-  color: white;
 }
 .ng-confirm.ng-confirm-supervan .ng-confirm-box .buttons {
   text-align: center;

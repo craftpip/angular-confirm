@@ -4,43 +4,51 @@ angular.module('application', ['ngConfirm'])
         '$ngConfirm',
         '$interval',
         '$ngConfirmDefaults',
-        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults) {
+        '$ngConfirmGlobal',
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal) {
             $scope.something = 'asdasd';
             $scope.title = 'something';
-            $scope.text = '<strong>{{something}}</strong> ' +
-                '<input type="text" ng-model="something" />' +
-                '<input type="text" ng-model="parent.title" />';
-
-
-            $scope.example1 = function(){
-                var ngConfirmObj = $ngConfirm({
-                    //contentUrl: 'readme.md',
+            $scope.asd = function(){
+                $ngConfirmGlobal.closeAll();
+            };
+            $scope.example1 = function () {
+                $ngConfirm({
+                    title: $scope.title,
+                    alignMiddle: true,
+                    contentUrl: 'test.html',
+                    autoClose: 'material|2000',
                     buttons: {
-                        hey: {
-                            action: function (scope, button) {
-                                this.setTheme('black');
-                                button.text = 'heyasdsad';
-                                button.class = 'btn btn-danger';
-                                scope.parent.title = 'Something right ?';
-                            }
+                        white: function (scope, button) {
+                            this.theme = 'white';
+                            this.title = 'The original one!';
+                            return false;
                         },
-                        hey2: function (scope, button) {
-                            this.setTheme('black');
-                            button.text = 'heyasdsad';
-                            button.class = 'btn btn-danger';
+                        dark: function (scope, button) {
+                            this.theme = 'dark';
+                            this.title = 'The dark one!';
+                            return false;
                         },
+                        material: function (scope, button) {
+                            this.theme = 'material';
+                            this.title = 'I trasdased';
+                            this.columnClass = 'col-md-8 col-md-offset-2';
+                            return false;
+                        },
+                        bootstrap: function (scope, button) {
+                            this.theme = 'bootstrap';
+                            this.title = 'I tried';
+                            return false;
+                        },
+                        supervan: function (scope, button) {
+                            this.theme = 'supervan';
+                            this.title = 'Something random';
+                            $ngConfirm('wow', 'asd');
+                            return false;
+                        }
                     },
                     scope: $scope,
                     content: $scope.text,
                 });
             };
-
-
-            //ngConfirmObj.scope // the local scope.
-            //ngConfirmObj.parent // the angular confirm scope.
-            //
-            //$interval(function(){
-            //    ngConfirmObj.title += 'a';
-            //}, 1000);
         }
     ]);

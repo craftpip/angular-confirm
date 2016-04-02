@@ -161,12 +161,12 @@ ul.nav.nav-list li.active ul {
     color: #cdbfe3;
     text-align: center;
     text-shadow: 0 1px 0 rgba(0,0,0,.1);
-    background-color: #1F90E2;
-    background-image: -webkit-gradient(linear,left top,left bottom,from(#3D83BF),to(#1F90E2));
-    background-image: -webkit-linear-gradient(top,#3D83BF 0,#1F90E2 100%);
+    background-color: #E23337;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#B63032),to(#E23337));
+    background-image: -webkit-linear-gradient(top,#B63032 0,#E23337 100%);
     background-image: -o-linear-gradient(top,#3D83BF 0,#1F90E2 100%);
     background-image: linear-gradient(to bottom,#3D83BF 0,#1F90E2 100%)
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3D83BF', endColorstr='#1F90E2', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3D83BF', endColorstr='#1F90E2', GradientType=0);
     background-repeat: repeat-x;
     color: white;
 }
