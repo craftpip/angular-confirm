@@ -14,7 +14,7 @@ angular.module('application', ['ngConfirm'])
 
             $scope.example1 = function(){
                 var ngConfirmObj = $ngConfirm({
-                    contentUrl: 'test.html',
+                    //contentUrl: 'readme.md',
                     buttons: {
                         hey: {
                             action: function (scope, button) {

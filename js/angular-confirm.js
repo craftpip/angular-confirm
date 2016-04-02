@@ -8,6 +8,14 @@
  * Licensed under MIT (https://github.com/craftpip/angular-confirm/blob/master/LICENSE)
  */
 
+/*
+ * TODO:
+ * Animations,
+ * Auto close,
+ * Keyboard events,
+ * Testing,
+ * Documentation.
+ */
 "use strict";
 
 if (typeof jQuery === 'undefined')
@@ -54,6 +62,7 @@ angular.module('ngConfirm', [
             '</div>' +
             '</div>' +
             '';
+
         return {default: template};
     })
     .service('$ngConfirmDefaults', function () {
@@ -367,7 +376,8 @@ angular.module('ngConfirm', [
 
                     this.content_style = this._getCSS(this.animationSpeed, 1);
                     this.contentPane_style = this._getCSS(this.animationSpeed, 1);
-                    this.box_style = this._getCSS(this.animationSpeed, 1);
+                    //this.box_style = this._getCSS(this.animationSpeed, 1);
+                    this.box_style = {};
 
                     $timeout(function () {
                         if (typeof that.onOpen === 'function')
