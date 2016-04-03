@@ -136,18 +136,17 @@ body[class*="ng-confirm-noscroll-"] {
   font-size: 27px !important;
   line-height: 20px !important;
   font-family: sans-serif;
+  letter-spacing: -1px;
 }
 .ng-confirm .ng-confirm-box div.closeIcon:empty {
   display: none;
 }
-.ng-confirm .ng-confirm-box div.closeIcon .fa {
-  font-size: 16px;
-}
-.ng-confirm .ng-confirm-box div.closeIcon .glyphicon {
-  font-size: 16px;
-}
+.ng-confirm .ng-confirm-box div.closeIcon .fa,
+.ng-confirm .ng-confirm-box div.closeIcon .glyphicon,
 .ng-confirm .ng-confirm-box div.closeIcon .zmdi {
   font-size: 16px;
+  line-height: 25px;
+  vertical-align: bottom;
 }
 .ng-confirm .ng-confirm-box div.closeIcon:hover {
   opacity: 1;
@@ -253,11 +252,13 @@ body[class*="ng-confirm-noscroll-"] {
   background: #444;
   border-radius: 5px;
 }
-.ng-confirm.ng-confirm-dark .ng-confirm-box *:not(input):not(textarea) {
+.ng-confirm.ng-confirm-dark .ng-confirm-box *:not(input):not(textarea):not(select):not(option) {
   color: white;
 }
 .ng-confirm.ng-confirm-dark .ng-confirm-box input,
-.ng-confirm.ng-confirm-dark .ng-confirm-box textarea {
+.ng-confirm.ng-confirm-dark .ng-confirm-box textarea,
+.ng-confirm.ng-confirm-dark .ng-confirm-box select,
+.ng-confirm.ng-confirm-dark .ng-confirm-box option {
   color: initial;
 }
 .ng-confirm.ng-confirm-dark .ng-confirm-box .buttons {
@@ -341,11 +342,13 @@ body[class*="ng-confirm-noscroll-"] {
 .ng-confirm.ng-confirm-supervan .ng-confirm-box {
   background-color: transparent;
 }
-.ng-confirm.ng-confirm-supervan .ng-confirm-box *:not(input):not(textarea) {
+.ng-confirm.ng-confirm-supervan .ng-confirm-box *:not(input):not(textarea):not(select):not(option) {
   color: white;
 }
 .ng-confirm.ng-confirm-supervan .ng-confirm-box input,
-.ng-confirm.ng-confirm-supervan .ng-confirm-box textarea {
+.ng-confirm.ng-confirm-supervan .ng-confirm-box textarea,
+.ng-confirm.ng-confirm-supervan .ng-confirm-box select,
+.ng-confirm.ng-confirm-supervan .ng-confirm-box option {
   color: initial;
 }
 .ng-confirm.ng-confirm-supervan .ng-confirm-box div.closeIcon {
@@ -413,6 +416,7 @@ body[class*="ng-confirm-noscroll-"] {
   box-shadow: 0 3px 8px 0px rgba(0, 0, 0, 0.2);
   border: solid 1px rgba(0, 0, 0, 0.4);
   padding: 15px 0 0;
+  border-radius: 6px;
 }
 .ng-confirm.ng-confirm-bootstrap .ng-confirm-box div.closeIcon {
   color: rgba(0, 0, 0, 0.87);
@@ -442,4 +446,94 @@ body[class*="ng-confirm-noscroll-"] {
   border-radius: 0px;
   margin: 0;
   border-left: solid 1px #ddd;
+}
+.ng-confirm.ng-confirm-modern .ng-confirm-bg {
+  background-color: rgba(0, 0, 0, 0.67);
+}
+.ng-confirm.ng-confirm-modern .ng-confirm-box {
+  background-color: white;
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+  padding: 30px 25px 10px 25px;
+}
+.ng-confirm.ng-confirm-modern .ng-confirm-box div.closeIcon {
+  color: rgba(0, 0, 0, 0.87);
+  border-radius: 50px;
+  height: 25px;
+  width: 25px;
+  line-height: 25px !important;
+  top: 10px;
+  right: 10px;
+  box-shadow: 0 0 0 2px #ddd;
+}
+.ng-confirm.ng-confirm-modern .ng-confirm-box div.title-c {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+.ng-confirm.ng-confirm-modern .ng-confirm-box div.title-c .icon-c {
+  display: block;
+  margin-right: 0px;
+  font-size: 69px;
+  color: #aaa;
+}
+.ng-confirm.ng-confirm-modern .ng-confirm-box div.content {
+  text-align: center;
+  font-size: 15px;
+  color: #777;
+  margin-bottom: 25px;
+}
+.ng-confirm.ng-confirm-modern .ng-confirm-box .buttons {
+  text-align: center;
+}
+.ng-confirm.ng-confirm-modern .ng-confirm-box .buttons button {
+  font-size: 16px;
+  font-weight: bold;
+}
+.ng-confirm.ng-confirm-modern .ng-confirm-box .buttons button + button {
+  margin-left: 4px;
+}
+.ng-confirm.ng-confirm-seamless .ng-confirm-box {
+  background-color: white;
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+  padding: 20px 0 10px 0;
+}
+.ng-confirm.ng-confirm-seamless .ng-confirm-box div.closeIcon {
+  color: rgba(0, 0, 0, 0.87);
+  border-radius: 50px;
+  height: 25px;
+  width: 25px;
+  line-height: 25px !important;
+  top: 10px;
+  right: 10px;
+  box-shadow: 0 0 0 2px #ddd;
+}
+.ng-confirm.ng-confirm-seamless .ng-confirm-box div.title-c {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+.ng-confirm.ng-confirm-seamless .ng-confirm-box div.title-c .icon-c {
+  color: #aaa;
+  padding-bottom: 25px;
+}
+.ng-confirm.ng-confirm-seamless .ng-confirm-box div.title-c .title {
+  padding-bottom: 25px;
+}
+.ng-confirm.ng-confirm-seamless .ng-confirm-box div.content {
+  text-align: center;
+  font-size: 15px;
+  color: #777;
+  margin-bottom: 25px;
+}
+.ng-confirm.ng-confirm-seamless .ng-confirm-box .buttons {
+  text-align: center;
+}
+.ng-confirm.ng-confirm-seamless .ng-confirm-box .buttons button {
+  font-size: 16px;
+  font-weight: bold;
+}
+.ng-confirm.ng-confirm-seamless .ng-confirm-box .buttons button + button {
+  margin-left: 4px;
 }

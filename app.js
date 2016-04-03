@@ -6,9 +6,9 @@ angular.module('application', ['ngConfirm'])
         '$ngConfirmDefaults',
         '$ngConfirmGlobal',
         function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal) {
-            $scope.something = 'asdasd';
-            $scope.title = 'something';
-            $scope.asd = function(){
+            $scope.content = 'You\'re ready to proceed!';
+            $scope.title = 'Awesome!';
+            $scope.asd = function () {
                 $ngConfirmGlobal.closeAll();
             };
             $scope.example1 = function () {
@@ -16,38 +16,55 @@ angular.module('application', ['ngConfirm'])
                     title: $scope.title,
                     alignMiddle: true,
                     contentUrl: 'test.html',
-                    autoClose: 'material|2000',
-                    buttons: {
-                        white: function (scope, button) {
-                            this.theme = 'white';
-                            this.title = 'The original one!';
-                            return false;
-                        },
-                        dark: function (scope, button) {
-                            this.theme = 'dark';
-                            this.title = 'The dark one!';
-                            return false;
-                        },
-                        material: function (scope, button) {
-                            this.theme = 'material';
-                            this.title = 'I trasdased';
-                            this.columnClass = 'col-md-8 col-md-offset-2';
-                            return false;
-                        },
-                        bootstrap: function (scope, button) {
-                            this.theme = 'bootstrap';
-                            this.title = 'I tried';
-                            return false;
-                        },
-                        supervan: function (scope, button) {
-                            this.theme = 'supervan';
-                            this.title = 'Something random';
-                            $ngConfirm('wow', 'asd');
-                            return false;
+                    escapeKey: true,
+                    theme: 'seamless',
+                    closeIcon: function(){
+                        if(this.closeIconClass == 'fa fa-unlock'){
+                            this.closeIconClass = 'fa fa-lock';
+                        }else{
+                            this.closeIconClass = 'fa fa-unlock';
                         }
+                        return false;
+                    },
+                    icon: 'fa fa-check-circle-o',
+                    buttons: {
+                        white: {
+                            text: 'Start CODING',
+                            keys: [],
+                            class: 'btn-success',
+                            action: function (scope, button) {
+                                this.theme = 'white';
+                                return false;
+                            }
+                        },
+                        //dark: {
+                        //    keys: [],
+                        //    class: 'btn-default',
+                        //    action: function (scope, button) {
+                        //        this.theme = 'dark';
+                        //        return false;
+                        //    }
+                        //},
+                        //material: {
+                        //    keys: [],
+                        //    action: function (scope, button) {
+                        //        this.theme = 'material';
+                        //        return false;
+                        //    }
+                        //},
+                        //bootstrap: {
+                        //    keys: [],
+                        //    action: function (scope, button) {
+                        //        this.theme = 'bootstrap';
+                        //        return false;
+                        //    }
+                        //}
                     },
                     scope: $scope,
-                    content: $scope.text,
+                    content: $scope.content,
+                    onOpen: function(scope){
+                        scope.data = this;
+                    }
                 });
             };
         }
