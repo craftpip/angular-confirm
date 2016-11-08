@@ -18,10 +18,10 @@ angular.module('application', ['ngConfirm'])
                     contentUrl: 'test.html',
                     escapeKey: true,
                     theme: 'seamless',
-                    closeIcon: function(){
-                        if(this.closeIconClass == 'fa fa-unlock'){
+                    closeIcon: function () {
+                        if (this.closeIconClass == 'fa fa-unlock') {
                             this.closeIconClass = 'fa fa-lock';
-                        }else{
+                        } else {
                             this.closeIconClass = 'fa fa-unlock';
                         }
                         return false;
@@ -29,40 +29,41 @@ angular.module('application', ['ngConfirm'])
                     icon: 'fa fa-check-circle-o',
                     buttons: {
                         white: {
-                            text: 'Start CODING',
+                            text: 'Bigger please!',
                             keys: [],
                             class: 'btn-success',
                             action: function (scope, button) {
-                                this.theme = 'white';
+                                this.columnClass = 'col-md-6 col-md-offset-3';
                                 return false;
                             }
                         },
-                        //dark: {
-                        //    keys: [],
-                        //    class: 'btn-default',
-                        //    action: function (scope, button) {
-                        //        this.theme = 'dark';
-                        //        return false;
-                        //    }
-                        //},
-                        //material: {
-                        //    keys: [],
-                        //    action: function (scope, button) {
-                        //        this.theme = 'material';
-                        //        return false;
-                        //    }
-                        //},
-                        //bootstrap: {
-                        //    keys: [],
-                        //    action: function (scope, button) {
-                        //        this.theme = 'bootstrap';
-                        //        return false;
-                        //    }
-                        //}
+                        Close: function(){},
+                        dark: {
+                            keys: [],
+                            class: 'btn-default',
+                            action: function (scope, button) {
+                                this.theme = 'dark';
+                                return false;
+                            }
+                        },
+                        material: {
+                            keys: [],
+                            action: function (scope, button) {
+                                this.theme = 'material';
+                                return false;
+                            }
+                        },
+                        bootstrap: {
+                            keys: [],
+                            action: function (scope, button) {
+                                this.theme = 'bootstrap';
+                                return false;
+                            }
+                        }
                     },
                     scope: $scope,
                     content: $scope.content,
-                    onOpen: function(scope){
+                    onOpen: function (scope) {
                         scope.data = this;
                     }
                 });

@@ -31,7 +31,7 @@ angular.module('ngConfirm', [
     ])
     .service('$ngConfirmTemplate', function () {
         var template = '<div class="ng-confirm" ng-class="[data.theme, {rtl: data.rtl}]" aria-labelledby="{{aria}}" tabindex="-1">' +
-            '<div class="ng-confirm-bg" ng-class="{loading: data.bgLoading}" ng-style="data.bg_style"></div>' +
+            '<div class="ng-confirm-bg" ng-class="{\'ng-confirm-loading\': data.bgLoading}" ng-style="data.bg_style"></div>' +
             '<div class="ng-confirm-scrollpane" ng-click="data._scrollPaneClick()">' +
             '<div class="container">' +
             '<div class="row">' +

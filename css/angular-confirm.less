@@ -56,7 +56,7 @@ body[class*="ng-confirm-noscroll-"] {
       border-bottom-color: white;
       opacity: 0;
     }
-    &.loading:before {
+    &.ng-confirm-loading:before {
       opacity: 1;
       animation: ng-confirm-rotate .6s infinite linear;
     }
@@ -79,7 +79,7 @@ body[class*="ng-confirm-noscroll-"] {
     padding: 15px 15px 0;
     opacity: 0;
 
-    &.loading {
+    &.ng-confirm-loading {
       min-height: 120px;
 
       &:before {
@@ -566,7 +566,10 @@ body[class*="ng-confirm-noscroll-"] {
 
 .ng-confirm.ng-confirm-seamless {
   .ng-confirm-bg {
-
+    background-color: rgba(255, 255, 255, .5);
+    &:before{
+      border-bottom-color: dodgerblue;
+    }
   }
   .ng-confirm-box {
     background-color: white;
