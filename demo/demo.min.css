@@ -12,14 +12,18 @@ body {
     width: 100%
 }
 
-.craftpip-logo {
-    background-image: url(logo-name.svg);
-    -webkit-background-size: contain;
+.aconfirm-logo {
+    background-image: url('../angular-confirm.png');
     background-size: contain;
     background-position: center;
-    width: 130px;
-    display: block;
-    height: 20px
+    background-repeat: no-repeat;
+    width: 152px;
+}
+
+.download-btns .btn{
+    background: white;
+    color: dodgerblue;
+    border-radius: 4px;
 }
 
 kbd.blue {
@@ -30,7 +34,7 @@ kbd.blue {
 }
 
 .section {
-    border-left: solid 1px #2980b9;
+    border-left: solid 1px #ddd;
     padding-left: 15px;
 }
 
@@ -151,6 +155,9 @@ ul.nav.nav-list li ul {
 ul.nav.nav-list li.active ul {
     display: block;
 }
+ul.nav.nav-list li.no-b-l a{
+    box-shadow: none;
+}
 .navheader{
     margin-bottom: 0px;
     background: white;
@@ -164,13 +171,45 @@ ul.nav.nav-list li.active ul {
     background-color: #E23337;
     background-image: -webkit-gradient(linear,left top,left bottom,from(#B63032),to(#E23337));
     background-image: -webkit-linear-gradient(top,#B63032 0,#E23337 100%);
-    background-image: -o-linear-gradient(top,#3D83BF 0,#1F90E2 100%);
-    background-image: linear-gradient(to bottom,#3D83BF 0,#1F90E2 100%)
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3D83BF', endColorstr='#1F90E2', GradientType=0);
+    background-image: -o-linear-gradient(top,#B63032 0,#E23337 100%);
+    background-image: linear-gradient(to bottom,#B63032 0,#E23337 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#B63032', endColorstr='#E23337', GradientType=0);
     background-repeat: repeat-x;
     color: white;
 }
 .header p{
     color: #f8f8f8;
     font-size: 24px;
+}
+.header img{
+    max-width: 400px;
+}
+@media all and (max-width: 500px){
+    .header img{
+        max-width: none;
+        width: 100%;
+    }
+    .header .btn{
+        display: block;
+    }
+    .header .btn + .btn{
+        margin-top: 5px;
+    }
+}
+.v{
+    vertical-align: text-top;
+}
+
+.space10 {
+    height: 10px;
+}
+body {
+    font-family: Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif;
+    position: relative;
+}
+
+@media all and (max-width: 992px) {
+    #my-nav-sticky-wrapper{
+        display: none;
+    }
 }
