@@ -4,18 +4,10 @@
  * Website: www.craftpip.com
  * Contact: hey@craftpip.com
  *
- * Copyright 2013-2015 angular-confirm
+ * Copyright 2016-2016 angular-confirm
  * Licensed under MIT (https://github.com/craftpip/angular-confirm/blob/master/LICENSE)
  */
 
-/*
- * TODO:
- * Animations,
- * Auto close,
- * Keyboard events,
- * Testing,
- * Documentation.
- */
 "use strict";
 
 if (typeof jQuery === 'undefined')
@@ -23,14 +15,17 @@ if (typeof jQuery === 'undefined')
 if (typeof angular === 'undefined')
     throw new Error('angular-confirm requires Angular');
 
-try { angular.module('ngSanitize')} catch (e) {
+try {
+    angular.module('ngSanitize')
+} catch (e) {
     throw new Error('angular-confirm requires ngSanitize: https://docs.angularjs.org/api/ngSanitize');
 }
+
 angular.module('ngConfirm', [
-        'ngSanitize',
-    ])
+    'ngSanitize',
+])
     .service('$ngConfirmTemplate', function () {
-        var template = '<div class="ng-confirm" ng-class="[data.theme, {rtl: data.rtl}]" aria-labelledby="{{aria}}" tabindex="-1">' +
+        var template = '<div class="ng-confirm" ng-class="[data.themeParsed, {rtl: data.rtl}]" aria-labelledby="{{aria}}" tabindex="-1">' +
             '<div class="ng-confirm-bg" ng-class="{\'ng-confirm-loading\': data.bgLoading}" ng-style="data.bg_style"></div>' +
             '<div class="ng-confirm-scrollpane" ng-click="data._scrollPaneClick()">' +
             '<div class="container">' +
@@ -46,7 +41,7 @@ angular.module('ngConfirm', [
             '<div class="content" ng-style="data.content_style"></div>' +
             '</div>' +
             '<div class="buttons">' +
-            '<button type="button" ng-repeat="(key, button) in data.buttons" ng-click="data.trigger(key)" class="btn" ng-class="button.class">{{button.text}}<span ng-show="button.timer"> ({{button.timer}})</span></button>' +
+            '<button type="button" ng-repeat="(key, button) in data.buttons" ng-click="data._buttonClick(key)" class="btn" ng-class="button.class">{{button.text}}<span ng-show="button.timer"> ({{button.timer}})</span></button>' +
             '</div>' +
             '<div class="jquery-clear">' +
             '</div>' +
@@ -99,11 +94,12 @@ angular.module('ngConfirm', [
     .service('$ngConfirmDefaults', function () {
         return {
             title: 'Hello',
+            titleClass: '', // todo: implementation
             content: 'Are you sure to continue?',
             contentUrl: false,
             icon: '',
             theme: 'white',
-            bgOpacity: 1,
+            bgOpacity: null,
             animation: 'zoom',
             closeAnimation: 'top',
             animationSpeed: 500,
@@ -187,98 +183,24 @@ angular.module('ngConfirm', [
                  Merge up the options with the object !
                  */
                 angular.extend(this, options);
-                this._init(); // start up.
+                this._init();
             };
 
             ngConfirmBase.prototype = {
                 _init: function () {
                     var that = this;
-                    this._id = Math.round(Math.random() * 999999);
 
+                    this._lastFocused = angular.element('body').find(':focus');
+                    this._id = Math.round(Math.random() * 999999);
                     $timeout(function () {
                         that.open();
                     }, 0);
                 },
-                _getCSS: function (speed, bounce) {
-                    return {
-                        '-webkit-transition-duration': speed / 1000 + 's',
-                        'transition-duration': speed / 1000 + 's',
-                        '-webkit-transition-timing-function': 'cubic-bezier(.36,1.1,.2, ' + bounce + ')',
-                        'transition-timing-function': 'cubic-bezier(.36,1.1,.2, ' + bounce + ')'
-                    }
-                },
-                _watchContent: function () {
-                    var that = this;
-                    if (this._watchTimer) clearInterval(this._watchTimer);
-                    this._watchTimer = $interval(function () {
-                        var now = that._hash(that.$content.html());
-                        var nowHeight = that.$content.height();
-                        if (that._contentHash != now || that._contentHeight != nowHeight) {
-                            that._contentHash = now;
-                            that._contentHeight = nowHeight;
-                            that._alignDialog();
-                        }
-                    }, this.watchTimerInterval);
-                },
-                _hash: function () {
-                    return btoa((encodeURIComponent(this.$content.html())));
-                },
-                _unwatchContent: function () {
-                    clearInterval(this._watchTimer);
-                },
-                _bindEvents: function () {
-                    var that = this;
-                    this._scope.$watch('[data.content, data.title, data.alignMiddle, data.offsetTop, data.offsetBottom]', function () {
-                        that._alignDialog();
-                    });
-                    this._scope.$watch('data.theme', function () {
-                        that._parseTheme();
-                    });
-                    angular.element(window).on('resize', function () {
-                        that._alignDialog();
-                    });
-
-                    $timeout(function () {
-                        angular.element(window).on('keyup.' + that._id, function (e) {
-                            that._reactOnKey(e);
-                        });
-                    }, this.openDelay);
-                },
-                _unBindEvents: function () {
-
-                },
-                _reactOnKey: function (e) {
-                    var that = this;
-
-                    var openedModals = angular.element('.ng-confirm');
-                    if (openedModals.eq(openedModals.length - 1)[0] !== this.$el[0])
-                        return false;
-
-                    var key = e.which;
-
-                    if ($(this.$el).find(':input').is(':focus') && /13|32/.test(key)) {
-                        return;
-                    }
-
-                    var keyChar = this._getKey(key);
-
-                    if (keyChar === 'esc' && this.escapeKey) {
-                        if (this.closeIcon)
-                            this._closeClick();
-                        else
-                            this._scrollPaneClick();
-                    }
-
-                    angular.forEach(this.buttons, function (button, key) {
-                        if (button.keys.indexOf(keyChar) != -1)
-                            that.trigger(key);
-                    })
-                },
                 _prepare: function () {
                     var that = this;
-                    // store the last focused element.
+
                     this.aria = 'ng-confirm-box' + this._id;
-                    this.showLoading = true;
+                    // this.showLoading = true;
                     this.bgLoading = true;
                     this.hilight = false;
                     this.boxClicked = false;
@@ -317,6 +239,79 @@ angular.module('ngConfirm', [
 
                     this._parseButtons();
                 },
+                _cubic_bezier: '0.36, 0.55, 0.19',
+                _getCSS: function (speed, bounce) {
+                    return {
+                        '-webkit-transition-duration': speed / 1000 + 's',
+                        'transition-duration': speed / 1000 + 's',
+                        '-webkit-transition-timing-function': 'cubic-bezier(' + this._cubic_bezier + ', ' + bounce + ')',
+                        'transition-timing-function': 'cubic-bezier(' + this._cubic_bezier + ', ' + bounce + ')'
+                    }
+                },
+                _watchContent: function () {
+                    var that = this;
+                    if (this._watchTimer) clearInterval(this._watchTimer);
+                    this._watchTimer = $interval(function () {
+                        var now = that._hash(that.$content.html());
+                        var nowHeight = that.$content.height();
+                        if (that._contentHash != now || that._contentHeight != nowHeight) {
+                            that._contentHash = now;
+                            that._contentHeight = nowHeight;
+                            that._alignDialog();
+                        }
+                    }, this.watchTimerInterval);
+                },
+                _hash: function () {
+                    return btoa((encodeURIComponent(this.$content.html())));
+                },
+                _unwatchContent: function () {
+                    clearInterval(this._watchTimer);
+                },
+                _bindEvents: function () {
+                    var that = this;
+                    this._scope.$watch('[data.content, data.title, data.alignMiddle, data.offsetTop, data.offsetBottom]', function () {
+                        that._alignDialog();
+                    });
+                    this._scope.$watch('data.theme', function () {
+                        that._parseTheme();
+                    });
+                    angular.element(window).on('resize.' + that._id, function () {
+                        that._alignDialog();
+                    });
+                    angular.element(window).on('keyup.' + that._id, function (e) {
+                        that._reactOnKey(e);
+                    });
+                },
+                _unBindEvents: function () {
+
+                },
+                _reactOnKey: function (e) {
+                    var that = this;
+
+                    var openedModals = angular.element('.ng-confirm');
+                    if (openedModals.eq(openedModals.length - 1)[0] !== this.$el[0])
+                        return false;
+
+                    var key = e.which;
+
+                    if ($(this.$el).find(':input').is(':focus') && /13|32/.test(key)) {
+                        return;
+                    }
+
+                    var keyChar = this._getKey(key);
+
+                    if (keyChar === 'esc' && this.escapeKey) {
+                        if (this.closeIcon)
+                            this._closeClick();
+                        else
+                            this._scrollPaneClick();
+                    }
+
+                    angular.forEach(this.buttons, function (button, key) {
+                        if (button.keys.indexOf(keyChar) != -1)
+                            that.trigger(key);
+                    })
+                },
                 _parseButtons: function () {
                     var that = this;
 
@@ -332,7 +327,8 @@ angular.module('ngConfirm', [
 
                         that.buttons[key].text = button.text || key;
                         that.buttons[key].class = button.class || 'btn-default';
-                        that.buttons[key].action = button.action || function () {};
+                        that.buttons[key].action = button.action || function () {
+                            };
                         that.buttons[key].keys = button.keys || [];
 
                         angular.forEach(that.buttons[key].keys, function (a, i) {
@@ -373,33 +369,36 @@ angular.module('ngConfirm', [
                         this.close();
                     }
                 },
+                _hilightAnimating: false,
                 _hiLightModal: function () {
                     var that = this;
+                    if (this.hilight)
+                        return;
+
                     this.hilight = true;
                     $timeout(function () {
                         that.hilight = false;
                     }, 800);
                 },
-                trigger: function (buttonKey) {
-                    var res = this.buttons[buttonKey].action.apply(this, [
-                        this.scope,
-                        this.buttons[buttonKey]
-                    ]);
-                    if (typeof this.onAction == 'function')
-                        this.onAction(buttonKey);
+                _buttonClick: function (buttonKey) {
+                    var res = this.buttons[buttonKey].action.apply(this, [this.scope, this.buttons[buttonKey]]);
+                    if (typeof this.onAction === 'function')
+                        this.onAction.apply(this, [buttonKey]);
 
                     if (typeof res === 'undefined' || res)
                         this.close();
                 },
+                _themePrefix: 'ng-confirm-',
+                themeParsed: '',
                 _parseTheme: function () {
                     var that = this;
                     var themes = this.theme.split(',');
                     angular.forEach(themes, function (theme, i) {
-                        if (theme.indexOf('ng-confirm-') == -1)
-                            themes[i] = 'ng-confirm-' + theme.trim();
+                        if (theme.indexOf(that._themePrefix) == -1)
+                            themes[i] = that._themePrefix + theme.trim();
                     });
                     themes = themes.join(' ').toLowerCase();
-                    this.theme = themes;
+                    this.themeParsed = themes;
                 },
                 _alignDialog: function () {
                     var $content = this.$el.find('div.content');

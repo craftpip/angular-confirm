@@ -51,30 +51,12 @@
     <meta property="og:site_name"
           content="craftpip.github.io"/>
 
-    <!--<link rel="stylesheet"-->
-    <!--href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
     <link rel="stylesheet"
-          href="asd.css">
+          href="demo/libs/bundled.css">
+    <script src="demo/libs/bundled.js"></script>
 
     <link rel="stylesheet"
-          href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <!---->
-    <!---->
-    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
-    <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>-->
-    <script src="asd.js"></script>
-    <!---->
-    <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
-    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.sticky/1.0.3/jquery.sticky.min.js"></script>-->
-    <!---->
-
-    <link rel="stylesheet"
-          href="demo/libs/default.min.css">
-    <script src="demo/libs/pretty.js"></script>
-
-    <link rel="stylesheet"
-          href="demo/demo.min.css">
-
+          href="demo/demo.css">
 
     <script>
         var version = '1.0.0';
@@ -175,10 +157,10 @@
         <div class="row download-btns">
             <div class="col-md-12">
                 <div style="height: 15px;"></div>
-                <a href="https://github.com/craftpip/jquery-confirm/releases/download/v3.0.0/jquery-confirm-v3.0.0.zip"
-                   class="btn btn-lg">Download v3
+                <a href="https://github.com/craftpip/angular-confirm/releases/download/v1.0.0/angular-confirm-v1.0.0.zip"
+                   class="btn btn-lg">Download v1
                 </a>
-                <a href="https://github.com/craftpip/jquery-confirm"
+                <a href="https://github.com/craftpip/angular-confirm"
                    class="btn btn-lg"><i class="fa fa-github"></i> View on GitHub
                 </a>
                 <div style="height: 15px;"></div>
@@ -186,10 +168,8 @@
         </div>
     </div>
 </div>
-<!--<div style="height:50px"></div>-->
 <div class="container"
-     ng-app="application"
-     ng-controller="main">
+     ng-app="application">
     <div class="row">
         <div class="col-md-3 col-sm-12">
             <div class="space10"></div>
@@ -222,9 +202,9 @@
 
                     <p>
                         Easy to use and highly flexible! <br/>
-                        A jQuery plugin that provides great set of features like,
-                        Auto-close, Ajax-loading, Themes, Animations and more. <br>
-                        This plugin is actively developed, I would love you have your suggestions.
+                        <!--A jQuery plugin that provides great set of features like,-->
+                        <!--Auto-close, Ajax-loading, Themes, Animations and more. <br>-->
+                        <!--This plugin is actively developed, I would love you have your suggestions.-->
                     </p>
                     <a href="https://github.com/craftpip/angular-confirm/issues"
                        target="empty"
@@ -232,23 +212,66 @@
                 </header>
             </section>
             <hr>
-            <section id="quickfeatures">
+            <section id="quickfeatures" ng-controller="quickFeaturesController">
                 <h1>Quick features</h1>
 
                 <p>These features can practically be used like so.</p>
 
                 <div class="row">
                     <div class="col-md-3">
-                        <button class="btn btn-primary btn-block"
-                                ng-click="example1()">Alerts
-                        </button>
-                        <button class="btn btn-primary btn-block"
-                                ng-click="asd()">clpose all
-                        </button>
+                        <button ng-click="alert()" class="btn btn-primary btn-block example-p-1">Alerts</button>
                         <p class="text-success">Elegant Alerts.</p>
                     </div>
-                </div>
 
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-block example-p-2">Confirmation</button>
+                        <p class="text-success">Stacked Confirmations</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-block example-p-70-type">Alert types</button>
+                        <p class="text-success">Success, error, warning</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-block example-p-7-1">Prompt</button>
+                        <p class="text-success">Need input?</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-block example-p-4">Dialogs</button>
+                        <p class="text-success">Its also a Dialog.</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-block example-p-3">Background dismiss</button>
+                        <p class="text-success">Not so important modal</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-block example-p-5">Asynchronous content</button>
+                        <p class="text-success">Loading from remote places</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-block example-p-6">Auto-close</button>
+                        <p class="text-success">Some actions maybe critical</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-block example-p-7">Keystrokes</button>
+                        <p class="text-success">Responds to keystrokes</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-block example-pc-1">Alignment</button>
+                        <p class="text-success">Automatically centered</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-block example-pc-2">Images</button>
+                        <p class="text-success">Loading images</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary btn-block example-pc-3">Animations</button>
+                        <p class="text-success">Clean animations</p>
+                    </div>
+                </div>
             </section>
 
             <section class="text-right footer">
@@ -269,7 +292,7 @@
 </div>
 
 <script type="text/javascript"
-        src="demo/demo.min.js"></script>
+        src="demo/demo.js"></script>
 
 <script type="text/javascript"
         src="app.js"></script>

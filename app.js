@@ -1,5 +1,5 @@
 angular.module('application', ['ngConfirm'])
-    .controller('main', [
+    .controller('quickFeaturesController', [
         '$scope',
         '$ngConfirm',
         '$interval',
@@ -10,6 +10,30 @@ angular.module('application', ['ngConfirm'])
             $scope.title = 'Awesome!';
             $scope.asd = function () {
                 $ngConfirmGlobal.closeAll();
+            };
+            $scope.alert = function () {
+                $ngConfirm({
+                    title: 'Alert alert!',
+                    icon: 'fa fa-rocket',
+                    content: '<div>This is a simple alert <br>with some <strong>HTML</strong> contents</div>',
+                    buttons: {
+                        ok: {
+                            class: "btn-primary",
+                        }
+                    }
+                })
+            };
+            $scope.alert = function () {
+                $ngConfirm({
+                    title: 'Alert alert!',
+                    icon: 'fa fa-rocket',
+                    content: '<div>This is a simple alert <br>with some <strong>HTML</strong> contents</div>',
+                    buttons: {
+                        ok: {
+                            class: "btn-primary",
+                        }
+                    }
+                })
             };
             $scope.example1 = function () {
                 $ngConfirm({
@@ -22,7 +46,7 @@ angular.module('application', ['ngConfirm'])
                         if (this.closeIconClass == 'fa fa-unlock') {
                             this.closeIconClass = 'fa fa-lock';
                         } else {
-                            this.closeIconClass = 'fa fa-unlock';
+                            this.icon = this.closeIconClass = 'fa fa-unlock';
                         }
                         return false;
                     },
@@ -37,7 +61,8 @@ angular.module('application', ['ngConfirm'])
                                 return false;
                             }
                         },
-                        Close: function(){},
+                        Close: function () {
+                        },
                         dark: {
                             keys: [],
                             class: 'btn-default',
