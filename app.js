@@ -5,7 +5,8 @@ angular.module('application', ['ngConfirm'])
         '$interval',
         '$ngConfirmDefaults',
         '$ngConfirmGlobal',
-        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal) {
+        '$timeout',
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
             $scope.content = 'You\'re ready to proceed!';
             $scope.title = 'Awesome!';
             $scope.alert = function () {
@@ -45,11 +46,11 @@ angular.module('application', ['ngConfirm'])
                                             text: 'Yes, sure!',
                                             btnClass: 'btn-warning',
                                             action: function () {
-                                                $.alert('A very critical action <strong>triggered!</strong>');
+                                                $ngConfirm('A very critical action <strong>triggered!</strong>');
                                             }
                                         },
                                         cancel: function () {
-                                            $.alert('you clicked on <strong>cancel</strong>');
+                                            $ngConfirm('you clicked on <strong>cancel</strong>');
                                         }
                                     }
                                 });
@@ -64,6 +65,63 @@ angular.module('application', ['ngConfirm'])
                                 $ngConfirm('you clicked on <strong>something else</strong>');
                             }
                         },
+                    }
+                })
+            };
+
+            $scope.type = function () {
+                $ngConfirm({
+                    title: 'Oh no',
+                    content: '<p>Something bad, bad happened.</p>' +
+                    'Select the alert type:' +
+                    ' <div class="form-group">' +
+                    '<select class="form-control" ng-model="ngc.type">' +
+                    '<option value="default">Default</option>' +
+                    '<option value="red">Red</option>' +
+                    '<option value="blue">Blue</option>' +
+                    '<option value="green">Green</option>' +
+                    '<option value="purple">Purple</option>' +
+                    '<option value="dark">Dark</option>' +
+                    '</select>' +
+                    '<div class="checkbox"><label><input type="checkbox" ng-model="ngc.typeAnimated"> Animated</label></div>' +
+                    '</div>',
+                    type: 'red',
+                    typeAnimated: true,
+                    buttons: {
+                        ok: function () {
+                        }
+                    },
+                    onContentReady: function ($scope) {
+
+                    }
+                })
+            };
+            $scope.prompt = function () {
+                $ngConfirm({
+                    title: 'A simple form',
+                    contentUrl: 'form.html',
+                    buttons: {
+                        sayMyName: {
+                            text: 'Say my name',
+                            btnClass: 'btn-orange',
+                            action: function ($scope) {
+                                if (!$scope.username) {
+                                    this.buttons.sayMyName.text = 'Please enter a valid name';
+                                    $scope.error = 'Please don\'t keep the name field empty!';
+                                    var that = this;
+                                    $timeout(function () {
+                                        that.buttons.sayMyName.text = 'Say my name again';
+                                    }, 1000);
+                                    return false;
+                                }
+                                $ngConfirm('Hello ' + $scope.username + ', i hope you have a great day!');
+                            }
+                        },
+                        later: function () {
+                        }
+                    },
+                    onContentReady: function ($scope) {
+
                     }
                 })
             };

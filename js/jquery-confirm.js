@@ -319,7 +319,7 @@ var jconfirm, Jconfirm;
             this.themeParsed = theme.join(' ').toLowerCase();
         },
         backgroundDismissAnimationParsed: '',
-        _bgDismissPrefix: 'jconfirm-hilight-',
+        _bgDismissPrefix: 'jconfirm-hiLight-',
         _parseBgDismissAnimation: function (bgDismissAnimation) {
             var animation = bgDismissAnimation.split(',');
             var that = this;
@@ -418,13 +418,13 @@ var jconfirm, Jconfirm;
             if (this._hilightAnimating)
                 return;
 
-            that.$body.addClass('hilight');
+            that.$body.addClass('hiLight');
             // var duration = parseFloat(that.$body.css('animation-duration')) || 0;
             var duration = 2; // 2 seconds default
             this._hilightAnimating = true;
             setTimeout(function () {
                 that._hilightAnimating = false;
-                that.$body.removeClass('hilight');
+                that.$body.removeClass('hiLight');
             }, duration * 1000);
         },
         _bindEvents: function () {
