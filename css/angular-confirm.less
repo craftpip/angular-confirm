@@ -31,6 +31,7 @@
   }
 }
 
+
 body[class*=ng-confirm-noscroll-] {
   overflow: hidden !important;
 }
@@ -53,7 +54,7 @@ body[class*=ng-confirm-noscroll-] {
     bottom: 0;
     transition: opacity .4s;
 
-    &.jconfirm-bg-h {
+    &.ng-confirm-bg-h {
       opacity: 0 !important;
     }
   }
@@ -177,7 +178,7 @@ body[class*=ng-confirm-noscroll-] {
         left: 50%;
         margin-left: -15px;
         border-radius: 50%;
-        animation: ng-confirm-rotate 1s infinite linear;
+        animation: ng-confirm-spin 1s infinite linear;
         border-bottom-color: dodgerblue;
         top: 50%;
         margin-top: -15px;
@@ -509,7 +510,7 @@ body[class*=ng-confirm-noscroll-] {
 
   .ng-confirm-box {
     opacity: 1;
-    transition-property: all;
+    //transition-property: all;
 
     &.ng-confirm-animation-top, &.ng-confirm-animation-left, &.ng-confirm-animation-right, &.ng-confirm-animation-bottom, &.ng-confirm-animation-opacity, &.ng-confirm-animation-zoom, &.ng-confirm-animation-scale, &.ng-confirm-animation-none, &.ng-confirm-animation-rotate, &.ng-confirm-animation-rotatex, &.ng-confirm-animation-rotatey, &.ng-confirm-animation-scaley, &.ng-confirm-animation-scalex {
       opacity: 0;

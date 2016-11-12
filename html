@@ -1,0 +1,47 @@
+<div class="ng-confirm-bg ng-confirm-bg-h" data-ng-style="ngc.styleBg"
+     style="transition-duration: 0.4s; transition-timing-function: cubic-bezier(0.36, 0.55, 0.19, 1);"></div>
+<div class="ng-confirm-scrollpane" data-ng-click="ngc._scrollPaneClick()">
+    <div class="ng-bs3-container container">
+        <div class="ng-bs3-row row">
+            <div class="ng-confirm-box-container col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+                <div class="ng-confirm-box ng-confirm-animation-scale ng-confirm-hilight-shake ng-confirm-default ng-confirm-type-animated"
+                     data-ng-click="ngc._ngBoxClick()" data-ng-class="[{hiLight: ngc.hiLight}]" role="dialog"
+                     aria-labelledby="ng-confirm-box798634" tabindex="-1"
+                     style="margin-top: 362px; margin-bottom: 0px;">
+                    <div class="ng-confirm-closeIcon" data-ng-show="ngc.closeIcon" data-ng-click="ngc._closeClick()">
+                        <!-- ngIf: !ngc.closeIconClass --><span data-ng-if="!ngc.closeIconClass"
+                                                                class="ng-scope">×</span>
+                        <!-- end ngIf: !ngc.closeIconClass --><!-- ngIf: ngc.closeIconClass --></div>
+                    <div class="ng-confirm-title-c"><span class="ng-confirm-icon-c"><!-- ngIf: ngc.icon --><i
+                            data-ng-if="ngc.icon" data-ng-class="ngc.icon" class="ng-scope"></i>
+                        <!-- end ngIf: ngc.icon --></span><span class="ng-confirm-title ng-binding"
+                                                                data-ng-show="ngc.title">A secure action</span></div>
+                    <div class="ng-confirm-content-pane" data-ng-style="ngc.styleContentPane" style="height: 40px;">
+                        <div class="ng-confirm-content" data-ng-style="ngc.styleContent" id="ng-confirm-box798634">
+                            <div class="ng-scope">Its smooth to do multiple confirms at a time. <br> Click confirm or
+                                cancel for another modal
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ng-confirm-buttons"><!-- ngRepeat: (key, button) in ngc.buttons -->
+                        <button type="button" data-ng-repeat="(key, button) in ngc.buttons"
+                                data-ng-click="ngc._buttonClick(key)" class="btn ng-binding ng-scope"
+                                data-ng-class="button.class">{{button.text}}<span data-ng-show="button.timer"
+                                                                                  class="ng-binding"> ({{button.timer}})</span>
+                        </button><!-- end ngRepeat: (key, button) in ngc.buttons -->
+                        <button type="button" data-ng-repeat="(key, button) in ngc.buttons"
+                                data-ng-click="ngc._buttonClick(key)" class="btn ng-binding ng-scope"
+                                data-ng-class="button.class">{{button.text}}<span data-ng-show="button.timer"
+                                                                                  class="ng-binding"> ({{button.timer}})</span>
+                        </button><!-- end ngRepeat: (key, button) in ngc.buttons -->
+                        <button type="button" data-ng-repeat="(key, button) in ngc.buttons"
+                                data-ng-click="ngc._buttonClick(key)" class="btn ng-binding ng-scope"
+                                data-ng-class="button.class">{{button.text}}<span data-ng-show="button.timer"
+                                                                                  class="ng-binding"> ({{button.timer}})</span>
+                        </button><!-- end ngRepeat: (key, button) in ngc.buttons --></div>
+                    <div class="ng-confirm-clear"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

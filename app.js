@@ -8,30 +8,62 @@ angular.module('application', ['ngConfirm'])
         function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal) {
             $scope.content = 'You\'re ready to proceed!';
             $scope.title = 'Awesome!';
-            $scope.asd = function () {
-                $ngConfirmGlobal.closeAll();
-            };
             $scope.alert = function () {
                 $ngConfirm({
                     title: 'Alert alert!',
                     icon: 'fa fa-rocket',
                     content: '<div>This is a simple alert <br>with some <strong>HTML</strong> contents</div>',
+                    animation: 'scale',
                     buttons: {
-                        ok: {
-                            class: "btn-primary",
+                        okay: {
+                            class: "btn-blue",
                         }
-                    }
+                    },
                 })
             };
-            $scope.alert = function () {
+            $scope.confirm = function () {
                 $ngConfirm({
-                    title: 'Alert alert!',
-                    icon: 'fa fa-rocket',
-                    content: '<div>This is a simple alert <br>with some <strong>HTML</strong> contents</div>',
+                    title: 'A secure action',
+                    content: 'Its smooth to do multiple confirms at a time. <br> Click confirm or cancel for another modal',
+                    icon: 'fa fa-question-circle',
+                    animation: 'scale',
+                    closeAnimation: 'scale',
+                    opacity: 0.5,
                     buttons: {
-                        ok: {
-                            class: "btn-primary",
-                        }
+                        'confirm': {
+                            text: 'Proceed',
+                            btnClass: 'btn-info',
+                            action: function () {
+                                $ngConfirm({
+                                    title: 'This maybe critical',
+                                    content: 'Critical actions can have multiple confirmations like this one.',
+                                    icon: 'fa fa-warning',
+                                    animation: 'zoom',
+                                    closeAnimation: 'zoom',
+                                    buttons: {
+                                        confirm: {
+                                            text: 'Yes, sure!',
+                                            btnClass: 'btn-warning',
+                                            action: function () {
+                                                $.alert('A very critical action <strong>triggered!</strong>');
+                                            }
+                                        },
+                                        cancel: function () {
+                                            $.alert('you clicked on <strong>cancel</strong>');
+                                        }
+                                    }
+                                });
+                            }
+                        },
+                        cancel: function () {
+                            $ngConfirm('you clicked on <strong>cancel</strong>');
+                        },
+                        moreButtons: {
+                            text: 'something else',
+                            action: function () {
+                                $ngConfirm('you clicked on <strong>something else</strong>');
+                            }
+                        },
                     }
                 })
             };
