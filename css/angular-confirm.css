@@ -27,7 +27,7 @@
             transform: rotate(360deg);
   }
 }
-body[class*=ng-confirm-noscroll-] {
+body[class*=ng-confirm-no-scroll-] {
   overflow: hidden !important;
 }
 .ng-confirm {
@@ -260,7 +260,6 @@ body[class*=ng-confirm-noscroll-] {
           transition: opacity 0.3s ease-in;
   font-size: 27px !important;
   line-height: 14px !important;
-  display: none;
 }
 .ng-confirm .ng-confirm-box div.ng-confirm-closeIcon:empty {
   display: none;
@@ -512,13 +511,13 @@ body[class*=ng-confirm-noscroll-] {
 .ng-confirm.ng-confirm-dark .ng-confirm-box .ng-confirm-buttons button.btn-default:hover {
   background: #666;
 }
-.ng-confirm .ng-confirm-box.hilight.ng-confirm-hilight-shake {
+.ng-confirm .ng-confirm-box.ng-confirm-hilight.ng-confirm-hilight-shake {
   -webkit-animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
           animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
 }
-.ng-confirm .ng-confirm-box.hilight.ng-confirm-hilight-glow {
+.ng-confirm .ng-confirm-box.ng-confirm-hilight.ng-confirm-hilight-glow {
   -webkit-animation: glow 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
           animation: glow 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   -webkit-transform: translate3d(0, 0, 0);
