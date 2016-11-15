@@ -1,4 +1,4 @@
-angular.module('application', ['ngConfirm'])
+angular.module('application', ['cp.ngConfirm'])
     .controller('quickFeaturesController', [
         '$scope',
         '$ngConfirm',
@@ -7,8 +7,7 @@ angular.module('application', ['ngConfirm'])
         '$ngConfirmGlobal',
         '$timeout',
         function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
-            $scope.content = 'You\'re ready to proceed!';
-            $scope.title = 'Awesome!';
+
             $scope.alert = function () {
                 $ngConfirm({
                     title: 'Alert alert!',
@@ -68,7 +67,6 @@ angular.module('application', ['ngConfirm'])
                     }
                 })
             };
-
             $scope.type = function () {
                 $ngConfirm({
                     title: 'Oh no',
@@ -277,68 +275,72 @@ angular.module('application', ['ngConfirm'])
                             // lets the user close the modal.
                         }
                     },
-                    onOpen: function($scope){
+                    onOpen: function ($scope) {
                         $scope.images = ['https://c2.staticflickr.com/4/3891/14354989289_2eec0ba724_b.jpg'];
                     }
                 });
             };
-            $scope.example1 = function () {
+            $scope.title = 'Seamless theme!';
+            $scope.videos = function () {
                 $ngConfirm({
                     title: $scope.title,
-                    alignMiddle: true,
-                    contentUrl: 'test.html',
-                    escapeKey: true,
+                    content: '<p> Seamless borders for images or videos!</p> <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="https://www.youtube.com/embed/4kHl4FoK1Ys"></iframe></div>',
                     theme: 'seamless',
-                    closeIcon: function () {
-                        if (this.closeIconClass == 'fa fa-unlock') {
-                            this.closeIconClass = 'fa fa-lock';
-                        } else {
-                            this.icon = this.closeIconClass = 'fa fa-unlock';
-                        }
-                        return false;
-                    },
                     icon: 'fa fa-check-circle-o',
                     buttons: {
                         white: {
-                            text: 'Bigger please!',
-                            keys: [],
-                            class: 'btn-success',
+                            text: 'Increase size',
+                            btnClass: 'btn-green',
                             action: function (scope, button) {
-                                this.columnClass = 'col-md-6 col-md-offset-3';
+                                this.columnClass = 'medium';
+                                button.disabled = true;
                                 return false;
                             }
                         },
-                        Close: function () {
+                        close: function () {
                         },
-                        dark: {
-                            keys: [],
-                            class: 'btn-default',
-                            action: function (scope, button) {
-                                this.theme = 'dark';
-                                return false;
-                            }
-                        },
-                        material: {
-                            keys: [],
-                            action: function (scope, button) {
-                                this.theme = 'material';
-                                return false;
-                            }
-                        },
-                        bootstrap: {
-                            keys: [],
-                            action: function (scope, button) {
-                                this.theme = 'bootstrap';
-                                return false;
-                            }
-                        }
                     },
-                    scope: $scope,
-                    content: $scope.content,
                     onOpen: function (scope) {
                         scope.data = this;
                     }
                 });
             };
+        }
+    ])
+    .controller('quickUseController', [
+        '$scope',
+        '$ngConfirm',
+        '$interval',
+        '$ngConfirmDefaults',
+        '$ngConfirmGlobal',
+        '$timeout',
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+            $scope.name = 'Sia: cheap thrills';
+            $scope.test = function () {
+                $ngConfirm({
+                    title: 'Title here',
+                    content: '{{name}} is my favourite song',
+                    scope: $scope,
+                    buttons: {
+                        sayBoo: {
+                            text: 'Say Booo',
+                            btnClass: 'btn-blue',
+                            action: function($scope){
+                                $scope.name = 'Booo!!';
+                                return false; // prevent close;
+                            }
+                        },
+                        somethingElse: {
+                            text: 'Something else',
+                            btnClass: 'btn-orange',
+                            action: function($scope){
+                                $ngConfirm('You clicked on <strong>something else</strong>');
+                            }
+                        },
+                        close: function(){
+                        }
+                    }
+                });
+            }
         }
     ]);

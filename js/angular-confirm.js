@@ -27,7 +27,7 @@ try {
     throw new Error('angular-confirm requires ngAnimate: https://docs.angularjs.org/api/ngSanitize');
 }
 
-angular.module('ngConfirm', [
+angular.module('cp.ngConfirm', [
     'ngSanitize',
 ])
     .service('$ngConfirmTemplate', function () {
@@ -47,7 +47,7 @@ angular.module('ngConfirm', [
             '<div class="ng-confirm-content" data-ng-style="ngc.styleContent"></div>' +
             '</div>' +
             '<div class="ng-confirm-buttons">' +
-            '<button type="button" data-ng-repeat="(key, button) in ngc.buttons" data-ng-click="ngc._buttonClick(key)" class="btn" data-ng-class="button.btnClass">{{button.text}}<span data-ng-show="button.timer"> ({{button.timer}})</span></button>' +
+            '<button type="button" data-ng-repeat="(key, button) in ngc.buttons" data-ng-click="ngc._buttonClick(key)" class="btn" data-ng-class="button.btnClass" ng-show="button.show" ng-disabled="button.disabled">{{button.text}}<span data-ng-show="button.timer"> ({{button.timer}})</span></button>' +
             '</div>' +
             '<div class="ng-confirm-clear">' +
             '</div>' +
@@ -130,7 +130,7 @@ angular.module('ngConfirm', [
             closeIcon: null,
             closeIconClass: false,
             watchInterval: 100,
-            columnClass: 'col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1',
+            columnClass: 'small',
             boxWidth: '50%', // todo: implement this.
             useBootstrap: true, // todo: implement this.
             bootstrapClasses: { // todo: implement this.
@@ -181,13 +181,20 @@ angular.module('ngConfirm', [
         function ($rootScope, $ngConfirmDefaults, $ngConfirmBase, $ngConfirmGlobal) {
             var $ = jQuery; // using jquery.
 
-            var ngConfirm = function (options, options2) {
-                if (typeof options == 'string'){
+            var ngConfirm = function (options, options2, option3) {
+                if (typeof options == 'string') {
                     options = {
                         content: options,
-                        title: options2 || false,
                         buttons: $ngConfirmDefaults.defaultButtons
                     };
+                    if (typeof options2 == 'string')
+                        options['title'] = options2 || false;
+                    else
+                        options['title'] = false;
+                    if (typeof options2 == 'object')
+                        options['scope'] = options2;
+                    if (typeof option3 == 'object')
+                        options['scope'] = option3;
                 }
 
                 if (typeof options === 'undefined') options = {};
@@ -392,7 +399,7 @@ angular.module('ngConfirm', [
                             break;
                         case 's':
                         case 'small':
-                            p = 'col-md-4 col-md-offset-4';
+                            p = 'col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1';
                             break;
                         case 'xs':
                         case 'xsmall':
@@ -401,6 +408,7 @@ angular.module('ngConfirm', [
                         default:
                             p = colClass;
                     }
+
                     this.columnClassParsed = p;
                 },
                 animationParsed: '',
@@ -451,7 +459,7 @@ angular.module('ngConfirm', [
                         that.buttons[key].action = button.action || angular.noop;
                         that.buttons[key].keys = button.keys || [];
                         that.buttons[key].disabled = button.disabled || false;
-                        that.buttons[key].show = button.show || false;
+                        that.buttons[key].show = button.show || true;
 
                         angular.forEach(that.buttons[key].keys, function (a, i) {
                             that.buttons[key].keys[i] = a.toLowerCase();
@@ -523,10 +531,18 @@ angular.module('ngConfirm', [
                     var previousTheme = null;
                     this._scope.$watch('ngc.theme', function () {
                         that._parseTheme(that.theme);
-                        if(previousType != null)
+                        if (previousType != null)
                             that.$el.removeClass(previousTheme);
                         that.$el.addClass(that.themeParsed);
                         previousTheme = that.themeParsed;
+                    });
+
+                    this._scope.$watch('ngc.columnClass', function () {
+                        var pCol = that.columnClassParsed;
+                        that._parseColumnClass(that.columnClass);
+                        if (pCol != null)
+                            that.$confirmBox.removeClass(pCol);
+                        that.$confirmBox.addClass(that.columnClassParsed);
                     });
                     angular.element(window).on('resize.' + that._id, function () {
                         that.setDialogCenter('Window Resize');
@@ -614,6 +630,11 @@ angular.module('ngConfirm', [
 
                     if (typeof res === 'undefined' || res)
                         this.close();
+
+                    return res;
+                },
+                triggerButton: function(buttonKey){
+                    return this._buttonClick(buttonKey);
                 },
                 setDialogCenter: function (where) {
                     var $content = this.$content;
@@ -730,7 +751,7 @@ angular.module('ngConfirm', [
                     var that = this;
                     if (typeof this.autoClose != 'string') return;
                     var opt = this.autoClose.split('|');
-                    if (opt.length != 2){
+                    if (opt.length != 2) {
                         $log.error('Invalid option for autoClose. example \'close|10000\'');
                         return;
                     }
