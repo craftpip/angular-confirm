@@ -36,7 +36,6 @@ angular.module('cp.ngConfirm', [
             '<div class="ng-confirm-scrollpane" data-ng-click="ngc._scrollPaneClick()">' +
             '<div class="ng-bs3-container">' +
             '<div class="ng-bs3-row">' +
-            '<div class="ng-confirm-box-container">' +
             '<div class="ng-confirm-box" data-ng-click="ngc._ngBoxClick()" data-ng-class="[{\'ng-confirm-hilight\': ngc.hiLight}]" role="dialog" aria-labelledby="labelled" tabindex="-1">' +
             '<div class="ng-confirm-closeIcon" data-ng-show="ngc.closeIcon" data-ng-click="ngc._closeClick()"><span data-ng-if="!ngc.closeIconClass">&times;</span><i data-ng-class="ngc.closeIconClass" data-ng-if="ngc.closeIconClass"></i></div>' +
             '<div class="ng-confirm-title-c">' +
@@ -50,7 +49,6 @@ angular.module('cp.ngConfirm', [
             '<button type="button" data-ng-repeat="(key, button) in ngc.buttons" data-ng-click="ngc._buttonClick(key)" class="btn" data-ng-class="button.btnClass" ng-show="button.show" ng-disabled="button.disabled">{{button.text}}<span data-ng-show="button.timer"> ({{button.timer}})</span></button>' +
             '</div>' +
             '<div class="ng-confirm-clear">' +
-            '</div>' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -282,7 +280,7 @@ angular.module('cp.ngConfirm', [
                         else
                             this.$el.find('.ng-bs3-container').addClass(this.bootstrapClasses.container);
                     } else {
-                        this.$confirmBox.css('width', this.boxWidth);
+                        this.$confirmBox.css('width', this.boxWidth).css('margin-left', 'auto').css('margin-right', 'auto');
                     }
 
                     if (this.titleClass)
@@ -539,13 +537,19 @@ angular.module('cp.ngConfirm', [
                         previousTheme = that.themeParsed;
                     });
 
-                    this._scope.$watch('ngc.columnClass', function () {
-                        var pCol = that.columnClassParsed;
-                        that._parseColumnClass(that.columnClass);
-                        if (pCol != null)
-                            that.$confirmBox.removeClass(pCol);
-                        that.$confirmBox.addClass(that.columnClassParsed);
-                    });
+                    if (this.useBootstrap) {
+                        this._scope.$watch('ngc.columnClass', function () {
+                            var pCol = that.columnClassParsed;
+                            that._parseColumnClass(that.columnClass);
+                            if (pCol != null)
+                                that.$confirmBox.removeClass(pCol);
+                            that.$confirmBox.addClass(that.columnClassParsed);
+                        });
+                    } else {
+                        this._scope.$watch('ngc.boxWidth', function () {
+                            that.$confirmBox.css('width', that.boxWidth);
+                        });
+                    }
                     angular.element(window).on('resize.' + that._id, function () {
                         that.setDialogCenter('Window Resize');
                     });
@@ -593,43 +597,61 @@ angular.module('cp.ngConfirm', [
                         return false;
                     }
 
-                    if (this.backgroundDismiss == 'function') {
-                        var res = this.backgroundDismiss.apply(this, [this.scope]);
 
-                        if (typeof res === 'undefined' || res) this.close(); else
-                            this._hiLightModal();
+                    var buttonName = false;
+                    var shouldClose = false;
+                    var str;
+
+
+                    if (typeof this.backgroundDismiss == 'function')
+                        str = this.backgroundDismiss();
+                    else
+                        str = this.backgroundDismiss;
+
+                    if (typeof str == 'string' && angular.isDefined(this.buttons[str])) {
+                        buttonName = str;
+                        shouldClose = false;
+                    } else if (typeof str == 'undefined' || !!(str) == true) {
+                        shouldClose = true;
                     } else {
-                        if (this.backgroundDismiss)
-                            this.close();
-                        else
-                            this._hiLightModal();
+                        shouldClose = false;
                     }
+
+                    if(buttonName){
+                        var btnResponse = this.buttons[buttonName].action.apply(this, [this.scope, this.buttons[buttonName]]);
+                        shouldClose = (typeof btnResponse == 'undefined') || !!(btnResponse);
+                    }
+
+                    if(shouldClose)
+                        this.close();
+                    else
+                        this._hiLightModal();
                 },
                 _closeClick: function () {
                     var buttonName = false;
                     var shouldClose = false;
                     var str;
 
-                    if(typeof this.closeIcon == 'function'){
+                    if (typeof this.closeIcon == 'function') {
                         str = this.closeIcon();
-                    }else{
+                    } else {
                         str = this.closeIcon;
                     }
 
-                    if(typeof str == 'string' && angular.isDefined(this.buttons[str])){
+                    if (typeof str == 'string' && angular.isDefined(this.buttons[str])) {
                         buttonName = str;
                         shouldClose = false;
-                    }else if(typeof str == 'undefined' || !!(str) == true){
+                    } else if (typeof str == 'undefined' || !!(str) == true) {
                         shouldClose = true;
-                    }else{
+                    } else {
                         shouldClose = false;
                     }
 
-                    if(buttonName){
+                    if (buttonName) {
                         var btnResponse = this.buttons[buttonName].action.apply(this, [this.scope, this.buttons[buttonName]]);
-                        shouldClose = (typeof btnResponse == 'undefined' || !!(str) == true);
+                        shouldClose = (typeof btnResponse == 'undefined' || !!(btnResponse) == true);
                     }
-                    if(shouldClose){
+                    if (shouldClose) {
                         this.close();
                     }
                 },

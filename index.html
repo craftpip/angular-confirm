@@ -361,9 +361,11 @@
                         <div class="col-md-12">
                             <p>
                                 A basic usage of ngConfirm, <br>
-                                This pretty much explains how it works, content is the template that will be shown inside the popup.
+                                This pretty much explains how it works, content is the template that will be shown
+                                inside the popup.
                                 <br>
-                                <p class="text-warning">If $scope is not provided, ngConfirm will create a child scope from rootScope.</p>
+                            <p class="text-warning">If $scope is not provided, ngConfirm will create a child scope from
+                                rootScope.</p>
                             </p>
                             <button ng-click="test()" class="btn btn-primary">test()</button>
                             <div class="space10"></div>
@@ -480,7 +482,9 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
                         <code>btn-warning</code>
                         <code>btn-info</code> <code>btn-danger</code> <code>btn-success</code>
                     </p>
-                    <button ng-click="usingNgConfirmButtons()" class="btn btn-primary">Using buttons that come with ngConfirm!</button>
+                    <button ng-click="usingNgConfirmButtons()" class="btn btn-primary">Using buttons that come with
+                        ngConfirm!
+                    </button>
                     <button ng-click="usingBootstrapButtons()" class="btn btn-primary">Using bootstrap buttons!</button>
                     <div class="space10"></div>
                     <pre class="prettyprint linenums"><code class="html">$ngConfirm({
@@ -674,7 +678,8 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
 
                     <button ng-click="errorDialog()" class="btn btn-primary">Error/Red dialog</button>
                     <button ng-click="successDialog()" class="btn btn-primary">Success/Green dialog</button>
-                    <button ng-click="errorDialogNoAnimation()" class="btn btn-primary">Non animated type dialog</button>
+                    <button ng-click="errorDialogNoAnimation()" class="btn btn-primary">Non animated type dialog
+                    </button>
                     <div class="space10"></div>
                     <button ng-click="dialogType('orange')" class="btn btn-primary">orange</button>
                     <button ng-click="dialogType('blue')" class="btn btn-primary">blue</button>
@@ -731,7 +736,8 @@ $ngConfirm({
 
                 <div class="section">
                     <p>
-                        ngConfirm confirm uses <code>&amp;times;</code> html entity for this close symbol, however you can
+                        ngConfirm confirm uses <code>&amp;times;</code> html entity for this close symbol, however you
+                        can
                         use Any icon of your choice (fa, glyphicon, zmdi)
                     </p>
 
@@ -773,9 +779,9 @@ $ngConfirm({
                         Control what happens when close icon is clicked. <br>
                         closeIcon can take in function to handle the button click or you can return a button name.
                     </p>
-                    <button class="example15-1-3-5-1 btn btn-primary">Test it</button>
+                    <button ng-click="closeIconCallback()" class="btn btn-primary">Test it</button>
                     <div class="space10"></div>
-                    <pre class="prettyprint linenums"><code>$.confirm({
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
     closeIcon: function(){
         return false; // to prevent close the modal.
         // or
@@ -792,47 +798,12 @@ $ngConfirm({
         }
     }
 });</code></pre>
-
-                    <script>
-                        $('.example15-1-3-4').click(function () {
-                            $.alert({
-                                closeIcon: true,
-                            });
-                        });
-                        $('.example15-1-3-5').click(function () {
-                            $.alert({
-                                closeIcon: true,
-                                closeIconClass: 'glyphicon glyphicon-remove',
-                            });
-                        });
-                        $('.example15-1-3-6').click(function () {
-                            $.alert({
-                                closeIcon: true,
-                                closeIconClass: 'fa fa-close'
-                            })
-                        });
-                        $('.example15-1-3-5-1').click(function () {
-                            $.confirm({
-                                content: "The close icon is now handled by 'aRandomButton', if the button returns a falsy value the modal will not close." +
-                                "<br>Click on the close icon to try it out",
-                                closeIcon: 'aRandomButton', // set a button handler
-                                buttons: {
-                                    aRandomButton: function () {
-                                        $.alert('A random button is called, and i prevent closing the modal');
-                                        return false; // you shall not pass
-                                    },
-                                    close: function () {
-                                    }
-                                }
-                            });
-                        });
-                    </script>
                 </div>
                 <h4 id="custom-width">Custom width</h4>
 
                 <div class="section">
                     <p>
-                        Jquery-confirm uses bootstrap's grid system for its layout by default.
+                        ngConfirm uses bootstrap's grid system for its layout by default.
                         You can simply provide column classes to adjust the modal's width.
                     </p>
 
@@ -854,56 +825,25 @@ $ngConfirm({
                         <code>xsmall</code>/<code>xs</code></code> equivalent to <code>col-md-2 col-md-offset-5</code>
                     </p>
 
-                    <button class="btn btn-primary grid-1">medium</button>
-                    <button class="btn btn-primary grid-2">small (default)</button>
-                    <button class="btn btn-primary grid-3">col-md-4</button>
-                    <button class="btn btn-primary grid-4">col-md-4 col-md-offset-8</button>
-                    <button class="btn btn-primary grid-5">xlarge</button>
-                    <button class="btn btn-primary grid-6">xlarge (fluid)</button>
+                    <button ng-click="columnClass('medium')" class="btn btn-primary ">medium</button>
+                    <button ng-click="columnClass('small')" class="btn btn-primary ">small (default)</button>
+                    <button ng-click="columnClass('col-md-4')" class="btn btn-primary ">col-md-4</button>
+                    <button ng-click="columnClass('col-md-4 col-md-offset-8')" class="btn btn-primary ">col-md-4
+                        col-md-offset-8
+                    </button>
+                    <button ng-click="columnClass('xlarge')" class="btn btn-primary ">xlarge</button>
+                    <button ng-click="columnClass('xlarge', true)" class="btn btn-primary ">xlarge (fluid)</button>
                     <div class="space10"></div>
-                    <script type="text/javascript">
-                        $('.grid-1').on('click', function () {
-                            $.confirm({
-                                columnClass: 'medium',
-                            }); // empty because its default.
-                        });
-                        $('.grid-2').on('click', function () {
-                            $.confirm({
-                                columnClass: 'small',
-                            });
-                        });
-                        $('.grid-3').on('click', function () {
-                            $.confirm({
-                                columnClass: 'col-md-4',
-                            });
-                        });
-                        $('.grid-4').on('click', function () {
-                            $.confirm({
-                                columnClass: 'col-md-4 col-md-offset-8'
-                            });
-                        });
-                        $('.grid-5').on('click', function () {
-                            $.confirm({
-                                columnClass: 'xlarge'
-                            });
-                        });
-                        $('.grid-6').on('click', function () {
-                            $.confirm({
-                                columnClass: 'xlarge',
-                                containerFluid: true,
-                            });
-                        });
-                    </script>
-                    <pre class="prettyprint linenums"><code>$.confirm({
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
     columnClass: 'small'
 });
-$.confirm({
+$ngConfirm({
     columnClass: 'col-md-4'
 });
-$.confirm({
+$ngConfirm({
     columnClass: 'col-md-4 col-md-offset-8 col-xs-4 col-xs-offset-8'
 });
-$.confirm({
+$ngConfirm({
     columnClass: 'col-md-4 col-md-offset-8 col-xs-4 col-xs-offset-8',
     containerFluid: true, // this will add 'container-fluid' instead of 'container'
 });</code></pre>
@@ -918,32 +858,17 @@ $.confirm({
                     </p>
 
                     <div class="alert alert-warning">
-                        <code>useBootstrap</code> must be set to <code>false</code> to use this feature <br>
-                        you can globally disable bootstrap by setting jconfirm.defaults
+                        <code>useBootstrap</code> must be set to <code>false</code> to use this feature
                     </div>
 
-                    <button class="btn btn-primary grid-wo-bootstrap-1">30%</button>
-                    <button class="btn btn-primary grid-wo-bootstrap-2">500px</button>
+                    <button ng-click="boxWidth('30%')" class="btn btn-primary">30%</button>
+                    <button ng-click="boxWidth('500px')" class="btn btn-primary">500px</button>
                     <div class="space10"></div>
-                    <script type="text/javascript">
-                        $('.grid-wo-bootstrap-1').on('click', function () {
-                            $.confirm({
-                                boxWidth: '30%',
-                                useBootstrap: false,
-                            });
-                        });
-                        $('.grid-wo-bootstrap-2').on('click', function () {
-                            $.confirm({
-                                boxWidth: '500px',
-                                useBootstrap: false,
-                            });
-                        });
-                    </script>
-                    <pre class="prettyprint linenums"><code>$.confirm({
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
     boxWidth: '30%',
     useBootstrap: false,
 });
-$.confirm({
+$ngConfirm({
     boxWidth: '500px',
     useBootstrap: false,
 });</code></pre>
@@ -959,10 +884,10 @@ $.confirm({
                         If you're using a namespaced bootstrap library, this option is for you.
                     </p>
                     <p>
-                        <i class="fa fa-info fa-fw"></i> it is ideal to set this in jconfirm.defaults
+                        <i class="fa fa-info fa-fw"></i> it is ideal to set this in defaults
                     </p>
                     <div class="space10"></div>
-                    <pre class="prettyprint linenums"><code>$.confirm({
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
     bootstrapClasses: {
         container: 'container',
         containerFluid: 'container-fluid',
@@ -971,6 +896,160 @@ $.confirm({
 });</code></pre>
                 </div>
             </section>
+
+
+            <section ng-controller="autoCloseController">
+                <h2 id="autoclose">Auto close</h2>
+
+                <p>
+                    Do a action if the user does not respond within the specified time. <br>
+                    This comes in handly when the user is about to do something critical. <br/>
+                    The <code>autoClose</code> option takes in a string, like <code>'confirm|4000'</code> where confirm
+                    is the action to trigger after 4000 milliseconds.
+                    <br>
+                    <i class="fa fa-info"></i> Practical examples of autoClose
+                </p>
+
+                <div class="section">
+                    <button ng-click="deleteUser()" class="btn btn-primary">Delete user</button>
+                    <button ng-click="logoutMyself()" class="btn btn-primary">Logout myself</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    title: 'Delete user?',
+    content: 'This dialog will automatically trigger \'cancel\' in 6 seconds if you don\'t respond.',
+    autoClose: 'cancel|8000',
+    buttons: {
+        deleteUser: {
+            text: 'delete user',
+            btnClass: 'btn-red',
+            action: function () {
+               $ngConfirm('Deleted the user!');
+            }
+        },
+        cancel: function () {
+           $ngConfirm('action is canceled');
+        }
+    }
+});
+$ngConfirm({
+   title: 'Logout?',
+    content: 'Your time is out, you will be automatically logged out in 10 seconds.',
+    autoClose: 'logoutUser|10000',
+    buttons: {
+        logoutUser: {
+            text: 'logout myself',
+            btnClass: 'btn-green',
+            action: function () {
+               $ngConfirm('The user was logged out');
+            }
+        },
+        cancel: function () {
+           $ngConfirm('canceled');
+        }
+    }
+});</code></pre>
+                </div>
+            </section>
+
+
+
+
+            <section id="backgrounddismiss" ng-controller="bgDismissController">
+                <h2>
+                    Background dismiss
+                </h2>
+
+                <div class="section">
+                    <p>
+                        Control what happens if the user clicks outside the modal. <br/>
+                    </p>
+                    <div class="alert alert-warning">
+                        backgroundDismiss is set to false by default.
+                    </div>
+                    <button class="btn btn-primary" ng-click="allowBgDismiss()">Allow backgroundDismiss</button>
+
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$.confirm({
+    backgroundDismiss: true, // this will just close the modal
+});
+$.confirm({
+    backgroundDismiss: function(){
+        return false; // modal wont close.
+    },
+});
+$.confirm({
+    backgroundDismiss: function(){
+        return 'buttonName'; // the button will handle it
+    },
+});
+$.confirm({
+    backgroundDismiss: 'buttonName',
+    content: 'Click outside the box to close the modal',
+    buttons: {
+        buttonName: function () {
+            $ngConfirm('Button name was clicked');
+        },
+        close: function () {
+        }
+    }
+});</code></pre>
+
+                    <script type="text/javascript">
+                        $('.example22').on('click', function () {
+                            $.confirm({
+                                backgroundDismiss: 'buttonName',
+                                content: 'in here the backgroundDismiss action is handled by buttonName' +
+                                '<div class="checkbox"><label><input type="checkbox" id="enableCheckbox"> Enable backgroundDismiss</label></div>',
+                                buttons: {
+                                    buttonName: function () {
+                                        var $checkbox = this.$content.find('#enableCheckbox');
+                                        return $checkbox.prop('checked');
+                                    },
+                                    close: function () {
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+
+                <h4 id="backgrounddismiss-animations">Background dismiss animation</h4>
+                <div class="section">
+                    <p>
+                        Fancy animations to grab users attention. Click outside the modal to see the animation.
+                    </p>
+                    <button class="btn btn-primary example22-1-1-1">Shake (default)</button>
+                    <button class="btn btn-primary example22-1-1-2">Glow</button>
+
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$.confirm({
+    backgroundDismiss: false,
+    backgroundDismissAnimation: 'shake',
+});
+$.confirm({
+    backgroundDismiss: false,
+    backgroundDismissAnimation: 'glow',
+});</code></pre>
+
+                </div>
+                <script>
+                    $('.example22-1-1-1').on('click', function () {
+                        $.confirm({
+                            backgroundDismiss: false,
+                            backgroundDismissAnimation: 'shake',
+                        });
+                    });
+                    $('.example22-1-1-2').on('click', function () {
+                        $.confirm({
+                            backgroundDismiss: false,
+                            backgroundDismissAnimation: 'glow',
+                        });
+                    });
+                </script>
+            </section>
+
+
+
 
 
 

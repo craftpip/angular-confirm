@@ -594,10 +594,10 @@ angular.module('application', ['cp.ngConfirm'])
                     icon: 'fa fa-warning',
                     buttons: {
                         ok: function () {
-                            
+
                         },
                         close: function () {
-                            
+
                         }
                     }
                 })
@@ -643,6 +643,127 @@ angular.module('application', ['cp.ngConfirm'])
                         }
                     }
                 })
+            };
+            $scope.closeIconCallback = function () {
+                $ngConfirm({
+                    closeIcon: function () {
+                        return 'aRandomButton'; // set a button handler, 'aRandomButton' prevents close.
+                    },
+                    // or
+                    // closeIcon: 'aRandomButton', // set a button handler
+                    buttons: {
+                        aRandomButton: function () {
+                            $ngConfirm('A random button is called, and i prevent closing the modal');
+                            return false; // you shall not pass
+                        },
+                        close: function () {
+                        }
+                    }
+                })
+            };
+            $scope.columnClass = function (className, fluid) {
+                fluid = fluid || false;
+                $ngConfirm({
+                    columnClass: className,
+                    containerFluid: fluid,
+                })
+            };
+            $scope.boxWidth = function (width) {
+                $ngConfirm({
+                    useBootstrap: false,
+                    boxWidth: width,
+                });
             }
         }
+    ])
+    .controller('autoCloseController', [
+        '$scope',
+        '$ngConfirm',
+        '$interval',
+        '$ngConfirmDefaults',
+        '$ngConfirmGlobal',
+        '$timeout',
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+            $scope.deleteUser = function () {
+                $ngConfirm({
+                    title: 'Delete user?',
+                    content: 'This dialog will automatically trigger \'cancel\' in 6 seconds if you don\'t respond.',
+                    autoClose: 'cancel|8000',
+                    buttons: {
+                        deleteUser: {
+                            text: 'delete user',
+                            btnClass: 'btn-red',
+                            action: function () {
+                                $ngConfirm('Deleted the user!');
+                            }
+                        },
+                        cancel: function () {
+                            $ngConfirm('action is canceled');
+                        }
+                    }
+                });
+            };
+            $scope.logoutMyself = function () {
+                $ngConfirm({
+                    title: 'Logout?',
+                    content: 'Your time is out, you will be automatically logged out in 10 seconds.',
+                    autoClose: 'logoutUser|10000',
+                    buttons: {
+                        logoutUser: {
+                            text: 'logout myself',
+                            btnClass: 'btn-green',
+                            action: function () {
+                                $ngConfirm('The user was logged out');
+                            }
+                        },
+                        cancel: function () {
+                            $ngConfirm('canceled');
+                        }
+                    }
+                });
+            };
+        }
+    ])
+    .controller('bgDismissController', [
+        '$scope',
+        '$ngConfirm',
+        '$interval',
+        '$ngConfirmDefaults',
+        '$ngConfirmGlobal',
+        '$timeout',
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+            $scope.allowBgDismiss = function () {
+                $ngConfirm({
+                    backgroundDismiss: 'buttonName',
+                    content: 'Click outside the box to close the modal',
+                    buttons: {
+                        buttonName: function () {
+                            $ngConfirm('Button name was clicked');
+                        },
+                        close: function () {
+                        }
+                    }
+                });
+            };
+        }
     ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
