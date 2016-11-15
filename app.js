@@ -325,7 +325,7 @@ angular.module('application', ['cp.ngConfirm'])
                         sayBoo: {
                             text: 'Say Booo',
                             btnClass: 'btn-blue',
-                            action: function($scope){
+                            action: function ($scope) {
                                 $scope.name = 'Booo!!';
                                 return false; // prevent close;
                             }
@@ -333,14 +333,316 @@ angular.module('application', ['cp.ngConfirm'])
                         somethingElse: {
                             text: 'Something else',
                             btnClass: 'btn-orange',
-                            action: function($scope){
+                            action: function ($scope) {
                                 $ngConfirm('You clicked on <strong>something else</strong>');
                             }
                         },
-                        close: function(){
+                        close: function () {
                         }
                     }
                 });
+            }
+        }
+    ])
+    .controller('buttonController', [
+        '$scope',
+        '$ngConfirm',
+        '$interval',
+        '$ngConfirmDefaults',
+        '$ngConfirmGlobal',
+        '$timeout',
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+            $scope.buttonText = function () {
+                $ngConfirm({
+                    buttons: {
+                        something: function () {
+                            // here the key 'something' will be used as the text.
+                            $ngConfirm('You clicked on something.');
+                        },
+                        somethingElse: {
+                            text: 'Something else &*', // Some Non-Alphanumeric characters
+                            action: function () {
+                                $ngConfirm('You clicked on something else');
+                            }
+                        }
+                    }
+                });
+            };
+            $scope.usingNgConfirmButtons = function () {
+                $ngConfirm({
+                    buttons: {
+                        default: {
+                            btnClass: 'btn-default',
+                        },
+                        blue: {
+                            btnClass: 'btn-blue',
+                        },
+                        green: {
+                            btnClass: 'btn-green',
+                        },
+                        red: {
+                            btnClass: 'btn-red',
+                        },
+                        orange: {
+                            btnClass: 'btn-orange',
+                        },
+                        purple: {
+                            btnClass: 'btn-purple',
+                        },
+                        dark: {
+                            btnClass: 'btn-dark',
+                        },
+                    }
+                })
+            };
+            $scope.usingBootstrapButtons = function () {
+                $ngConfirm({
+                    buttons: {
+                        default: {
+                            btnClass: 'btn-default',
+                        },
+                        info: {
+                            btnClass: 'btn-info',
+                        },
+                        success: {
+                            btnClass: 'btn-success custom-class',
+                        },
+                        danger: {
+                            btnClass: 'btn-danger custom-class',
+                        },
+                        warning: {
+                            btnClass: 'btn-warning',
+                        },
+                    }
+                })
+            };
+            $scope.buttonKeys = function () {
+                $ngConfirm({
+                    buttons: {
+                        specialKey: {
+                            text: 'On behalf of shift',
+                            keys: ['shift', 'alt'],
+                            action: function () {
+                                $ngConfirm('Shift or Alt was pressed');
+                            }
+                        },
+                        alphabet: {
+                            text: 'A, B',
+                            keys: ['a', 'b'],
+                            action: function () {
+                                $ngConfirm('A or B was pressed');
+                            }
+                        }
+                    }
+                });
+            };
+            $scope.buttonKeysExample = function () {
+                $ngConfirm({
+                    title: false,
+                    content: 'A very very critical action here! <br> ' +
+                    'the proceed button is hidden.' +
+                    'The only way to proceed is to press the <strong>Y</strong> key.<br>' +
+                    'Press <span style="font-size: 20px;">Y</span> to proceed.',
+                    buttons: {
+                        yes: {
+                            show: false,
+                            keys: ['y'],
+                            action: function ($scope, button) {
+                                $ngConfirm('Critical action <strong>was performed</strong>.');
+                            }
+                        },
+                        no: {
+                            keys: ['N'],
+                            action: function ($scope, button) {
+                                $ngConfirm('You clicked No.');
+                            }
+                        },
+                    }
+                });
+            };
+            $scope.buttonProperties = function () {
+                $ngConfirm({
+                    buttons: {
+                        buttonA: {
+                            text: 'button a',
+                            action: function ($scope, button) {
+                                button.text = 'Oh yeah'; // the current button
+                                this.buttons.buttonB.text = 'Changed it!';
+                                return false;
+                            }
+                        },
+                        buttonB: {
+                            text: 'button b',
+                            action: function ($scope, button) {
+                                this.buttons.buttonA.disabled = true;
+                                return false;
+                            }
+                        },
+                        reset: function ($scope, button) {
+                            this.buttons.buttonA.disabled = false;
+                            this.buttons.buttonA.text = 'button a';
+                            this.buttons.buttonB.text = 'button b';
+                            return false;
+                        }
+                    },
+                    closeIcon: true, // let the user close the modal
+                });
+            }
+        }
+    ])
+    .controller('customizationController', [
+        '$scope',
+        '$ngConfirm',
+        '$interval',
+        '$ngConfirmDefaults',
+        '$ngConfirmGlobal',
+        '$timeout',
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+            $scope.errorDialog = function () {
+                $ngConfirm({
+                    title: 'Encountered an error!',
+                    type: 'red',
+                    content: 'Something went downhill, this may be serious',
+                    buttons: {
+                        tryAgain: {
+                            text: 'Try again',
+                            btnClass: 'btn-red',
+                            action: function () {
+
+                            }
+                        },
+                        close: function () {
+
+                        }
+                    }
+                })
+            };
+            $scope.errorDialogNoAnimation = function () {
+                $ngConfirm({
+                    title: 'Encountered an error!',
+                    type: 'red',
+                    typeAnimation: false,
+                    content: 'Something went downhill, this may be serious',
+                    buttons: {
+                        tryAgain: {
+                            text: 'Try again',
+                            btnClass: 'btn-red',
+                            action: function () {
+
+                            }
+                        },
+                        close: function () {
+
+                        }
+                    }
+                })
+            };
+            $scope.successDialog = function () {
+                $ngConfirm({
+                    title: 'Congratulations!',
+                    content: 'Consider something great happened, and you have to show a positive message',
+                    buttons: {
+                        thankYou: {
+                            text: 'Thank you',
+                            btnClass: 'Thank you!',
+                            action: function () {
+
+                            }
+                        },
+                        close: function () {
+
+                        }
+                    }
+                })
+            };
+            $scope.successDialog = function () {
+                $ngConfirm({
+                    title: 'Congratulations!',
+                    content: 'Consider something great happened, and you have to show a positive message',
+                    buttons: {
+                        thankYou: {
+                            text: 'Thank you',
+                            btnClass: 'Thank you!',
+                            action: function () {
+
+                            }
+                        },
+                        close: function () {
+
+                        }
+                    }
+                })
+            };
+            $scope.dialogType = function (color) {
+                $ngConfirm({
+                    title: color + '!',
+                    type: color,
+                    content: 'Some content here.',
+                    buttons: {
+                        ok: function () {
+
+                        },
+                        close: function () {
+
+                        }
+                    }
+                })
+            };
+            $scope.iconFA = function () {
+                $ngConfirm({
+                    text: 'font-awesome',
+                    icon: 'fa fa-warning',
+                    buttons: {
+                        ok: function () {
+                            
+                        },
+                        close: function () {
+                            
+                        }
+                    }
+                })
+            };
+            $scope.iconAnimatedFA = function () {
+                $ngConfirm({
+                    text: 'Working!',
+                    icon: 'fa fa-spinner fa-spin',
+                    content: 'Sit back, we are processing your request!',
+                    buttons: {
+                        ok: function () {
+
+                        },
+                        close: function () {
+
+                        }
+                    }
+                })
+            };
+            $scope.closeIcon = function () {
+                $ngConfirm({
+                    closeIcon: true,
+                    buttons: {
+                        ok: function () {
+
+                        },
+                        close: function () {
+
+                        }
+                    }
+                })
+            };
+            $scope.closeIconFa = function () {
+                $ngConfirm({
+                    closeIcon: true,
+                    closeIconClass: 'fa fa-close',
+                    buttons: {
+                        ok: function () {
+
+                        },
+                        close: function () {
+
+                        }
+                    }
+                })
             }
         }
     ]);

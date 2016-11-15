@@ -459,7 +459,9 @@ angular.module('cp.ngConfirm', [
                         that.buttons[key].action = button.action || angular.noop;
                         that.buttons[key].keys = button.keys || [];
                         that.buttons[key].disabled = button.disabled || false;
-                        that.buttons[key].show = button.show || true;
+                        if (typeof button.show == 'undefined')
+                            button.show = true;
+                        that.buttons[key].show = button.show;
 
                         angular.forEach(that.buttons[key].keys, function (a, i) {
                             that.buttons[key].keys[i] = a.toLowerCase();
@@ -604,11 +606,30 @@ angular.module('cp.ngConfirm', [
                     }
                 },
                 _closeClick: function () {
-                    if (typeof this.closeIcon == 'function') {
-                        var res = this.closeIcon.apply(this, [this.scope]);
-                        if (typeof res === 'undefined' || res)
-                            this.close();
-                    } else {
+                    var buttonName = false;
+                    var shouldClose = false;
+                    var str;
+
+                    if(typeof this.closeIcon == 'function'){
+                        str = this.closeIcon();
+                    }else{
+                        str = this.closeIcon;
+                    }
+
+                    if(typeof str == 'string' && angular.isDefined(this.buttons[str])){
+                        buttonName = str;
+                        shouldClose = false;
+                    }else if(typeof str == 'undefined' || !!(str) == true){
+                        shouldClose = true;
+                    }else{
+                        shouldClose = false;
+                    }
+
+                    if(buttonName){
+                        var btnResponse = this.buttons[buttonName].action.apply(this, [this.scope, this.buttons[buttonName]]);
+                        shouldClose = (typeof btnResponse == 'undefined' || !!(str) == true);
+                    }
+                    if(shouldClose){
                         this.close();
                     }
                 },
@@ -633,7 +654,7 @@ angular.module('cp.ngConfirm', [
 
                     return res;
                 },
-                triggerButton: function(buttonKey){
+                triggerButton: function (buttonKey) {
                     return this._buttonClick(buttonKey);
                 },
                 setDialogCenter: function (where) {

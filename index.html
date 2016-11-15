@@ -414,7 +414,7 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
                 </div>
             </section>
 
-            <section id="buttons">
+            <section id="buttons" ng-controller="buttonController">
                 <h2>Buttons</h2>
                 <p>
                     Its all what you need to know about buttons in ngConfirm.
@@ -426,80 +426,75 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
                     <p>
                         Buttons can be defined in the following fashion, pretty self explanatory.
                     </p>
-                    <pre class="prettyprint linenums"><code class="html">$.confirm({
+                    <pre class="prettyprint linenums"><code class="html" ng-non-bindable>$ngConfirm({
     buttons: {
-        hello: function(){
+        hello: function($scope, button){
             // button action
         },
-        hey: function(){
-            this.$$hello.trigger('click'); // click the other button
-            this.buttons.hello.setText('Helloooo'); // do whatever
-
-            this.$$hey.prop('disabled', true); // disable the current button
-            // or
-            this.buttons.hey.disable();
+        hey: function($scope, button){
+            button.disabled = true; // disable the current button.
+            button.text = 'heyyyy'; // change the current button text.
+            this.triggerButton('hello'); // this triggers the other button named hello.
+            this.buttons.heyThere.disabled = true; // disable the hello button.
         },
         heyThere: {
             text: 'Hey there!',
-            btnClass: 'btn-primary',
+            btnClass: 'btn-blue',
             keys: ['enter', 'a'],
-            action: function(){
-                // button action.
-            }
-        },
-    }
-});</code></pre>
-
-
-                </div>
-                <h4 id="buttontext">Button text</h4>
-                <div class="section">
-                    <button class="btn btn-primary example3">click me!</button>
-                    <div class="space10"></div>
-                    <pre class="prettyprint linenums"><code class="html">$.confirm({
-    buttons: {
-        something: function(){
-            // here the key 'something' will be used as the text.
-            $.alert('You clicked on something.');
-        },
-        somethingElse: {
-            text: 'Something else &*', // Some Non-Alphanumeric characters
-            action: function(){
-                $.alert('You clicked on something else');
+            action: function($scope, button){
+                // button action
             }
         }
     }
 });</code></pre>
+                </div>
+                <h4 id="buttontext">Button text</h4>
+                <div class="section">
+                    <button ng-click="buttonText()" class="btn btn-primary">click me!</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code class="html" ng-non-bindable>$ngConfirm({
+    buttons: {
+        something: function(){
+            // here the key 'something' will be used as the text.
+            $ngConfirm('You clicked on something.');
+        },
+        somethingElse: {
+            text: 'Something else &*', // Some Non-Alphanumeric characters
+            action: function(){
+                $ngConfirm('You clicked on something else');
+            }
+        }
+    }
+})</code></pre>
                 </div>
                 <h4 id="buttonstyle">Button style</h4>
 
                 <div class="section">
                     <p>Simply applying classes to buttons.</p>
                     <p class="text-info">
-                        Jconfirm comes bundled with <code>btn-blue</code> <code>btn-green</code> <code>btn-red</code>
+                        ngConfirm comes bundled with <code>btn-blue</code> <code>btn-green</code> <code>btn-red</code>
                         <code>btn-orange</code> <code>btn-purple</code> <code>btn-default</code> <code>btn-dark</code>
-                        or any other class name.
                     </p>
                     <p class="text-info">
                         Other bootstrap options are <code>btn-primary</code> <code>btn-inverse</code>
                         <code>btn-warning</code>
-                        <code>btn-info</code> <code>btn-danger</code> <code>btn-success</code> or any other class name.
+                        <code>btn-info</code> <code>btn-danger</code> <code>btn-success</code>
                     </p>
-                    <button class="btn btn-primary example3-1-jc">Using buttons that come with jconfirm!</button>
-                    <button class="btn btn-primary example3-1">Using bootstrap buttons!</button>
+                    <button ng-click="usingNgConfirmButtons()" class="btn btn-primary">Using buttons that come with ngConfirm!</button>
+                    <button ng-click="usingBootstrapButtons()" class="btn btn-primary">Using bootstrap buttons!</button>
                     <div class="space10"></div>
-                    <pre class="prettyprint linenums"><code class="html">$.confirm({
+                    <pre class="prettyprint linenums"><code class="html">$ngConfirm({
     buttons: {
-        info: {
-            btnClass: 'btn-blue',
-            action: function(){}
-        },
-        danger: {
-            btnClass: 'btn-red any-other-class', // multiple classes.
+        default: {
+            btnClass: 'btn-default',
             ...
         },
-        warning: {
-            btnClass: 'btn-warning',
+        blue: {
+            btnClass: 'btn-blue',
+            ...
+        },
+        green: {
+            btnClass: 'btn-green',
             ...
         },
     }
@@ -516,88 +511,91 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
                         Available options are: <br>
                         a to Z, tilde, enter, shift, tab, capslock, ctrl, win, alt, esc, space.
                     </div>
-                    <button class="btn btn-primary example3-1-a">Click me!</button>
+                    <button ng-click="buttonKeys()" class="btn btn-primary">Click me!</button>
                     <div class="space10"></div>
-                    <pre class="prettyprint linenums"><code class="html">$.confirm({
+                    <pre class="prettyprint linenums"><code class="html">$ngConfirm({
     buttons: {
         specialKey: {
             text: 'On behalf of shift',
             keys: ['shift', 'alt'],
             action: function(){
-                $.alert('Shift or Alt was pressed');
+                $ngConfirm('Shift or Alt was pressed');
             }
         },
         alphabet: {
             text: 'A, B',
             keys: ['a', 'b'],
             action: function(){
-                $.alert('A or B was pressed');
+                $ngConfirm('A or B was pressed');
             }
         }
     }
 });</code></pre>
 
                     <button type="button"
-                            class="btn btn-primary example3-1-1">Another important example
+                            ng-click="buttonKeysExample()"
+                            class="btn btn-primary">Another important example
                     </button>
                     <div class="space10"></div>
                     <p>
                         In this example, the YES button is hidden using bootstrap's hide class, thus the user can only
                         use keys to proceed.
                     </p>
-                    <pre class="prettyprint linenums"><code class="html">$.confirm({
+                    <pre class="prettyprint linenums"><code class="html">$ngConfirm({
     title: false,
     content: 'A very very critical action here! &lt;br&gt; ' +
              'the proceed button is hidden.' +
-             'The only way to proceed is to press the key &lt;strong&gt;Y&lt;/strong&gt;.&lt;br&gt;' +
+             'The only way to proceed is to press the &lt;strong&gt;Y&lt;/strong&gt; key.&lt;br&gt;' +
              'Press &lt;span style="font-size: 20px;"&gt;Y&lt;/span&gt; to proceed.',
     buttons: {
         yes: {
-            btnClass: 'hide', // hide is a bootstrap class to hide elements
+            show: false, // hides the button using display: none
             keys: ['y'],
-            action: function () {
-                $.alert('Critical action &lt;strong&gt;was performed&lt;/strong&gt;.');
+            action: function ($scope, button) {
+                $ngConfirm('Critical action &lt;strong&gt;was performed&lt;/strong&gt;.');
             }
         },
         no: {
             keys: ['N'],
-            action: function () {
-                $.alert('You clicked No.');
+            action: function ($scope, button) {
+                $ngConfirm('You clicked No.');
             }
         },
     }
 });</code></pre>
                 </div>
 
-                <h4 id="button-functions">Button functions</h4>
+                <h4 id="button-properties">Button properties</h4>
                 <div class="section">
                     <p>
-                        Button functions provide a nice and clean way to alter your buttons in run-time. <br>
-                        if this is not enough you can use <code>this.$$&lt;buttonName&gt;</code> to get the DOM element
+                        Button properties provide a nice and clean way to alter your buttons in run-time.
                     </p>
-                    <button class="btn btn-primary example3-1-a-f-1">Try me</button>
+                    <button ng-click="buttonProperties()" class="btn btn-primary">Try me</button>
                     <div class="space10"></div>
-                    <pre class="prettyprint linenums"><code class="html">$.confirm({
+                    <pre class="prettyprint linenums"><code class="html">$ngConfirm({
     buttons: {
-       buttonA: {
+        buttonA: {
             text: 'button a',
-            action: function () {
-                this.buttons.buttonB.setText('Changed it!');
+            action: function ($scope, button) {
+                button.text = 'Oh yeah'; // the current button
+                this.buttons.buttonB.text = 'Changed it!';
                 return false;
             }
         },
         buttonB: {
             text: 'button b',
-            action: function () {
-                this.buttons.buttonA.disable();
+            action: function ($scope, button) {
+                this.buttons.buttonA.disabled = true;
                 return false;
             }
         },
-        reset: function () {
-            this.buttons.buttonA.enable();
-            this.buttons.buttonB.setText('button b');
+        reset: function ($scope, button) {
+            this.buttons.buttonA.disabled = false;
+            this.buttons.buttonA.text = 'button a';
+            this.buttons.buttonB.text = 'button b';
             return false;
-        }
+        },
+        closeIcon: true, // let the user close the modal
     }
 });</code></pre>
                     <p>
@@ -606,7 +604,7 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
                     <table class="table table-bordered table-condensed">
                         <tr>
                             <td>
-                                Function
+                                Property
                             </td>
                             <td>
                                 Code
@@ -617,10 +615,10 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
                         </tr>
                         <tr>
                             <td>
-                                setText
+                                text
                             </td>
                             <td>
-                                this.buttons.&lt;buttonName&gt;.setText(text)
+                                this.buttons.&lt;buttonName&gt;.text = 'text'
                             </td>
                             <td>
                                 The text you want to set.
@@ -628,46 +626,24 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
                         </tr>
                         <tr>
                             <td>
-                                addClass
+                                btnClass
                             </td>
                             <td>
-                                this.buttons.&lt;buttonName&gt;.addClass(className)
+                                this.buttons.&lt;buttonName&gt;.btnClass = 'btn-info'
                             </td>
                             <td>
-                                Add a class to the button
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                removeClass
-                            </td>
-                            <td>
-                                this.buttons.&lt;buttonName&gt;.removeClass(className)
-                            </td>
-                            <td>
-                                remove a class to the button
+                                Change the button's class.
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                disable
+                                disabled
                             </td>
                             <td>
-                                this.buttons.&lt;buttonName&gt;.disable()
+                                this.buttons.&lt;buttonName&gt;.disabled
                             </td>
                             <td>
-                                Disable the button
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                enable
-                            </td>
-                            <td>
-                                this.buttons.&lt;buttonName&gt;.enable()
-                            </td>
-                            <td>
-                                Enable the button
+                                enable or disable a button
                             </td>
                         </tr>
                         <tr>
@@ -675,28 +651,327 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
                                 show
                             </td>
                             <td>
-                                this.buttons.&lt;buttonName&gt;.show()
+                                this.buttons.&lt;buttonName&gt;.show
                             </td>
                             <td>
-                                Show the button via CSS
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                hide
-                            </td>
-                            <td>
-                                this.buttons.&lt;buttonName&gt;.hide()
-                            </td>
-                            <td>
-                                Hide the button via CSS
+                                Show or hide the button via CSS
                             </td>
                         </tr>
                     </table>
                 </div>
-
-
             </section>
+
+
+            <section id="customizing" ng-controller="customizationController">
+                <h2>Customizing</h2>
+
+                <h4 id="dialog-type">Dialog type</h4>
+
+                <div class="section">
+                    <p>
+                        Dialog types helps give the user a hint as to what the dialog is about
+                    </p>
+
+                    <button ng-click="errorDialog()" class="btn btn-primary">Error/Red dialog</button>
+                    <button ng-click="successDialog()" class="btn btn-primary">Success/Green dialog</button>
+                    <button ng-click="errorDialogNoAnimation()" class="btn btn-primary">Non animated type dialog</button>
+                    <div class="space10"></div>
+                    <button ng-click="dialogType('orange')" class="btn btn-primary">orange</button>
+                    <button ng-click="dialogType('blue')" class="btn btn-primary">blue</button>
+                    <button ng-click="dialogType('purple')" class="btn btn-primary">purple</button>
+                    <button ng-click="dialogType('dark')" class="btn btn-primary">dark</button>
+
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    title: 'Encountered an error!',
+    content: 'Something went downhill, this may be serious',
+    type: 'red',
+    typeAnimated: true,
+    buttons: {
+        tryAgain: {
+            text: 'Try again',
+            btnClass: 'btn-red',
+            action: function(){
+            }
+        },
+        close: function () {
+        }
+    }
+});</code></pre>
+                </div>
+
+                <h4 id="icons">Icons</h4>
+
+                <div class="section">
+                    <p>Give meaning to your dialog with custom icons.<br>
+                        Read about Font Awesome
+                        <a href="http://fortawesome.github.io/Font-Awesome">here</a>
+                        .
+                    </p>
+
+                    <button ng-click="iconFA()" class="btn btn-primary">Using font-awesome</button>
+                    <button ng-click="iconAnimatedFA()" class="btn btn-primary">Animated font-awesome</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    icon: 'glyphicon glyphicon-heart',
+    title: 'glyphicon'
+});
+$ngConfirm({
+    icon: 'fa fa-warning',
+    title: 'font-awesome'
+});
+$ngConfirm({
+    icon: 'fa fa-spinner fa-spin',
+    title: 'Working!',
+    content: 'Sit back, we are processing your request!'
+});</code></pre>
+                </div>
+
+                <h4 id="close-icon">Close icon</h4>
+
+                <div class="section">
+                    <p>
+                        ngConfirm confirm uses <code>&amp;times;</code> html entity for this close symbol, however you can
+                        use Any icon of your choice (fa, glyphicon, zmdi)
+                    </p>
+
+                    <div class="alert alert-info">
+                        By default <code>closeIcon</code> is set to <code>null</code>.
+                        That means, if buttons are not defined the closeIcon will be shown, else will not be shown.
+                        <br>
+                        To explicitly show <code>closeIcon</code> set it to a truthy value and vise versa.
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>
+                                Turn on closeIcon explicitly
+                            </p>
+                            <button ng-click="closeIcon()" class="btn btn-primary">With closeIcon</button>
+                            <div class="space10"></div>
+                            <pre class="prettyprint linenums"><code>$ngConfirm({
+    closeIcon: true
+});</code></pre>
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                Using other libraries for icons
+                            </p>
+                            <button ng-click="closeIconFa()" class="btn btn-primary">Using font awesome</button>
+                            <div class="space10"></div>
+                            <pre class="prettyprint linenums"><code>$ngConfirm({
+    closeIcon: true,
+    closeIconClass: 'fa fa-close'
+});</code></pre>
+                        </div>
+                    </div>
+
+                    <h4>
+                        <i class="fa fa-info"></i> Handle closeIcon's callback
+                    </h4>
+                    <p>
+                        Control what happens when close icon is clicked. <br>
+                        closeIcon can take in function to handle the button click or you can return a button name.
+                    </p>
+                    <button class="example15-1-3-5-1 btn btn-primary">Test it</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$.confirm({
+    closeIcon: function(){
+        return false; // to prevent close the modal.
+        // or
+        return 'aRandomButton'; // set a button handler, 'aRandomButton' prevents close.
+    },
+    // or
+    closeIcon: 'aRandomButton', // set a button handler
+    buttons: {
+        aRandomButton: function(){
+            $.alert('A random button is called, and i prevent closing the modal');
+            return false; // you shall not pass
+        },
+        close: function(){
+        }
+    }
+});</code></pre>
+
+                    <script>
+                        $('.example15-1-3-4').click(function () {
+                            $.alert({
+                                closeIcon: true,
+                            });
+                        });
+                        $('.example15-1-3-5').click(function () {
+                            $.alert({
+                                closeIcon: true,
+                                closeIconClass: 'glyphicon glyphicon-remove',
+                            });
+                        });
+                        $('.example15-1-3-6').click(function () {
+                            $.alert({
+                                closeIcon: true,
+                                closeIconClass: 'fa fa-close'
+                            })
+                        });
+                        $('.example15-1-3-5-1').click(function () {
+                            $.confirm({
+                                content: "The close icon is now handled by 'aRandomButton', if the button returns a falsy value the modal will not close." +
+                                "<br>Click on the close icon to try it out",
+                                closeIcon: 'aRandomButton', // set a button handler
+                                buttons: {
+                                    aRandomButton: function () {
+                                        $.alert('A random button is called, and i prevent closing the modal');
+                                        return false; // you shall not pass
+                                    },
+                                    close: function () {
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+                <h4 id="custom-width">Custom width</h4>
+
+                <div class="section">
+                    <p>
+                        Jquery-confirm uses bootstrap's grid system for its layout by default.
+                        You can simply provide column classes to adjust the modal's width.
+                    </p>
+
+                    <p class="text-info"><i class="fa fa-magic fa-fw"></i> You can also set responsive layouts.
+                        <a href="http://getbootstrap.com/examples/grid/"
+                           target="_empty">Bootstrap grid docs
+                        </a>
+                    </p>
+
+                    <p>
+                        instead of typing the whole thing, provide keywords like <br>
+                        <code>xlarge</code>/<code>xl</code></code> equivalent to <code>col-md-12</code> <br>
+                        <code>large</code>/<code>l</code></code> equivalent to <code>col-md-8 col-md-offset-2</code>
+                        <br>
+                        <code>medium</code>/<code>m</code></code> equivalent to <code>col-md-6 col-md-offset-3</code>
+                        <br>
+                        <code>small</code>/<code>s</code></code> equivalent to <code>col-md-4 col-md-offset-4</code>
+                        <br>
+                        <code>xsmall</code>/<code>xs</code></code> equivalent to <code>col-md-2 col-md-offset-5</code>
+                    </p>
+
+                    <button class="btn btn-primary grid-1">medium</button>
+                    <button class="btn btn-primary grid-2">small (default)</button>
+                    <button class="btn btn-primary grid-3">col-md-4</button>
+                    <button class="btn btn-primary grid-4">col-md-4 col-md-offset-8</button>
+                    <button class="btn btn-primary grid-5">xlarge</button>
+                    <button class="btn btn-primary grid-6">xlarge (fluid)</button>
+                    <div class="space10"></div>
+                    <script type="text/javascript">
+                        $('.grid-1').on('click', function () {
+                            $.confirm({
+                                columnClass: 'medium',
+                            }); // empty because its default.
+                        });
+                        $('.grid-2').on('click', function () {
+                            $.confirm({
+                                columnClass: 'small',
+                            });
+                        });
+                        $('.grid-3').on('click', function () {
+                            $.confirm({
+                                columnClass: 'col-md-4',
+                            });
+                        });
+                        $('.grid-4').on('click', function () {
+                            $.confirm({
+                                columnClass: 'col-md-4 col-md-offset-8'
+                            });
+                        });
+                        $('.grid-5').on('click', function () {
+                            $.confirm({
+                                columnClass: 'xlarge'
+                            });
+                        });
+                        $('.grid-6').on('click', function () {
+                            $.confirm({
+                                columnClass: 'xlarge',
+                                containerFluid: true,
+                            });
+                        });
+                    </script>
+                    <pre class="prettyprint linenums"><code>$.confirm({
+    columnClass: 'small'
+});
+$.confirm({
+    columnClass: 'col-md-4'
+});
+$.confirm({
+    columnClass: 'col-md-4 col-md-offset-8 col-xs-4 col-xs-offset-8'
+});
+$.confirm({
+    columnClass: 'col-md-4 col-md-offset-8 col-xs-4 col-xs-offset-8',
+    containerFluid: true, // this will add 'container-fluid' instead of 'container'
+});</code></pre>
+                </div>
+
+                <h4 id="custom-width-without-bootstrap">Custom width without Bootstrap</h4>
+
+                <div class="section">
+                    <p>
+                        Many have a different taste, who wont be using bootstrap in their projects. <br>
+                        You can simply provide the width of the modal, in px or any metric you want.
+                    </p>
+
+                    <div class="alert alert-warning">
+                        <code>useBootstrap</code> must be set to <code>false</code> to use this feature <br>
+                        you can globally disable bootstrap by setting jconfirm.defaults
+                    </div>
+
+                    <button class="btn btn-primary grid-wo-bootstrap-1">30%</button>
+                    <button class="btn btn-primary grid-wo-bootstrap-2">500px</button>
+                    <div class="space10"></div>
+                    <script type="text/javascript">
+                        $('.grid-wo-bootstrap-1').on('click', function () {
+                            $.confirm({
+                                boxWidth: '30%',
+                                useBootstrap: false,
+                            });
+                        });
+                        $('.grid-wo-bootstrap-2').on('click', function () {
+                            $.confirm({
+                                boxWidth: '500px',
+                                useBootstrap: false,
+                            });
+                        });
+                    </script>
+                    <pre class="prettyprint linenums"><code>$.confirm({
+    boxWidth: '30%',
+    useBootstrap: false,
+});
+$.confirm({
+    boxWidth: '500px',
+    useBootstrap: false,
+});</code></pre>
+                </div>
+
+                <h4 id="namespaced-bootstrap">Namespaced bootstrap</h4>
+
+                <div class="section">
+                    <p>
+                        Namespacing is basically isolating the bootstrap classes names, like turning '.row' to
+                        '.custom-row'
+                        <br>
+                        If you're using a namespaced bootstrap library, this option is for you.
+                    </p>
+                    <p>
+                        <i class="fa fa-info fa-fw"></i> it is ideal to set this in jconfirm.defaults
+                    </p>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$.confirm({
+    bootstrapClasses: {
+        container: 'container',
+        containerFluid: 'container-fluid',
+        row: 'row',
+    },
+});</code></pre>
+                </div>
+            </section>
+
 
 
 
