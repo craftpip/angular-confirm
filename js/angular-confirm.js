@@ -57,7 +57,7 @@ angular.module('cp.ngConfirm', [
             '</div>' +
             '';
 
-        return {default: template};
+        return {'default': template};
     })
     .service('$ngConfirmDefaults', function () {
         return {
@@ -211,7 +211,7 @@ angular.module('cp.ngConfirm', [
 
                     // This is angular-confirm's scope. this is destroyed on close.
                     this._scope = $rootScope.$new();
-                    this.$el = $compile($ngConfirmTemplate.default)(this._scope);
+                    this.$el = $compile($ngConfirmTemplate['default'])(this._scope);
                     this._scope.ngc = this;
 
                     // This is the scope that the user provided, the content is to be bind to this scope.
