@@ -97,8 +97,8 @@ angular.module('cp.ngConfirm', [
         return {
             title: 'Hello',
             titleClass: '', // todo: implementation
-            type: 'default', // todo: implement this
-            typeAnimated: true, // todo: implement this
+            type: 'default',
+            typeAnimated: true,
             content: 'Are you sure to continue?',
             contentUrl: false,
             defaultButtons: {
@@ -108,20 +108,20 @@ angular.module('cp.ngConfirm', [
             },
             icon: '',
             theme: 'white',
-            bgOpacity: null, // todo: implement this
+            bgOpacity: null,
             animation: 'zoom',
-            closeAnimation: 'zoom',
+            closeAnimation: 'scale',
             animationSpeed: 400,
             animationBounce: 1.2,
             scope: false,
-            escapeKey: true,
+            escapeKey: false,
             rtl: false,
             buttons: {},
             container: 'body',
-            containerFluid: false, // todo: implement this.
+            containerFluid: false,
             backgroundDismiss: false,
-            backgroundDismissAnimation: 'shake', // todo: implement this.
-            alignMiddle: true, // what is this ?
+            backgroundDismissAnimation: 'shake',
+            alignMiddle: true,
             offsetTop: 50,
             offsetBottom: 50,
             autoClose: false,
@@ -129,14 +129,14 @@ angular.module('cp.ngConfirm', [
             closeIconClass: false,
             watchInterval: 100,
             columnClass: 'small',
-            boxWidth: '50%', // todo: implement this.
-            useBootstrap: true, // todo: implement this.
-            bootstrapClasses: { // todo: implement this.
+            boxWidth: '50%',
+            useBootstrap: true,
+            bootstrapClasses: {
                 container: 'container',
                 containerFluid: 'container-fluid',
                 row: 'row',
             },
-            onContentReady: function () {
+            onReady: function () {
 
             },
             onOpenBefore: function () {
@@ -305,6 +305,9 @@ angular.module('cp.ngConfirm', [
                         if (that.isAjax) {
                             that.setContent(that.content);
                             that.loading(false);
+                        }
+                        if(typeof that.onReady == 'function'){
+                            that.onReady.apply(that, [that.scope]);
                         }
                     });
 
@@ -577,10 +580,25 @@ angular.module('cp.ngConfirm', [
                     var keyChar = this._getKey(key);
 
                     if (keyChar === 'esc' && this.escapeKey) {
-                        if (this.closeIcon)
-                            this._closeClick();
-                        else
+                        if (this.escapeKey == true) {
                             this._scrollPaneClick();
+                        }
+                        else if (typeof this.escapeKey == 'string' || typeof this.escapeKey == 'function') {
+                            var buttonName = false;
+                            if (typeof this.escapeKey == 'function') {
+                                buttonName = this.escapeKey();
+                            } else {
+                                buttonName = this.escapeKey;
+                            }
+
+                            if (buttonName) {
+                                if (!angular.isDefined(this.buttons[buttonName])) {
+                                    console.warn('Invalid escapeKey, no buttons found with name ' + buttonName);
+                                } else {
+                                    this._buttonClick(buttonName);
+                                }
+                            }
+                        }
                     }
 
                     angular.forEach(this.buttons, function (button, key) {
@@ -617,12 +635,12 @@ angular.module('cp.ngConfirm', [
                         shouldClose = false;
                     }
 
-                    if(buttonName){
+                    if (buttonName) {
                         var btnResponse = this.buttons[buttonName].action.apply(this, [this.scope, this.buttons[buttonName]]);
                         shouldClose = (typeof btnResponse == 'undefined') || !!(btnResponse);
                     }
 
-                    if(shouldClose)
+                    if (shouldClose)
                         this.close();
                     else
                         this._hiLightModal();
@@ -669,7 +687,7 @@ angular.module('cp.ngConfirm', [
                 _buttonClick: function (buttonKey) {
                     var res = this.buttons[buttonKey].action.apply(this, [this.scope, this.buttons[buttonKey]]);
                     if (typeof this.onAction === 'function')
-                        this.onAction.apply(this, [buttonKey, this.scope]);
+                        this.onAction.apply(this, [this.scope, buttonKey]);
 
                     if (typeof res === 'undefined' || res)
                         this.close();
@@ -680,6 +698,7 @@ angular.module('cp.ngConfirm', [
                     return this._buttonClick(buttonKey);
                 },
                 setDialogCenter: function (where) {
+                    where = where || 'n/a';
                     var $content = this.$content;
                     var contentHeight = $content.outerHeight();
                     var contentPaneHeight = this.$contentPane.outerHeight();
@@ -699,12 +718,9 @@ angular.module('cp.ngConfirm', [
                         // console.log(where, confirmBoxHeight);
                         return;
                     }
-                    // console.log(confirmBoxHeight, contentPaneHeight, contentHeight);
                     var boxHeight = (confirmBoxHeight - contentPaneHeight) + contentHeight;
                     var totalOffset = (this.offsetTop) + this.offsetBottom;
                     var style;
-
-                    // console.log(where, confirmBoxHeight, contentPaneHeight, contentHeight, boxHeight, contentHeight, contentPaneHeight);
                     if (boxHeight > (windowHeight - totalOffset) || !this.alignMiddle) {
                         style = {
                             'margin-top': this.offsetTop,
@@ -833,7 +849,7 @@ angular.module('cp.ngConfirm', [
                 close: function () {
                     var that = this;
                     if (typeof this.onClose === 'function')
-                        this.onClose();
+                        this.onClose.apply(this, [this.scope]);
 
                     this._unwatchContent();
                     this._unBindEvents();

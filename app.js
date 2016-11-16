@@ -1,4 +1,11 @@
 angular.module('application', ['cp.ngConfirm'])
+    .run([
+        '$ngConfirmDefaults',
+        function ($ngConfirmDefaults) {
+            // modify the defaults here.
+            // $ngConfirmDefaults.bgOpacity = 1;
+        }
+    ])
     .controller('quickFeaturesController', [
         '$scope',
         '$ngConfirm',
@@ -7,7 +14,6 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirmGlobal',
         '$timeout',
         function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
-
             $scope.alert = function () {
                 $ngConfirm({
                     title: 'Alert alert!',
@@ -315,11 +321,11 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirmGlobal',
         '$timeout',
         function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
-            $scope.name = 'Sia: cheap thrills';
             $scope.test = function () {
+                $scope.name = 'Sia: cheap thrills';
                 $ngConfirm({
                     title: 'Title here',
-                    content: '{{name}} is my favourite song',
+                    content: '<strong>{{name}}</strong> is my favourite song',
                     scope: $scope,
                     buttons: {
                         sayBoo: {
@@ -540,29 +546,12 @@ angular.module('application', ['cp.ngConfirm'])
             $scope.successDialog = function () {
                 $ngConfirm({
                     title: 'Congratulations!',
+                    type: 'green',
                     content: 'Consider something great happened, and you have to show a positive message',
                     buttons: {
                         thankYou: {
                             text: 'Thank you',
-                            btnClass: 'Thank you!',
-                            action: function () {
-
-                            }
-                        },
-                        close: function () {
-
-                        }
-                    }
-                })
-            };
-            $scope.successDialog = function () {
-                $ngConfirm({
-                    title: 'Congratulations!',
-                    content: 'Consider something great happened, and you have to show a positive message',
-                    buttons: {
-                        thankYou: {
-                            text: 'Thank you',
-                            btnClass: 'Thank you!',
+                            btnClass: 'btn-green',
                             action: function () {
 
                             }
@@ -741,6 +730,135 @@ angular.module('application', ['cp.ngConfirm'])
                             $ngConfirm('Button name was clicked');
                         },
                         close: function () {
+                        }
+                    }
+                });
+            };
+            $scope.bgDismissAnimation = function (animationName) {
+                $ngConfirm({
+                    backgroundDismiss: false,
+                    backgroundDismissAnimation: animationName,
+                    buttons: {
+                        ok: function () {
+                        }
+                    }
+                });
+            };
+        }
+    ])
+    .controller('escapeKeyController', [
+        '$scope',
+        '$ngConfirm',
+        '$interval',
+        '$ngConfirmDefaults',
+        '$ngConfirmGlobal',
+        '$timeout',
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+            $scope.escapeKey = function () {
+                $ngConfirm({
+                    content: 'background dismiss is not allowed on this modal, thus the modal will make a backgroundDismissAnimation',
+                    escapeKey: true,
+                    backgroundDismiss: false,
+                    buttons: {
+                        ok: function () {
+
+                        }
+                    }
+                });
+            };
+            $scope.escapeKeyHandler = function () {
+                $ngConfirm({
+                    escapeKey: 'buttonName',
+                    buttons: {
+                        buttonName: function () {
+                            $ngConfirm('Button name was called');
+                        },
+                        close: function () {
+
+                        }
+                    }
+                });
+            };
+        }
+    ])
+    .controller('rtlController', [
+        '$scope',
+        '$ngConfirm',
+        '$interval',
+        '$ngConfirmDefaults',
+        '$ngConfirmGlobal',
+        '$timeout',
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+            $scope.rtl = function () {
+                $ngConfirm({
+                    title: 'پیغام',
+                    content: 'این یک متن به زبان شیرین فارسی است',
+                    rtl: true,
+                    closeIcon: true,
+                    buttons: {
+                        confirm: {
+                            text: 'تایید',
+                            btnClass: 'btn-blue',
+                            action: function () {
+                                $ngConfirm('تایید شد.');
+                            }
+                        },
+                        cancel: {
+                            text: 'انصراف',
+                            action: function () {
+
+                            }
+                        }
+                    }
+                });
+            };
+        }
+    ])
+    .controller('callbackController', [
+        '$scope',
+        '$ngConfirm',
+        '$interval',
+        '$ngConfirmDefaults',
+        '$ngConfirmGlobal',
+        '$timeout',
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+            $scope.callback = function () {
+                $ngConfirm({
+                    title: false,
+                    contentUrl: 'callback.html',
+                    onReady: function ($scope) {
+                        // when content is fetched & the modal is open
+                        alert('onReady');
+                        var self = this;
+                        this.buttons.ok.disabled = true;
+                        $scope.fnClick = function () {
+                            $scope.name = 'Chuck norris';
+                            self.buttons.ok.disabled = false;
+                        };
+                    },
+                    onOpenBefore: function () {
+                        // before the modal is displayed.
+                        alert('onOpenBefore');
+                    },
+                    onOpen: function () {
+                        // after the modal is displayed.
+                        alert('onOpen');
+                    },
+                    onClose: function () {
+                        // before the modal is hidden.
+                        alert('onClose');
+                    },
+                    onDestroy: function () {
+                        // when the modal is removed from DOM
+                        alert('onDestroy');
+                    },
+                    onAction: function ($scope, btnName) {
+                        // when a button is clicked, with the button name
+                        alert('onAction: ' + btnName);
+                    },
+                    buttons: {
+                        ok: function () {
+
                         }
                     }
                 });

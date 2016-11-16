@@ -440,20 +440,25 @@ body[class*=ng-confirm-no-scroll-] {
 .ng-confirm.ng-confirm-rtl {
   direction: rtl;
 }
-.ng-confirm.ng-confirm-rtl div.closeIcon {
-  left: 12px;
-  right: auto;
+.ng-confirm.ng-confirm-rtl .ng-confirm-closeIcon {
+  left: 5px !important;
+  right: auto !important;
 }
+.ng-confirm.ng-confirm-light .ng-confirm-bg,
 .ng-confirm.ng-confirm-white .ng-confirm-bg {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: #444;
+  opacity: .2;
 }
+.ng-confirm.ng-confirm-light .ng-confirm-box,
 .ng-confirm.ng-confirm-white .ng-confirm-box {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
 }
+.ng-confirm.ng-confirm-light .ng-confirm-box .ng-confirm-buttons,
 .ng-confirm.ng-confirm-white .ng-confirm-box .ng-confirm-buttons {
   float: right;
 }
+.ng-confirm.ng-confirm-light .ng-confirm-box .ng-confirm-buttons button,
 .ng-confirm.ng-confirm-white .ng-confirm-box .ng-confirm-buttons button {
   border: none;
   background-image: none;
@@ -465,34 +470,46 @@ body[class*=ng-confirm-no-scroll-] {
           transition: background .1s;
   color: white;
 }
+.ng-confirm.ng-confirm-light .ng-confirm-box .ng-confirm-buttons button.btn-default,
 .ng-confirm.ng-confirm-white .ng-confirm-box .ng-confirm-buttons button.btn-default {
   box-shadow: none;
   color: #333;
 }
+.ng-confirm.ng-confirm-light .ng-confirm-box .ng-confirm-buttons button.btn-default:hover,
 .ng-confirm.ng-confirm-white .ng-confirm-box .ng-confirm-buttons button.btn-default:hover {
   background: #ddd;
 }
-.ng-confirm.ng-confirm-dark .ng-confirm-bg {
-  background-color: rgba(0, 0, 0, 0.6);
+.ng-confirm.ng-confirm-dark .ng-confirm-bg,
+.ng-confirm.ng-confirm-black .ng-confirm-bg {
+  background-color: darkslategray;
+  opacity: .4;
 }
-.ng-confirm.ng-confirm-dark .ng-confirm-box {
+.ng-confirm.ng-confirm-dark .ng-confirm-box,
+.ng-confirm.ng-confirm-black .ng-confirm-box {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   background: #444;
   border-radius: 5px;
 }
-.ng-confirm.ng-confirm-dark .ng-confirm-box *:not(input):not(textarea):not(select):not(option) {
+.ng-confirm.ng-confirm-dark .ng-confirm-box *:not(input):not(textarea):not(select):not(option),
+.ng-confirm.ng-confirm-black .ng-confirm-box *:not(input):not(textarea):not(select):not(option) {
   color: white;
 }
 .ng-confirm.ng-confirm-dark .ng-confirm-box input,
+.ng-confirm.ng-confirm-black .ng-confirm-box input,
 .ng-confirm.ng-confirm-dark .ng-confirm-box textarea,
+.ng-confirm.ng-confirm-black .ng-confirm-box textarea,
 .ng-confirm.ng-confirm-dark .ng-confirm-box select,
-.ng-confirm.ng-confirm-dark .ng-confirm-box option {
+.ng-confirm.ng-confirm-black .ng-confirm-box select,
+.ng-confirm.ng-confirm-dark .ng-confirm-box option,
+.ng-confirm.ng-confirm-black .ng-confirm-box option {
   color: initial;
 }
-.ng-confirm.ng-confirm-dark .ng-confirm-box .ng-confirm-buttons {
+.ng-confirm.ng-confirm-dark .ng-confirm-box .ng-confirm-buttons,
+.ng-confirm.ng-confirm-black .ng-confirm-box .ng-confirm-buttons {
   float: right;
 }
-.ng-confirm.ng-confirm-dark .ng-confirm-box .ng-confirm-buttons button {
+.ng-confirm.ng-confirm-dark .ng-confirm-box .ng-confirm-buttons button,
+.ng-confirm.ng-confirm-black .ng-confirm-box .ng-confirm-buttons button {
   border: none;
   background-image: none;
   text-transform: uppercase;
@@ -503,12 +520,14 @@ body[class*=ng-confirm-no-scroll-] {
           transition: background .1s;
   color: white;
 }
-.ng-confirm.ng-confirm-dark .ng-confirm-box .ng-confirm-buttons button.btn-default {
+.ng-confirm.ng-confirm-dark .ng-confirm-box .ng-confirm-buttons button.btn-default,
+.ng-confirm.ng-confirm-black .ng-confirm-box .ng-confirm-buttons button.btn-default {
   box-shadow: none;
   color: #fff;
   background: none;
 }
-.ng-confirm.ng-confirm-dark .ng-confirm-box .ng-confirm-buttons button.btn-default:hover {
+.ng-confirm.ng-confirm-dark .ng-confirm-box .ng-confirm-buttons button.btn-default:hover,
+.ng-confirm.ng-confirm-black .ng-confirm-box .ng-confirm-buttons button.btn-default:hover {
   background: #666;
 }
 .ng-confirm .ng-confirm-box.ng-confirm-hilight.ng-confirm-hilight-shake {

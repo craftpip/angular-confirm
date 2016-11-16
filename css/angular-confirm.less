@@ -384,15 +384,17 @@ body[class*=ng-confirm-no-scroll-] {
 
   &.ng-confirm-rtl {
     direction: rtl;
-    div.closeIcon {
-      left: 12px;
-      right: auto;
+
+    .ng-confirm-closeIcon {
+      left: 5px !important;
+      right: auto !important;
     }
   }
 
-  &.ng-confirm-white {
+  &.ng-confirm-light,&.ng-confirm-white {
     .ng-confirm-bg {
-      background-color: rgba(0, 0, 0, .3);
+      background-color: #444;
+      opacity: .2;
     }
     .ng-confirm-box {
       box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
@@ -423,9 +425,10 @@ body[class*=ng-confirm-no-scroll-] {
     }
   }
 
-  &.ng-confirm-dark {
+  &.ng-confirm-dark,&.ng-confirm-black {
     .ng-confirm-bg {
-      background-color: rgba(0, 0, 0, .6);
+      background-color: darkslategray;
+      opacity: .4;
     }
     .ng-confirm-box {
       box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
