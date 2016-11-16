@@ -186,6 +186,9 @@
                                 <a href="#usage"> Basic usage</a>
                             </li>
                             <li>
+                                <a href="#using-templates"> Using templates</a>
+                            </li>
+                            <li>
                                 <a href="#shorthand"> Shorthand usage</a>
                             </li>
                         </ul>
@@ -342,9 +345,9 @@
 
                     <p>
                         Easy to use and highly flexible! <br/>
-                        <!--A jQuery plugin that provides great set of features like,-->
-                        <!--Auto-close, Ajax-loading, Themes, Animations and more. <br>-->
-                        <!--This plugin is actively developed, I would love you have your suggestions.-->
+                        A angular plugin that provides great set of features like,
+                        Auto-close, Ajax-loading, Themes, Animations and more. <br>
+                        This project is a re-write of the <a href="https://github.com/craftpip/jquery-confirm">jquery-confirm</a> plugin
                     </p>
                     <a href="https://github.com/craftpip/angular-confirm/issues"
                        target="empty"
@@ -559,6 +562,27 @@
                     // closes the modal
                 },
             }
+        });
+    }
+});</code></pre>
+                        </div>
+                        <div class="col-md-12">
+                            <h4 id="using-templates">
+                                using templates (contentUrl)
+                            </h4>
+                        </div>
+                        <div class="col-md-12">
+                            <p>
+                                contentUrl is basically templateUrl, which is fetched and compiled with scope. <br>
+                                if contentUrl is provided content property is ignored.
+                            </p>
+                            <pre class="prettyprint linenums"><code class="js" ng-non-bindable>.controller('myController', function ($scope, $ngConfirm) {
+    $scope.usingTemplates = function(){
+        $ngConfirm({
+            title: 'Confirm!',
+            contentUrl: 'my_template.html',
+            scope: $scope,
+            ...
         });
     }
 });</code></pre>
@@ -1059,7 +1083,6 @@ $ngConfirm({
 });</code></pre>
                 </div>
             </section>
-
 
             <section id="animations">
                 <h2>Animations</h2>
