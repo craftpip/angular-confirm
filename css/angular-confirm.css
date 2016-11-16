@@ -278,13 +278,13 @@ body[class*=ng-confirm-no-scroll-] {
   display: block;
   font-size: 22px;
   line-height: 20px;
+  padding-bottom: 15px;
 }
 .ng-confirm .ng-confirm-box div.ng-confirm-title-c .ng-confirm-icon-c {
   font-size: inherit;
-  padding-bottom: 15px;
   display: inline-block;
   margin-right: 8px;
-  vertical-align: middle;
+  vertical-align: top;
 }
 .ng-confirm .ng-confirm-box div.ng-confirm-title-c .ng-confirm-icon-c i {
   vertical-align: middle;
@@ -297,7 +297,6 @@ body[class*=ng-confirm-no-scroll-] {
   font-family: inherit;
   display: inline-block;
   vertical-align: middle;
-  padding-bottom: 15px;
 }
 .ng-confirm .ng-confirm-box div.ng-confirm-title-c .ng-confirm-title:empty {
   display: none;

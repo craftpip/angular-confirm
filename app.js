@@ -916,6 +916,40 @@ angular.module('application', ['cp.ngConfirm'])
                 });
             };
         }
+    ])
+    .controller('themesController', [
+        '$scope',
+        '$ngConfirm',
+        '$interval',
+        '$ngConfirmDefaults',
+        '$ngConfirmGlobal',
+        '$timeout',
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+            $scope.theme = function (themeName) {
+                $ngConfirm({
+                    icon: 'fa fa-check',
+                    theme: themeName,
+                    closeIcon: true,
+                    buttons: {
+                        default: {
+                            btnClass: 'btn-default',
+                        },
+                        blue: {
+                            btnClass: 'btn-blue',
+                        },
+                        green: {
+                            btnClass: 'btn-green',
+                        },
+                        red: {
+                            btnClass: 'btn-red',
+                        },
+                        orange: {
+                            btnClass: 'btn-orange',
+                        },
+                    }
+                });
+            };
+        }
     ]);
 
 
