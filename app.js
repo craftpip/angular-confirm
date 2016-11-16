@@ -864,6 +864,58 @@ angular.module('application', ['cp.ngConfirm'])
                 });
             };
         }
+    ])
+    .controller('openCloseAnimationController', [
+        '$scope',
+        '$ngConfirm',
+        '$interval',
+        '$ngConfirmDefaults',
+        '$ngConfirmGlobal',
+        '$timeout',
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+            $scope.animation = function (animationName) {
+                $ngConfirm({
+                    animation: animationName,
+                    closeAnimation: animationName,
+                    buttons: {
+                        ok: function () {
+                            
+                        }
+                    }
+                });
+            };
+            $scope.bounce = function (bounceRate) {
+                $ngConfirm({
+                    animationBounce: bounceRate,
+                    buttons: {
+                        ok: function () {
+
+                        }
+                    }
+                });
+            };
+            $scope.speed = function (speed) {
+                $ngConfirm({
+                    animationSpeed: speed,
+                    buttons: {
+                        ok: function () {
+
+                        }
+                    }
+                });
+            };
+            $scope.bgDismissAnimation = function (animationName) {
+                $ngConfirm({
+                    backgroundDismiss: false,
+                    backgroundDismissAnimation: animationName,
+                    buttons: {
+                        ok: function () {
+
+                        }
+                    }
+                });
+            };
+        }
     ]);
 
 

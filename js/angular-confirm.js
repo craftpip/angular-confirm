@@ -96,7 +96,7 @@ angular.module('cp.ngConfirm', [
     .service('$ngConfirmDefaults', function () {
         return {
             title: 'Hello',
-            titleClass: '', // todo: implementation
+            titleClass: '',
             type: 'default',
             typeAnimated: true,
             content: 'Are you sure to continue?',
