@@ -184,10 +184,9 @@ angular.module('cp.ngConfirm', [
         '$ngConfirmTemplate',
         '$interval',
         '$templateRequest',
-        '$ngConfirmAnimations',
         '$log',
         '$q',
-        function ($rootScope, $ngConfirmDefaults, $timeout, $compile, $ngConfirmTemplate, $interval, $templateRequest, $ngConfirmAnimations, $log, $q) {
+        function ($rootScope, $ngConfirmDefaults, $timeout, $compile, $ngConfirmTemplate, $interval, $templateRequest, $log, $q) {
             var ngConfirmBase = function (options) {
                 /*
                  Merge up the options with the object !
