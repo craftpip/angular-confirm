@@ -191,7 +191,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#buttons"></a>
+                        <a href="#buttons">Buttons</a>
                         <ul class="nav nav-list">
                             <li>
                                 <a href="#defining-buttons">Defining buttons</a>
@@ -235,25 +235,35 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="animations.html"> Animations <span class="v"><i class="fa fa-external-link-square"></i></span></a>
-                    </li>
-                    <li>
-                        <a href="themes.html"> Themes <span class="v"><i class="fa fa-external-link-square"></i></span></a>
-                    </li>
-                    <li>
-                        <a href="#ajaxloading"> Ajax loading</a>
+                        <a href="animations.html"> Animations <span style="margin-left: 5px;"><i class="fa fa-external-link"></i></span></a>
                         <ul class="nav nav-list">
                             <li>
-                                <a href="#urlprefix">URL: prefix method</a>
-                            </li>
-                            <li>
-                                <a href="#ajaxpromise">Ajax promise method</a>
-                            </li>
-                            <li>
-                                <a href="#content-loaded">Ajax complete callback</a>
+                                <a href="#animations">Animations</a>
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="themes.html"> Themes <span style="margin-left: 5px;"><i class="fa fa-external-link"></i></span></a>
+                        <ul class="nav nav-list">
+                            <li>
+                                <a href="#themes">Themes</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--<li>-->
+                        <!--<a href="#ajaxloading"> Ajax loading</a>-->
+                        <!--<ul class="nav nav-list">-->
+                            <!--<li>-->
+                                <!--<a href="#urlprefix">URL: prefix method</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#ajaxpromise">Ajax promise method</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#content-loaded">Ajax complete callback</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
                     <li>
                         <a href="#autoclose"> Auto close</a>
                     </li>
@@ -343,7 +353,7 @@
             </section>
             <hr>
             <section id="quickfeatures" ng-controller="quickFeaturesController">
-                <h1>Features</h1>
+                <h2>Features</h2>
 
                 <p>These features can practically be used like so.</p>
 
@@ -407,6 +417,29 @@
                     <div class="col-md-3">
                         <button ng-click="videos()" class="btn btn-primary btn-block">Videos</button>
                         <p class="text-success">Youtube videos</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Themes</h3>
+                        <p>
+                            angular-confirm comes loaded with 7 different themes, for all common use cases.
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="materialTheme()" class="btn btn-info btn-block">Material theme
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="modernTheme()" class="btn btn-info btn-block">Modern theme
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="supervanTheme()" class="btn btn-info btn-block">Supervan theme
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="themes.html" class="btn btn-default btn-block">more themes</a>
                     </div>
                 </div>
             </section>
@@ -1024,6 +1057,27 @@ $ngConfirm({
         row: 'row',
     },
 });</code></pre>
+                </div>
+            </section>
+
+
+            <section id="animations">
+                <h2>Animations</h2>
+                <div class="well">
+                    <p>
+                        The animations section is moved to the animations.html page.
+                    </p>
+                    <a class="btn btn-warning" href="animations.html">see Animations</a>
+                </div>
+            </section>
+
+            <section id="themes">
+                <h2>Themes</h2>
+                <div class="well">
+                    <p>
+                        The themes section is moved to the themes.html page
+                    </p>
+                    <a class="btn btn-warning" href="themes.html">see Themes</a>
                 </div>
             </section>
 

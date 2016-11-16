@@ -38,8 +38,8 @@ angular.module('cp.ngConfirm', [
             '<div class="ng-bs3-row">' +
             '<div class="ng-confirm-box" data-ng-click="ngc._ngBoxClick()" data-ng-class="[{\'ng-confirm-hilight\': ngc.hiLight}]" role="dialog" aria-labelledby="labelled" tabindex="-1">' +
             '<div class="ng-confirm-closeIcon" data-ng-show="ngc.closeIcon" data-ng-click="ngc._closeClick()"><span data-ng-if="!ngc.closeIconClass">&times;</span><i data-ng-class="ngc.closeIconClass" data-ng-if="ngc.closeIconClass"></i></div>' +
-            '<div class="ng-confirm-title-c">' +
-            '<span class="ng-confirm-icon-c"><i data-ng-if="ngc.icon" data-ng-class="ngc.icon"></i></span>' +
+            '<div class="ng-confirm-title-c" ng-if="ngc.icon || ngc.title">' +
+            '<span class="ng-confirm-icon-c" data-ng-if="ngc.icon"><i data-ng-class="ngc.icon"></i></span>' +
             '<span class="ng-confirm-title" data-ng-show="ngc.title">{{ngc.title}}</span>' +
             '</div>' +
             '<div class="ng-confirm-content-pane" data-ng-style="ngc.styleContentPane">' +
@@ -268,7 +268,8 @@ angular.module('cp.ngConfirm', [
                     this.$contentPane = this.$el.find('.ng-confirm-content-pane');
                     this.$confirmContainer = this.$el.find('.ng-confirm-box-container');
 
-                    this.$confirmBox.addClass(this.animationParsed).addClass(this.backgroundDismissAnimationParsed).addClass(this.typeParsed);
+                    this.$confirmBox.addClass(this.animationParsed).addClass(this.backgroundDismissAnimationParsed);
+                    this.$el.addClass(this.typeParsed);
                     if (this.typeAnimated)
                         this.$confirmBox.addClass('ng-confirm-type-animated');
 
@@ -340,9 +341,6 @@ angular.module('cp.ngConfirm', [
                     }
 
 
-                    that._contentHash = this._hash(that.$el.html());
-                    that._contentHeight = this.$content.height();
-
                     this._watchContent();
 
                     if (this.animation == 'none') {
@@ -372,7 +370,7 @@ angular.module('cp.ngConfirm', [
                     this.$content.append(compiledHtml);
                 },
                 _typeList: ['default', 'blue', 'green', 'red', 'orange', 'purple', 'dark'],
-                _typePrefix: 'ng-confirm-',
+                _typePrefix: 'ng-confirm-type-',
                 typeParsed: '',
                 _parseType: function (type) {
                     if (this._typeList.indexOf(type.toLowerCase()) == -1) {
@@ -497,9 +495,13 @@ angular.module('cp.ngConfirm', [
                 },
                 _watchContent: function () {
                     var that = this;
+
+                    that._contentHash = this._hash(angular.element('<div>').append(that.$el.clone()).html());
+                    that._contentHeight = this.$content.height();
+
                     if (this._watchTimer) clearInterval(this._watchTimer);
                     this._watchTimer = $interval(function () {
-                        var now = that._hash(that.$el.html());
+                        var now = that._hash(angular.element('<div>').append(that.$el.clone()).html());
                         var nowHeight = that.$content.height();
                         if (that._contentHash != now || that._contentHeight != nowHeight) {
                             that._contentHash = now;
@@ -520,15 +522,22 @@ angular.module('cp.ngConfirm', [
                     this._scope.$watch('ngc.type', function () {
                         that._parseType(that.type);
                         if (previousType != null)
-                            that.$confirmBox.removeClass(previousType);
-                        that.$confirmBox.addClass(that.typeParsed);
+                            that.$el.removeClass(previousType);
+                        that.$el.addClass(that.typeParsed);
                         previousType = that.typeParsed;
                     });
                     this._scope.$watch('ngc.typeAnimated', function () {
                         if (that.typeAnimated)
-                            that.$confirmBox.addClass('ng-confirm-type-animated');
+                            that.$el.addClass('ng-confirm-type-animated');
                         else
-                            that.$confirmBox.removeClass('ng-confirm-type-animated');
+                            that.$el.removeClass('ng-confirm-type-animated');
+                    });
+
+                    this._scope.$watch('ngc.rtl', function () {
+                        if (that.rtl)
+                            that.$el.addClass('ng-confirm-rtl');
+                        else
+                            that.$el.removeClass('ng-confirm-rtl');
                     });
 
                     var previousTheme = null;
@@ -538,6 +547,7 @@ angular.module('cp.ngConfirm', [
                             that.$el.removeClass(previousTheme);
                         that.$el.addClass(that.themeParsed);
                         previousTheme = that.themeParsed;
+                        that.setDialogCenter('bindEvents:theme');
                     });
 
                     if (this.useBootstrap) {
@@ -795,6 +805,7 @@ angular.module('cp.ngConfirm', [
                         that.$confirmBox.css(that._getCSS(that.animationSpeed, that.animationBounce));
                         that.$confirmBox.removeClass(that.animationParsed);
                         that.$confirmBg.removeClass('ng-confirm-bg-h');
+                        that.$confirmBox.focus();
                         $timeout(function () {
                             that._bindEvents();
                             that.$confirmBox.css(that._getCSS(that.animationSpeed, 1));

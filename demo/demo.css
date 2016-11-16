@@ -47,8 +47,9 @@ pre ol {
 }
 
 .btn {
-    background-image: none;
-    border: 0
+    /*background-image: none;*/
+    /*border: 0*/
+    outline: none;
 }
 
 .com {

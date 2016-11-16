@@ -3,7 +3,7 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirmDefaults',
         function ($ngConfirmDefaults) {
             // modify the defaults here.
-            // $ngConfirmDefaults.bgOpacity = 1;
+            // $ngConfirmDefaults.theme = 'modern';
         }
     ])
     .controller('quickFeaturesController', [
@@ -14,6 +14,66 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirmGlobal',
         '$timeout',
         function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+            $scope.materialTheme = function () {
+                $ngConfirm({
+                    title: 'Alert',
+                    icon: 'fa fa-info-circle',
+                    theme: 'material',
+                    content: '<div>Inspirations taken from Google\'s material design.' +
+                    '</div>',
+                    animation: 'scale',
+                    type: 'purple',
+                    closeAnimation: 'scale',
+                    buttons: {
+                        ok: {
+                            btnClass: "btn-blue",
+                        },
+                        close: function () {
+                            
+                        }
+                    },
+                })
+            };
+            $scope.modernTheme = function () {
+                $ngConfirm({
+                    title: 'Alert',
+                    icon: 'fa fa-info-circle',
+                    theme: 'modern',
+                    type: 'blue',
+                    content: '<div class="text-center">This theme meets the trend of the internet.' +
+                    '</div>',
+                    animation: 'scale',
+                    closeAnimation: 'scale',
+                    buttons: {
+                        ok: {
+                            btnClass: "btn-blue",
+                        },
+                        close: function () {
+
+                        }
+                    },
+                })
+            };
+            $scope.supervanTheme = function () {
+                $ngConfirm({
+                    title: 'Alert',
+                    icon: 'fa fa-info-circle',
+                    theme: 'supervan',
+                    content: '<div class="text-center">I was inspired from tumblr for this. <br>' +
+                    'A dialog that\'s free of bounds, try this one out in the themes page with different type colors.' +
+                    '</div>',
+                    animation: 'scale',
+                    closeAnimation: 'scale',
+                    buttons: {
+                        ok: {
+                            btnClass: "btn-blue",
+                        },
+                        close: function () {
+
+                        }
+                    },
+                })
+            };
             $scope.alert = function () {
                 $ngConfirm({
                     title: 'Alert alert!',
@@ -22,7 +82,7 @@ angular.module('application', ['cp.ngConfirm'])
                     animation: 'scale',
                     buttons: {
                         okay: {
-                            class: "btn-blue",
+                            btnClass: "btn-blue",
                         }
                     },
                 })
@@ -879,7 +939,7 @@ angular.module('application', ['cp.ngConfirm'])
                     closeAnimation: animationName,
                     buttons: {
                         ok: function () {
-                            
+
                         }
                     }
                 });
@@ -927,8 +987,9 @@ angular.module('application', ['cp.ngConfirm'])
         function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
             $scope.theme = function (themeName) {
                 $ngConfirm({
-                    icon: 'fa fa-check',
+                    icon: 'fa fa-check-circle',
                     theme: themeName,
+                    contentUrl: 'themes_popup.html',
                     closeIcon: true,
                     buttons: {
                         default: {
@@ -946,6 +1007,15 @@ angular.module('application', ['cp.ngConfirm'])
                         orange: {
                             btnClass: 'btn-orange',
                         },
+                    },
+                    onOpen: function ($scope) {
+                        var that = this;
+                        $scope.showLoading = function () {
+                            that.loading(true);
+                            $timeout(function () {
+                                that.loading(false);
+                            }, 2000)
+                        }
                     }
                 });
             };
