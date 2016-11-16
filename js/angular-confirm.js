@@ -59,40 +59,6 @@ angular.module('cp.ngConfirm', [
 
         return {default: template};
     })
-    .service('$ngConfirmAnimations', function () {
-        return {
-            'zoom': {
-                in: {
-                    'transform': 'scale(1.2)',
-                    'opacity': 0,
-                },
-                out: {
-                    'transform': 'scale(1)',
-                    'opacity': 1,
-                }
-            },
-            'scale': {
-                in: {
-                    'transform': 'scale(0.7)',
-                    'opacity': 0,
-                },
-                out: {
-                    'transform': 'scale(1)',
-                    'opacity': 1,
-                }
-            },
-            'right': {
-                in: {
-                    'transform': 'translate(20px, 0)',
-                    'opacity': 0,
-                },
-                out: {
-                    'transform': 'translate(0px, 0)',
-                    'opacity': 1,
-                }
-            }
-        }
-    })
     .service('$ngConfirmDefaults', function () {
         return {
             title: 'Hello',
