@@ -96,7 +96,7 @@
                 <li class=""><a href="http://github.com/craftpip/angular-confirm/issues/new">Suggest feature</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
+                <li class="dropdown hide">
                     <a href="#"
                        class="dropdown-toggle"
                        data-toggle="dropdown"
@@ -107,7 +107,7 @@
                         <li><a href="http://craftpip.github.io/angular-confirm/v1.0">v1.0</a></li>
                     </ul>
                 </li>
-                <li>
+                <li class="hide">
                     <a class="github-button"
                        href="https://github.com/craftpip/angular-confirm"
                        data-style="mega"
@@ -1858,5 +1858,41 @@ $ngConfirm({
 <script type="text/javascript"
         src="app.js"></script>
 
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-53264350-2', 'auto');
+    ga('send', 'pageview');
+</script>
+
+<script async
+        defer
+        id="github-bjs"
+        src="https://buttons.github.io/buttons.js"></script>
+<script> window.twttr = (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
+    if (d.getElementById(id))
+        return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+    t._e = [];
+    t.ready = function (f) {
+        t._e.push(f);
+    };
+    return t;
+}(document, "script", "twitter-wjs"));
+</script>
 </body>
 </html>
