@@ -1,5 +1,5 @@
 /*!
- * angular-confirm v1.0.0 (http://craftpip.github.io/angular-confirm/)
+ * angular-confirm v1.0.1 (http://craftpip.github.io/angular-confirm/)
  * Author: Boniface Pereira
  * Website: www.craftpip.com
  * Contact: hey@craftpip.com

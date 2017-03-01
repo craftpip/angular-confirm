@@ -1,12 +1,15 @@
 {
     "name": "angular-confirm",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "homepage": "https://github.com/craftpip/angular-confirm",
     "authors": [
         "boniface pereira <bonifacepereira@gmail.com>"
     ],
     "description": "A multipurpose alert and confirm plugin",
-    "main": "dist/angular-confirm.min.js",
+    "main": [
+        "css/angular-confirm.css",
+        "js/angular-confirm.js"
+    ],
     "keywords": [
         "angular-plugin",
         "javascript",

@@ -1,7 +1,7 @@
 ### ![jquery-confirm](https://raw.githubusercontent.com/craftpip/angular-confirm/master/angular-confirm.png "jquery-confirm")
 *alerts, confirms and dialogs in* ***one.***
 
-v1.0.0
+v1.0.1
 
 Angular-confirm targets to make it really easy to use confirm dialogs with angular.  
 With angular-confirm you can harness the angular two-way data binding to update the content as well as make changes to the model in runtime. 
