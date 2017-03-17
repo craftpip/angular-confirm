@@ -622,7 +622,7 @@ angular.module('cp.ngConfirm', [
                         button_el.addClass(buttons[key].btnClass);
                         if (buttons[key].disabled)
                             button_el.attr('disabled', 'disabled');
-                        button_el.html(buttons[key].text);
+                        button_el.find('.ng-confirm-btn-text').html(buttons[key].text);
                         if (!buttons[key].show) {
                             button_el.css('display', 'none');
                         } else {
