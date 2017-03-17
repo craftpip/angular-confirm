@@ -37,7 +37,7 @@ angular.module('cp.ngConfirm', [
             '<div class="ng-bs3-container">' +
             '<div class="ng-bs3-row">' +
             '<div class="ng-confirm-box" role="dialog" aria-labelledby="labelled" tabindex="-1">' +
-            '<div class="ng-confirm-closeIcon"><span data-ng-if="!ngc.closeIconClass">&times;</span><i data-ng-class="ngc.closeIconClass" data-ng-if="ngc.closeIconClass"></i></div>' +
+            '<div class="ng-confirm-closeIcon"></div>' +
             '<div class="ng-confirm-title-c">' +
             '<span class="ng-confirm-icon-c"><i></i></span>' +
             '<span class="ng-confirm-title"></span>' +
@@ -260,6 +260,7 @@ angular.module('cp.ngConfirm', [
                     this.setType(this.type);
                     this._setButtons(this.buttons);
                     this.setCloseIcon(this.closeIcon);
+                    this.setCloseIconClass(this.closeIconClass);
 
                     this.setTypeAnimated(this.typeAnimated);
                     if (this.useBootstrap) {
@@ -523,6 +524,16 @@ angular.module('cp.ngConfirm', [
                         this.$closeIcon.addClass(this._hideClass);
 
                     this.closeIcon = strFunc;
+                },
+                setCloseIconClass: function (iconClass) {
+                    var iconEl;
+                    if (iconClass) {
+                        iconEl = angular.element('<i></i>').addClass(this.closeIconClass);
+                    } else {
+                        iconEl = angular.element('<span>&times;</span>').addClass(this.closeIconClass);
+                    }
+                    this.$closeIcon.html(iconEl);
+                    this.closeIconClass = iconClass;
                 },
                 _animationPrefix: 'ng-confirm-animation-',
                 _pSetAnimation: '',
