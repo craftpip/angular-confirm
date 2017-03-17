@@ -15,21 +15,7 @@ if (typeof jQuery === 'undefined')
 if (typeof angular === 'undefined')
     throw new Error('angular-confirm requires Angular');
 
-try {
-    angular.module('ngSanitize')
-} catch (e) {
-    throw new Error('angular-confirm requires ngSanitize: https://docs.angularjs.org/api/ngSanitize');
-}
-
-try {
-    angular.module('ngAnimate')
-} catch (e) {
-    throw new Error('angular-confirm requires ngAnimate: https://docs.angularjs.org/api/ngSanitize');
-}
-
-angular.module('cp.ngConfirm', [
-    'ngSanitize',
-])
+angular.module('cp.ngConfirm', [])
     .service('$ngConfirmTemplate', function () {
         this.default = '<div class="ng-confirm">' +
             '<div class="ng-confirm-bg ng-confirm-bg-h"></div>' +
@@ -121,29 +107,14 @@ angular.module('cp.ngConfirm', [
 
         };
     })
-    .service('$ngConfirmGlobal', [
-        function () {
-            var instances = [];
-            return {
-                instances: instances,
-                closeAll: function () {
-                    angular.forEach(instances, function (obj) {
-                        if (!obj.isClosed())
-                            obj.close();
-                    });
-                },
-            }
-        }
-    ])
     .service('$ngConfirm', [
         '$rootScope',
         '$ngConfirmDefaults',
         '$ngConfirmBase',
-        '$ngConfirmGlobal',
-        function ($rootScope, $ngConfirmDefaults, $ngConfirmBase, $ngConfirmGlobal) {
+        function ($rootScope, $ngConfirmDefaults, $ngConfirmBase) {
             var $ = jQuery; // using jquery.
 
-            var ngConfirm = function (options, options2, option3) {
+            return function (options, options2, option3) {
                 if (typeof options == 'string') {
                     options = {
                         content: options,
@@ -166,12 +137,8 @@ angular.module('cp.ngConfirm', [
                  */
                 options = angular.extend({}, $ngConfirmDefaults, options);
 
-                var obj = new $ngConfirmBase(options);
-                // $ngConfirmGlobal.instances.push(obj);
-                return obj;
+                return new $ngConfirmBase(options);
             };
-
-            return ngConfirm;
         }
     ])
     .factory('$ngConfirmBase', [
@@ -713,7 +680,6 @@ angular.module('cp.ngConfirm', [
                     var self = this;
                     // bind to scope digest
                     this._digestWatchUnRegister = this.scope.$watch(function () {
-                        $log.log('Digest called');
                         self.setDialogCenter('Digest watcher');
                     });
                     this.$closeIcon.on('click.' + self._id, function () {
