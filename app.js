@@ -515,13 +515,13 @@ angular.module('application', ['cp.ngConfirm'])
                         yes: {
                             show: false,
                             keys: ['y'],
-                            action: function ($scope, button) {
+                            action: function (scope, button) {
                                 $ngConfirm('Critical action <strong>was performed</strong>.');
                             }
                         },
                         no: {
                             keys: ['N'],
-                            action: function ($scope, button) {
+                            action: function (scope, button) {
                                 $ngConfirm('You clicked No.');
                             }
                         },
@@ -533,23 +533,23 @@ angular.module('application', ['cp.ngConfirm'])
                     buttons: {
                         buttonA: {
                             text: 'button a',
-                            action: function ($scope, button) {
-                                button.text = 'Oh yeah'; // the current button
-                                this.buttons.buttonB.text = 'Changed it!';
+                            action: function (scope, button) {
+                                button.setText('Oh yeah'); // the current button
+                                this.buttons.buttonB.setText('Changed it!');
                                 return false;
                             }
                         },
                         buttonB: {
                             text: 'button b',
-                            action: function ($scope, button) {
-                                this.buttons.buttonA.disabled = true;
+                            action: function (scope, button) {
+                                this.buttons.buttonA.setDisabled(true);
                                 return false;
                             }
                         },
-                        reset: function ($scope, button) {
-                            this.buttons.buttonA.disabled = false;
-                            this.buttons.buttonA.text = 'button a';
-                            this.buttons.buttonB.text = 'button b';
+                        reset: function (scope, button) {
+                            this.buttons.buttonA.setDisabled(false);
+                            this.buttons.buttonA.setText('button a');
+                            this.buttons.buttonB.setText('button b');
                             return false;
                         }
                     },

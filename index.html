@@ -724,13 +724,13 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
         yes: {
             show: false, // hides the button using display: none
             keys: ['y'],
-            action: function ($scope, button) {
+            action: function (scope, button) {
                 $ngConfirm('Critical action &lt;strong&gt;was performed&lt;/strong&gt;.');
             }
         },
         no: {
             keys: ['N'],
-            action: function ($scope, button) {
+            action: function (scope, button) {
                 $ngConfirm('You clicked No.');
             }
         },
@@ -749,27 +749,26 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
     buttons: {
         buttonA: {
             text: 'button a',
-            action: function ($scope, button) {
-                button.text = 'Oh yeah'; // the current button
-                this.buttons.buttonB.text = 'Changed it!';
+            action: function (scope, button) {
+                button.setText('Oh yeah'); // the current button
+                this.buttons.buttonB.setText('Changed it!');
                 return false;
             }
         },
         buttonB: {
             text: 'button b',
-            action: function ($scope, button) {
-                this.buttons.buttonA.disabled = true;
+            action: function (scope, button) {
+                this.buttons.buttonA.setDisabled(true);
                 return false;
             }
         },
-        reset: function ($scope, button) {
-            this.buttons.buttonA.disabled = false;
-            this.buttons.buttonA.text = 'button a';
-            this.buttons.buttonB.text = 'button b';
+        reset: function (scope, button) {
+            this.buttons.buttonA.setDisabled(false);
+            this.buttons.buttonA.setText('button a');
+            this.buttons.buttonB.setText('button b');
             return false;
-        },
-        closeIcon: true, // let the user close the modal
-    }
+        }
+    },
 });</code></pre>
                     <p>
                         A full list of functions for buttons.
@@ -777,7 +776,7 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
                     <table class="table table-bordered table-condensed">
                         <tr>
                             <td>
-                                Property
+                                Function
                             </td>
                             <td>
                                 Code
@@ -788,10 +787,10 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
                         </tr>
                         <tr>
                             <td>
-                                text
+                                setText
                             </td>
                             <td>
-                                this.buttons.&lt;buttonName&gt;.text = 'text'
+                                this.buttons.&lt;buttonName&gt;.setText('text')
                             </td>
                             <td>
                                 The text you want to set.
@@ -799,10 +798,10 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
                         </tr>
                         <tr>
                             <td>
-                                btnClass
+                                setBtnClass
                             </td>
                             <td>
-                                this.buttons.&lt;buttonName&gt;.btnClass = 'btn-info'
+                                this.buttons.&lt;buttonName&gt;.setBtnClass('btn-info')
                             </td>
                             <td>
                                 Change the button's class.
@@ -810,10 +809,10 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
                         </tr>
                         <tr>
                             <td>
-                                disabled
+                                setDisabled
                             </td>
                             <td>
-                                this.buttons.&lt;buttonName&gt;.disabled
+                                this.buttons.&lt;buttonName&gt;.setDisabled(Boolean)
                             </td>
                             <td>
                                 enable or disable a button
@@ -821,10 +820,10 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
                         </tr>
                         <tr>
                             <td>
-                                show
+                                setShow
                             </td>
                             <td>
-                                this.buttons.&lt;buttonName&gt;.show
+                                this.buttons.&lt;buttonName&gt;.setShow(Boolean)
                             </td>
                             <td>
                                 Show or hide the button via CSS
