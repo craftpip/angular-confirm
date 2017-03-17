@@ -1054,3 +1054,6 @@ body[class*=ng-confirm-no-scroll-] {
 .ng-confirm.ng-confirm-seamless .ng-confirm-box .ng-confirm-buttons button + button {
   margin-left: 4px;
 }
+.ng-confirm-el-hide {
+  display: none !important;
+}

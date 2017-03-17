@@ -29,7 +29,7 @@ angular.module('application', ['cp.ngConfirm'])
                             btnClass: "btn-blue",
                         },
                         close: function () {
-                            
+
                         }
                     },
                 })
@@ -78,13 +78,17 @@ angular.module('application', ['cp.ngConfirm'])
                 $ngConfirm({
                     title: 'Alert alert!',
                     icon: 'fa fa-rocket',
-                    content: '<div>This is a simple alert <br>with some <strong>HTML</strong> contents</div>',
+                    content: '<div>{{hey}}This is a simple alert <br>with some <strong>HTML</strong> contents</div>',
                     animation: 'scale',
                     buttons: {
                         okay: {
                             btnClass: "btn-blue",
                         }
                     },
+                    scope: $scope,
+                    onOpen: function (scope) {
+                        scope.hey = "WOw";
+                    }
                 })
             };
             $scope.confirm = function () {
@@ -155,7 +159,7 @@ angular.module('application', ['cp.ngConfirm'])
                         ok: function () {
                         }
                     },
-                    onContentReady: function ($scope) {
+                    onContentReady: function (scope) {
 
                     }
                 })
@@ -168,23 +172,23 @@ angular.module('application', ['cp.ngConfirm'])
                         sayMyName: {
                             text: 'Say my name',
                             btnClass: 'btn-orange',
-                            action: function ($scope) {
-                                if (!$scope.username) {
+                            action: function (scope) {
+                                if (!scope.username) {
                                     this.buttons.sayMyName.text = 'Please enter a valid name';
-                                    $scope.error = 'Please don\'t keep the name field empty!';
+                                    scope.error = 'Please don\'t keep the name field empty!';
                                     var that = this;
                                     $timeout(function () {
                                         that.buttons.sayMyName.text = 'Say my name again';
                                     }, 1000);
                                     return false;
                                 }
-                                $ngConfirm('Hello <strong>' + $scope.username + '</strong>, i hope you have a great day!');
+                                $ngConfirm('Hello <strong>' + scope.username + '</strong>, i hope you have a great day!');
                             }
                         },
                         later: function () {
                         }
                     },
-                    onContentReady: function ($scope) {
+                    onContentReady: function (scope) {
 
                     }
                 })

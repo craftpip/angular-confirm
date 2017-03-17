@@ -31,8 +31,32 @@ angular.module('cp.ngConfirm', [
     'ngSanitize',
 ])
     .service('$ngConfirmTemplate', function () {
-        var template = '<div class="ng-confirm">' +
-            '<div class="ng-confirm-bg ng-confirm-bg-h" data-ng-style="ngc.styleBg"></div>' +
+        this.default = '<div class="ng-confirm">' +
+            '<div class="ng-confirm-bg ng-confirm-bg-h"></div>' +
+            '<div class="ng-confirm-scrollpane">' +
+            '<div class="ng-bs3-container">' +
+            '<div class="ng-bs3-row">' +
+            '<div class="ng-confirm-box" role="dialog" aria-labelledby="labelled" tabindex="-1">' +
+            '<div class="ng-confirm-closeIcon"><span data-ng-if="!ngc.closeIconClass">&times;</span><i data-ng-class="ngc.closeIconClass" data-ng-if="ngc.closeIconClass"></i></div>' +
+            '<div class="ng-confirm-title-c">' +
+            '<span class="ng-confirm-icon-c"><i></i></span>' +
+            '<span class="ng-confirm-title"></span>' +
+            '</div>' +
+            '<div class="ng-confirm-content-pane">' +
+            '<div class="ng-confirm-content"></div>' +
+            '</div>' +
+            '<div class="ng-confirm-buttons">' +
+            '</div>' +
+            '<div class="ng-confirm-clear">' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '';
+        this.default2 = '<div class="ng-confirm">' +
+            '<div class="ng-confirm-bg ng-confirm-bg-h"></div>' +
             '<div class="ng-confirm-scrollpane" data-ng-click="ngc._scrollPaneClick()">' +
             '<div class="ng-bs3-container">' +
             '<div class="ng-bs3-row">' +
@@ -46,7 +70,7 @@ angular.module('cp.ngConfirm', [
             '<div class="ng-confirm-content" data-ng-style="ngc.styleContent"></div>' +
             '</div>' +
             '<div class="ng-confirm-buttons">' +
-            '<button type="button" data-ng-repeat="(key, button) in ngc.buttons" data-ng-click="ngc._buttonClick(key)" class="btn" data-ng-class="button.btnClass" ng-show="button.show" ng-disabled="button.disabled">{{button.text}}<span data-ng-show="button.timer"> ({{button.timer}})</span></button>' +
+            '<button type="button" data-ng-repeat="(key, button) in buttons" data-ng-click="buttonClick(key)" class="btn" data-ng-class="button.btnClass" ng-show="button.show" ng-disabled="button.disabled">{{button.text}}<span data-ng-show="button.timer"> ({{button.timer}})</span></button>' +
             '</div>' +
             '<div class="ng-confirm-clear">' +
             '</div>' +
@@ -56,8 +80,6 @@ angular.module('cp.ngConfirm', [
             '</div>' +
             '</div>' +
             '';
-
-        return {'default': template};
     })
     .service('$ngConfirmDefaults', function () {
         return {
@@ -137,7 +159,7 @@ angular.module('cp.ngConfirm', [
             }
         }
     ])
-    .factory('$ngConfirm', [
+    .service('$ngConfirm', [
         '$rootScope',
         '$ngConfirmDefaults',
         '$ngConfirmBase',
@@ -169,7 +191,7 @@ angular.module('cp.ngConfirm', [
                 options = angular.extend({}, $ngConfirmDefaults, options);
 
                 var obj = new $ngConfirmBase(options);
-                $ngConfirmGlobal.instances.push(obj);
+                // $ngConfirmGlobal.instances.push(obj);
                 return obj;
             };
 
@@ -188,81 +210,70 @@ angular.module('cp.ngConfirm', [
         '$q',
         function ($rootScope, $ngConfirmDefaults, $timeout, $compile, $ngConfirmTemplate, $interval, $templateRequest, $log, $q) {
             var ngConfirmBase = function (options) {
-                /*
-                 Merge up the options with the object !
-                 */
                 angular.extend(this, options);
                 this._init();
             };
 
             ngConfirmBase.prototype = {
                 _init: function () {
-                    var that = this;
-
                     this._lastFocused = angular.element('body').find(':focus');
                     this._id = Math.round(Math.random() * 999999);
-                    $timeout(function () {
-                        that.open();
-                    }, 0);
+                    this.open();
                 },
+                _providedScope: false, // has the user provided a scope.
                 _prepare: function () {
                     var that = this;
 
-                    // This is angular-confirm's scope. this is destroyed on close.
-                    this._scope = $rootScope.$new();
-                    this.$el = $compile($ngConfirmTemplate['default'])(this._scope);
-                    this._scope.ngc = this;
+                    this.$el = angular.element($ngConfirmTemplate['default']);
 
-                    // This is the scope that the user provided, the content is to be bind to this scope.
-                    if (!that.scope)
+                    // Has the user provided us with the scope.
+                    if (that.scope) {
+                        this._providedScope = true;
+                    } else {
+                        this._providedScope = false;
                         that.scope = $rootScope.$new();
-                    that.scope.ngc = this;
+                    }
 
-                    this._parseAnimation(this.animation, 'o');
-                    this._parseAnimation(this.closeAnimation, 'c');
-                    this._parseBgDismissAnimation(this.backgroundDismissAnimation);
-                    this._parseTheme(this.theme);
-                    this._parseButtons();
-                    this._parseType(this.type);
-                    this._parseColumnClass(this.columnClass);
+                    // Parse the options the user gave us.
 
+                    // Dom elements
                     this.$confirmBox = this.$el.find('.ng-confirm-box');
                     this.$titleContainer = this.$el.find('.ng-confirm-title-c');
+                    this.$title = this.$el.find('.ng-confirm-title');
+                    this.$icon = this.$el.find('.ng-confirm-icon-c');
                     this.$content = this.$el.find('.ng-confirm-content');
                     this.$confirmBg = this.$el.find('.ng-confirm-bg');
                     this.$contentPane = this.$el.find('.ng-confirm-content-pane');
                     this.$confirmContainer = this.$el.find('.ng-confirm-box-container');
-
-                    this.$confirmBox.addClass(this.animationParsed).addClass(this.backgroundDismissAnimationParsed);
-                    this.$el.addClass(this.typeParsed);
-                    if (this.typeAnimated)
-                        this.$confirmBox.addClass('ng-confirm-type-animated');
-
-                    if (this.useBootstrap) {
-                        this.$el.find('.ng-bs3-row').addClass(this.bootstrapClasses.row);
-                        this.$confirmBox.addClass(this.columnClassParsed);
-                        if (this.containerFluid)
-                            this.$el.find('.ng-bs3-container').addClass(this.bootstrapClasses.containerFluid);
-                        else
-                            this.$el.find('.ng-bs3-container').addClass(this.bootstrapClasses.container);
-                    } else {
-                        this.$confirmBox.css('width', this.boxWidth).css('margin-left', 'auto').css('margin-right', 'auto');
-                    }
-
-                    if (this.titleClass)
-                        this.$titleContainer.addClass(this.titleClass);
-
-                    this.$el.addClass(this.themeParsed);
+                    this.$closeIcon = this.$el.find('.ng-confirm-closeIcon');
+                    this.$bs3Container = this.$el.find('.ng-bs3-container');
+                    this.$buttonContainer = this.$el.find('.ng-confirm-buttons');
+                    this.$scrollPane = this.$el.find('.ng-confirm-scrollpane');
 
                     var ariaLabel = 'ng-confirm-box' + this._id;
                     this.$confirmBox.attr('aria-labelledby', ariaLabel);
                     this.$content.attr('id', ariaLabel);
 
-                    if (this.bgOpacity != null)
-                        this.$confirmBg.css('opacity', this.bgOpacity);
+                    this._setAnimationClass(this.animation);
+                    this.setDismissAnimation(this.backgroundDismissAnimation);
+                    this.setTheme(this.theme);
+                    this.setType(this.type);
+                    this._setButtons(this.buttons);
+                    this.setCloseIcon(this.closeIcon);
 
-                    if (this.rtl)
-                        this.$el.addClass('ng-confirm-rtl');
+                    this.setTypeAnimated(this.typeAnimated);
+                    if (this.useBootstrap) {
+                        this.setColumnClass(this.columnClass);
+                        this.$el.find('.ng-bs3-row').addClass(this.bootstrapClasses.row);
+                        this.setContainerFluid(this.containerFluid);
+                    } else {
+                        this.setBoxWidth(this.boxWidth);
+                    }
+                    this.setTitleClass(this.titleClass);
+                    this.setTitle(this.title);
+                    this.setIcon(this.icon);
+                    this.setBgOpacity(this.bgOpacity);
+                    this.setRtl(this.rtl);
 
                     this._contentReady = $q.defer();
                     this._modalReady = $q.defer();
@@ -272,20 +283,19 @@ angular.module('cp.ngConfirm', [
                             that.setContent(that.content);
                             that.loading(false);
                         }
-                        if(typeof that.onReady == 'function'){
+                        if (typeof that.onReady == 'function') {
                             that.onReady.apply(that, [that.scope]);
                         }
                     });
 
-                    if (that.contentUrl) {
-                        that.loading(true);
-                        that.isAjax = true;
-                        var contentUrl = that.contentUrl;
-                        if (typeof that.contentUrl == 'function')
-                            contentUrl = that.contentUrl();
+                    if (this.contentUrl) {
+                        this.loading(true);
+                        this.isAjax = true;
+                        var contentUrl = this.contentUrl;
+                        if (typeof this.contentUrl == 'function')
+                            contentUrl = this.contentUrl();
 
-                        that.loading(true);
-                        that.isAjaxLoading = true;
+                        this.isAjaxLoading = true;
                         $templateRequest(contentUrl).then(function (html) {
                             that.content = html;
                             that._contentReady.resolve();
@@ -296,17 +306,16 @@ angular.module('cp.ngConfirm', [
                             that.isAjaxLoading = false;
                         });
                     } else {
-                        var content = that.content;
-                        if (typeof that.content == 'function')
-                            content = that.content();
+                        var content = this.content;
+                        if (typeof this.content == 'function')
+                            content = this.content();
 
-                        that.content = content;
-                        that.setContent(that.content);
-                        that._contentReady.resolve();
+                        this.content = content;
+                        this.setContent(this.content);
+                        this._contentReady.resolve();
                     }
 
-
-                    this._watchContent();
+                    // this._watchContent();
 
                     if (this.animation == 'none') {
                         this.animationSpeed = 1;
@@ -318,16 +327,27 @@ angular.module('cp.ngConfirm', [
                 isAjax: false,
                 isAjaxLoading: false,
                 isLoading: false,
+                _hideClass: 'ng-confirm-el-hide',
+                _loadingClass: 'ng-confirm-loading',
+                /**
+                 * Shows the loading spinner
+                 * @param show
+                 */
                 loading: function (show) {
                     this.isLoading = show;
                     if (show)
-                        this.$confirmBox.addClass('ng-confirm-loading');
+                        this.$confirmBox.addClass(this._loadingClass);
                     else
-                        this.$confirmBox.removeClass('ng-confirm-loading');
+                        this.$confirmBox.removeClass(this._loadingClass);
                 },
+                /**
+                 * Set content to DOM.
+                 * @param contentHtml
+                 * @private
+                 */
                 setContent: function (contentHtml) {
                     if (!this.$content) {
-                        console.error('Attempted to set content before $content is defined');
+                        $log.error('Attempted to set content before $content is defined');
                         return;
                     }
                     contentHtml = "<div>" + contentHtml + "</div>";
@@ -336,16 +356,86 @@ angular.module('cp.ngConfirm', [
                 },
                 _typeList: ['default', 'blue', 'green', 'red', 'orange', 'purple', 'dark'],
                 _typePrefix: 'ng-confirm-type-',
-                typeParsed: '',
-                _parseType: function (type) {
+                _pSetType: '',
+                /**
+                 * Set the type class
+                 * @param type
+                 * @returns {boolean}
+                 */
+                setType: function (type) {
                     if (this._typeList.indexOf(type.toLowerCase()) == -1) {
-                        console.warn('Invalid dialog type: ' + type);
+                        $log.warn('Invalid dialog type: ' + type);
+                        return false;
                     } else {
-                        this.typeParsed = this._typePrefix + type;
+                        var c = this._typePrefix + type;
+                        this.$el.removeClass(this._pSetType).addClass(c);
+                        this._pSetType = c;
                     }
                 },
-                columnClassParsed: '',
-                _parseColumnClass: function (colClass) {
+                _setTypeAnimatedClass: 'ng-confirm-type-animated',
+                /**
+                 * Adds or removes the type animated class
+                 * @param state
+                 */
+                setTypeAnimated: function (state) {
+                    if (state)
+                        this.$confirmBox.addClass(this._setTypeAnimatedClass);
+                    else
+                        this.$confirmBox.removeClass(this._setTypeAnimatedClass);
+                },
+                _pTitleClass: '',
+                /**
+                 * Sets the title class or classes
+                 * @param str
+                 */
+                setTitleClass: function (str) {
+                    this.$titleContainer.removeClass(this._pTitleClass).addClass(str);
+                    this._pTitleClass = str;
+                },
+                /**
+                 * Sets box width,
+                 * requires useBootstrap to be false.
+                 * @param units
+                 */
+                setBoxWidth: function (units) {
+                    if (this.useBootstrap) {
+                        $log.warn('Cannot set boxWidth as useBootstrap is set to true. use columnClass instead.');
+                        return;
+                    }
+
+                    this.$confirmBox.css('width', units);
+                },
+                /**
+                 * Set the container class as fluid or not.
+                 * requires useBootstrap to be true
+                 * @param state
+                 */
+                setContainerFluid: function (state) {
+                    if (!this.useBootstrap) {
+                        $log.warn('Cannot set containerFluid as useBootstrap is set to false.');
+                        return;
+                    }
+
+                    if (state) {
+                        this.$bs3Container.removeClass(this.bootstrapClasses.container)
+                            .addClass(this.bootstrapClasses.containerFluid);
+                    } else {
+                        this.$bs3Container.removeClass(this.bootstrapClasses.containerFluid)
+                            .addClass(this.bootstrapClasses.container);
+                    }
+                },
+                _pSetColumnClass: '',
+                /**
+                 * Sets the columnClass class
+                 * requires useBootstrap to be true
+                 * @param colClass
+                 */
+                setColumnClass: function (colClass) {
+                    if (!this.useBootstrap) {
+                        $log.warn('Cannot set columnClass as useBootstrap is set to false, use bixWidth instead');
+                        return;
+                    }
+
                     colClass = colClass.toLowerCase();
                     var p;
                     switch (colClass) {
@@ -373,78 +463,229 @@ angular.module('cp.ngConfirm', [
                             p = colClass;
                     }
 
-                    this.columnClassParsed = p;
+                    this.$confirmBox.removeClass(this._pSetColumnClass).addClass(p);
+                    this._pSetColumnClass = p;
                 },
-                animationParsed: '',
-                closeAnimationParsed: '',
-                _animationPrefix: 'ng-confirm-animation-',
-                _parseAnimation: function (animation, which) { // ready
-                    which = which || 'o';
-                    var animations = animation.split(',');
-                    var that = this;
-                    angular.forEach(animations, function (a, k) {
-                        if (a.indexOf(that._animationPrefix) == -1)
-                            animations[k] = that._animationPrefix + a.trim();
-                    })
-                    var a_string = animations.join(' ').toLowerCase();
-                    if (which == 'o')
-                        this.animationParsed = a_string;
+                /**
+                 * Set icon for the modal.
+                 * @param iconClass
+                 */
+                setIcon: function (iconClass) {
+                    if (typeof iconClass == 'function')
+                        iconClass = iconClass();
+
+                    if (iconClass) {
+                        this.$icon.html(angular.element('<i></i>').addClass(iconClass));
+                        this.$icon.removeClass(this._hideClass);
+                    } else {
+                        this.$icon.addClass(this._hideClass);
+                    }
+
+                    if (this.icon || this.title) {
+                        this.$titleContainer.removeClass(this._hideClass);
+                    } else {
+                        this.$titleContainer.addClass(this._hideClass);
+                    }
+                },
+                /**
+                 * set the title of the modal
+                 * @param str
+                 */
+                setTitle: function (str) {
+                    if (typeof str == 'function')
+                        str = str();
+
+                    if (str) {
+                        this.$title.html(str);
+                        this.$title.removeClass(this._hideClass);
+                    } else {
+                        this.$title.addClass(this._hideClass);
+                    }
+
+                    if (this.icon || this.title) {
+                        this.$titleContainer.removeClass(this._hideClass);
+                    } else {
+                        this.$titleContainer.addClass(this._hideClass);
+                    }
+                },
+                /**
+                 * Set the visibility of the close icon
+                 * Will be visible if button count is 0 and closeIcon is null
+                 * @param strFunc
+                 */
+                setCloseIcon: function (strFunc) {
+                    if (this._buttonCount == 0 && strFunc == null)
+                        strFunc = true;
+
+                    if (!!strFunc)
+                        this.$closeIcon.removeClass(this._hideClass);
                     else
-                        this.closeAnimationParsed = a_string;
+                        this.$closeIcon.addClass(this._hideClass);
 
-                    return a_string;
+                    this.closeIcon = strFunc;
                 },
-                backgroundDismissAnimationParsed: '',
+                _animationPrefix: 'ng-confirm-animation-',
+                _pSetAnimation: '',
+                /**
+                 * Set the start and end animations
+                 * @param animation
+                 * @private
+                 */
+                _setAnimationClass: function (animation) {
+                    var c = this._prefixThis(animation, this._animationPrefix);
+                    // remove the previously set animation and add the new one.
+                    this.$confirmBox.removeClass(this._pSetAnimation).addClass(c);
+                    this._pSetAnimation = c;
+                },
+                _removeAnimationClass: function () {
+                    this.$confirmBox.removeClass(this._pSetAnimation);
+                    this._pSetAnimation = '';
+                },
                 _bgDismissPrefix: 'ng-confirm-hilight-',
-                _parseBgDismissAnimation: function (bgDismissAnimation) { // ready
-                    var animation = bgDismissAnimation.split(',');
-                    var that = this;
-                    angular.forEach(animation, function (a, k) {
-                        if (a.indexOf(that._bgDismissPrefix) == -1)
-                            animation[k] = that._bgDismissPrefix + a.trim();
-                    });
-                    this.backgroundDismissAnimationParsed = animation.join(' ').toLowerCase();
+                _pSetDismissAnimation: '',
+                /**
+                 * Set the dismiss animations class
+                 * @param animation
+                 */
+                setDismissAnimation: function (animation) {
+                    var c = this._prefixThis(animation, this._bgDismissPrefix);
+                    this.$confirmBox.removeClass(this._pSetDismissAnimation)
+                        .addClass(c);
+                    this._pSetDismissAnimation = c;
                 },
-                _parseButtons: function () { // ready
-                    var that = this;
+                /**
+                 * Prefix the strings with the given prefix,
+                 * make no changes if its already prefixed.
+                 * @param str
+                 * @param pr
+                 * @returns {string}
+                 * @private
+                 */
+                _prefixThis: function (str, pr) {
+                    str = str.split(',');
+                    angular.forEach(str, function (a, k) {
+                        if (a.indexOf(pr) == -1)
+                            str[k] = pr + a.trim();
+                    });
+                    return str.join(' ').toLowerCase();
+                },
+                /**
+                 * Parses the buttons and sets in the ngConfirm _scope.
+                 * PLACED IN NG CONFIRM SCOPE.
+                 *
+                 * Setting buttons
+                 * The user cannot add or remove buttons in run time.
+                 * The user can however change the buttons properties.
+                 *
+                 * @param buttons
+                 * @private
+                 */
+                _setButtons: function (buttons) {
+                    var self = this;
+                    if (typeof buttons != 'object')
+                        buttons = {};
 
-                    if (typeof this.buttons != 'object')
-                        this.buttons = {};
-
-                    angular.forEach(this.buttons, function (button, key) {
+                    angular.forEach(buttons, function (button, key) {
                         if (typeof button === 'function') {
-                            that.buttons[key] = button = {
+                            buttons[key] = button = {
                                 action: button
                             };
                         }
 
-                        that.buttons[key].text = button.text || key;
-                        that.buttons[key].btnClass = button.btnClass || 'btn-default';
-                        that.buttons[key].action = button.action || angular.noop;
-                        that.buttons[key].keys = button.keys || [];
-                        that.buttons[key].disabled = button.disabled || false;
+                        buttons[key].text = button.text || key;
+                        buttons[key].btnClass = button.btnClass || 'btn-default';
+                        buttons[key].action = button.action || angular.noop;
+                        buttons[key].keys = button.keys || [];
+                        buttons[key].disabled = button.disabled || false;
                         if (typeof button.show == 'undefined')
                             button.show = true;
-                        that.buttons[key].show = button.show;
+                        buttons[key].show = button.show;
 
-                        angular.forEach(that.buttons[key].keys, function (a, i) {
-                            that.buttons[key].keys[i] = a.toLowerCase();
+                        angular.forEach(buttons[key].keys, function (a, i) {
+                            buttons[key].keys[i] = a.toLowerCase();
                         });
+
+                        var button_el = angular.element('<button type="button" class="btn"><span class="ng-confirm-btn-text"></span></button>');
+                        button_el.addClass(buttons[key].btnClass);
+                        if (buttons[key].disabled)
+                            button_el.attr('disabled', 'disabled');
+                        button_el.html(buttons[key].text);
+                        if (!buttons[key].show) {
+                            button_el.css('display', 'none');
+                        } else {
+                            button_el.css('display', 'inline-block');
+                        }
+
+                        buttons[key].setText = function (text) {
+                            button_el.find('.ng-confirm-btn-text').html(text);
+                        };
+                        buttons[key].setBtnClass = function (btnClass) {
+                            button_el.removeClass(buttons[key].btnClass).addCass(btnClass);
+                            buttons[key].btnClass = btnClass;
+                        };
+                        buttons[key].setDisabled = function (state) {
+                            if (state)
+                                button_el.attr('disabled', 'disabled');
+                            else
+                                button_el.removeAttr('disabled');
+                            buttons[key].disabled = disabled;
+                        };
+                        buttons[key].setShow = function (state) {
+                            if (state)
+                                button_el.removeClass(this._hideClass);
+                            else
+                                button_el.addClass(this._hideClass);
+                            buttons[key].show = show;
+                        };
+
+                        button_el.click(function (e) {
+                            e.preventDefault();
+                            self.triggerButton(key);
+                        });
+
+                        buttons[key].el = button_el;
+
+                        $log.log(button_el, self.$buttonContainer);
+                        self.$buttonContainer.append(button_el);
                     });
 
-                    if (Object.keys(this.buttons).length == 0 && this.closeIcon === null)
-                        this.closeIcon = true;
+                    this.buttons = buttons;
+                    this._buttonCount = Object.keys(buttons).length;
                 },
+                /**
+                 * Buttons in the model.
+                 */
+                _buttonCount: 0,
                 _themePrefix: 'ng-confirm-',
-                themeParsed: '',
-                _parseTheme: function (theme) { // done
-                    var that = this;
-                    var themes = theme.split(',');
-                    angular.forEach(themes, function (theme, i) {
-                        if (theme.indexOf(that._themePrefix) == -1)
-                            themes[i] = that._themePrefix + theme.trim();
-                    });
-                    this.themeParsed = themes.join(' ').toLowerCase();
+                _pSetTheme: '',
+                /**
+                 * sets the theme class
+                 * @param theme
+                 * @returns {string}
+                 */
+                setTheme: function (theme) {
+                    var c = this._prefixThis(theme, this._themePrefix);
+                    this.$el.removeClass(this._pSetTheme).addClass(c);
+                    this._pSetTheme = c;
+                },
+                _rtlClass: 'ng-confirm-rtl',
+                /**
+                 * sets and removes the Right to left class
+                 * @param state
+                 */
+                setRtl: function (state) {
+                    if (state)
+                        this.$el.addClass(this._rtlClass);
+                    else
+                        this.$el.removeClass(this._rtlClass);
+                },
+                /**
+                 * Sets the background opacity.
+                 * @param opacity
+                 */
+                setBgOpacity: function (opacity) {
+                    if (opacity)
+                        this.$confirmBg.css('opacity', opacity);
                 },
                 _cubic_bezier: '0.36, 0.55, 0.19',
                 _getCSS: function (speed, bounce) {
@@ -455,89 +696,55 @@ angular.module('cp.ngConfirm', [
                         'transition-timing-function': 'cubic-bezier(' + this._cubic_bezier + ', ' + bounce + ')'
                     }
                 },
-                _hash: function (hash) {
-                    return btoa((encodeURIComponent(hash)));
-                },
-                _watchContent: function () {
-                    var that = this;
-
-                    that._contentHash = this._hash(angular.element('<div>').append(that.$el.clone()).html());
-                    that._contentHeight = this.$content.height();
-
-                    if (this._watchTimer) clearInterval(this._watchTimer);
-                    this._watchTimer = $interval(function () {
-                        var now = that._hash(angular.element('<div>').append(that.$el.clone()).html());
-                        var nowHeight = that.$content.height();
-                        if (that._contentHash != now || that._contentHeight != nowHeight) {
-                            that._contentHash = now;
-                            that._contentHeight = nowHeight;
-                            that.setDialogCenter('watchContent');
-                        }
-                    }, this.watchInterval);
-                },
-                _unwatchContent: function () {
-                    clearInterval(this._watchTimer);
-                },
-                _bindEvents: function () {
-                    var that = this;
-                    this._scope.$watch('[ngc.alignMiddle, ngc.offsetTop, ngc.offsetBottom]', function () {
-                        that.setDialogCenter('bindEvents');
-                    });
-                    var previousType = null;
-                    this._scope.$watch('ngc.type', function () {
-                        that._parseType(that.type);
-                        if (previousType != null)
-                            that.$el.removeClass(previousType);
-                        that.$el.addClass(that.typeParsed);
-                        previousType = that.typeParsed;
-                    });
-                    this._scope.$watch('ngc.typeAnimated', function () {
-                        if (that.typeAnimated)
-                            that.$el.addClass('ng-confirm-type-animated');
-                        else
-                            that.$el.removeClass('ng-confirm-type-animated');
-                    });
-
-                    this._scope.$watch('ngc.rtl', function () {
-                        if (that.rtl)
-                            that.$el.addClass('ng-confirm-rtl');
-                        else
-                            that.$el.removeClass('ng-confirm-rtl');
-                    });
-
-                    var previousTheme = null;
-                    this._scope.$watch('ngc.theme', function () {
-                        that._parseTheme(that.theme);
-                        if (previousType != null)
-                            that.$el.removeClass(previousTheme);
-                        that.$el.addClass(that.themeParsed);
-                        previousTheme = that.themeParsed;
-                        that.setDialogCenter('bindEvents:theme');
-                    });
-
-                    if (this.useBootstrap) {
-                        this._scope.$watch('ngc.columnClass', function () {
-                            var pCol = that.columnClassParsed;
-                            that._parseColumnClass(that.columnClass);
-                            if (pCol != null)
-                                that.$confirmBox.removeClass(pCol);
-                            that.$confirmBox.addClass(that.columnClassParsed);
-                        });
-                    } else {
-                        this._scope.$watch('ngc.boxWidth', function () {
-                            that.$confirmBox.css('width', that.boxWidth);
-                        });
+                _hash: function (str) {
+                    var string = str.toString();
+                    var hash = 0;
+                    if (string.length == 0) return hash;
+                    for (var i = 0; i < string.length; i++) {
+                        var char = string.charCodeAt(i);
+                        hash = ((hash << 5) - hash) + char;
+                        hash = hash & hash; // Convert to 32bit integer
                     }
-                    angular.element(window).on('resize.' + that._id, function () {
-                        that.setDialogCenter('Window Resize');
+                    return hash;
+                },
+                _digestWatchUnRegister: false,
+                /**
+                 * Bind all events.
+                 *
+                 * @returns {boolean}
+                 * @private
+                 */
+                _bindEvents: function () {
+                    var self = this;
+                    // bind to scope digest
+                    this._digestWatchUnRegister = this.scope.$watch(function () {
+                        $log.log('Digest called');
+                        self.setDialogCenter('Digest watcher');
                     });
-                    angular.element(window).on('keyup.' + that._id, function (e) {
-                        that._reactOnKey(e);
+                    this.$closeIcon.on('click.' + self._id, function () {
+                        self._closeClick();
+                    });
+                    angular.element(window).on('resize.' + self._id, function () {
+                        self.setDialogCenter('Window Resize');
+                    });
+                    angular.element(window).on('keyup.' + self._id, function (e) {
+                        self._reactOnKey(e);
+                    });
+                    this.$scrollPane.on('click', function () {
+                        $log.log('scrollPanel clicked');
+                        self._scrollPaneClick();
+                    });
+                    this.$confirmBox.on('click', function () {
+                        $log.log('box clicked');
+                        self.boxClicked = true;
                     });
                 },
                 _unBindEvents: function () {
                     angular.element(window).off('resize.' + this._id);
                     angular.element(window).off('keyup.' + this._id);
+                    this.$closeIcon.off('click.' + this._id);
+                    if (this._digestWatchUnRegister)
+                        this._digestWatchUnRegister();
                 },
                 _reactOnKey: function (e) {
                     var that = this;
@@ -568,7 +775,7 @@ angular.module('cp.ngConfirm', [
 
                             if (buttonName) {
                                 if (!angular.isDefined(this.buttons[buttonName])) {
-                                    console.warn('Invalid escapeKey, no buttons found with name ' + buttonName);
+                                    $log.warn('Invalid escapeKey, no buttons found with name ' + buttonName);
                                 } else {
                                     this._buttonClick(buttonName);
                                 }
@@ -581,20 +788,15 @@ angular.module('cp.ngConfirm', [
                             that._buttonClick(key);
                     })
                 },
-                _ngBoxClick: function () {
-                    this.boxClicked = true;
-                },
                 _scrollPaneClick: function () {
                     if (this.boxClicked) {
                         this.boxClicked = false;
                         return false;
                     }
 
-
                     var buttonName = false;
                     var shouldClose = false;
                     var str;
-
 
                     if (typeof this.backgroundDismiss == 'function')
                         str = this.backgroundDismiss();
@@ -618,8 +820,12 @@ angular.module('cp.ngConfirm', [
                     if (shouldClose)
                         this.close();
                     else
-                        this._hiLightModal();
+                        this.hiLightModal();
                 },
+                /**
+                 * Called when close button is clicked.
+                 * @private
+                 */
                 _closeClick: function () {
                     var buttonName = false;
                     var shouldClose = false;
@@ -649,16 +855,30 @@ angular.module('cp.ngConfirm', [
                     }
                 },
                 _hilightAnimating: false,
-                _hiLightModal: function () {
-                    var that = this;
-                    if (this.hiLight)
+                _hilightClass: 'ng-confirm-hilight',
+                /**
+                 * Hilight the modal.
+                 * Whatever animation that is given to it.
+                 */
+                hiLightModal: function () {
+                    var self = this;
+                    if (this._hilightAnimating)
                         return;
 
-                    this.hiLight = true;
-                    $timeout(function () {
-                        that.hiLight = false;
-                    }, 800);
+                    this._hilightAnimating = true;
+                    this.$confirmBox.addClass(this._hilightClass);
+                    setTimeout(function () {
+                        self._hilightAnimating = false;
+                        self.$confirmBox.removeClass(self._hilightClass);
+                    }, this.animationSpeed);
                 },
+                /**
+                 * Button click function
+                 *
+                 * @param buttonKey
+                 * @returns {*}
+                 * @private
+                 */
                 _buttonClick: function (buttonKey) {
                     var res = this.buttons[buttonKey].action.apply(this, [this.scope, this.buttons[buttonKey]]);
                     if (typeof this.onAction === 'function')
@@ -666,14 +886,24 @@ angular.module('cp.ngConfirm', [
 
                     if (typeof res === 'undefined' || res)
                         this.close();
+                    else
+                        this.scope.$apply(); // if there are changes in the scope. apply it
+
 
                     return res;
                 },
+                /**
+                 * Alias for _buttonClick
+                 * Available for triggering buttons.
+                 *
+                 * @param buttonKey
+                 * @returns {*}
+                 */
                 triggerButton: function (buttonKey) {
                     return this._buttonClick(buttonKey);
                 },
                 setDialogCenter: function (where) {
-                    where = where || 'n/a';
+                    where = where || 'n/a'; // for debug
                     var $content = this.$content;
                     var contentHeight = $content.outerHeight();
                     var contentPaneHeight = this.$contentPane.outerHeight();
@@ -716,7 +946,7 @@ angular.module('cp.ngConfirm', [
                     this.$confirmBox.css(style);
                 },
                 _getKey: function (key) {
-                    // very necessary keys.
+                    // special keys.
                     switch (key) {
                         case 192:
                             return 'tilde';
@@ -755,64 +985,69 @@ angular.module('cp.ngConfirm', [
                     return true;
                 },
                 _open: function () {
-                    var that = this;
+                    var self = this;
 
-                    if (typeof that.onOpenBefore == 'function')
-                        that.onOpenBefore.apply(that, [that.scope]);
+                    if (typeof this.onOpenBefore == 'function')
+                        this.onOpenBefore.apply(this, [this.scope]);
 
-                    // console.log(that.$el.html());
-                    angular.element(that.container).append(that.$el);
-                    that.setDialogCenter('_open');
+                    angular.element(this.container).append(this.$el);
+                    self.setDialogCenter('_open');
 
-                    $timeout(function () {
-                        // console.log(that.$el.html());
-                        that.$contentPane.css(that._getCSS(that.animationSpeed, 1));
-                        that.$confirmBox.css(that._getCSS(that.animationSpeed, that.animationBounce));
-                        that.$confirmBox.removeClass(that.animationParsed);
-                        that.$confirmBg.removeClass('ng-confirm-bg-h');
-                        that.$confirmBox.focus();
-                        $timeout(function () {
-                            that._bindEvents();
-                            that.$confirmBox.css(that._getCSS(that.animationSpeed, 1));
-                            that._modalReady.resolve();
-                            if (typeof that.onOpen === 'function')
-                                that.onOpen.apply(that, [that.scope]);
+                    setTimeout(function () {
+                        // console.log(self.$el.html());
+                        self.$contentPane.css(self._getCSS(self.animationSpeed, 1));
+                        self.$confirmBox.css(self._getCSS(self.animationSpeed, self.animationBounce));
+                        self._removeAnimationClass();
+                        self.$confirmBg.removeClass('ng-confirm-bg-h');
+                        self.$confirmBox.focus();
 
-                            that._startCountDown();
-                        }, that.animationSpeed);
+                        setTimeout(function () {
+                            self._bindEvents();
+                            self.$confirmBox.css(self._getCSS(self.animationSpeed, 1));
+                            self._modalReady.resolve();
+
+                            if (typeof self.onOpen === 'function')
+                                self.onOpen.apply(self, [self.scope]);
+
+                            self._startCountDown();
+                        }, self.animationSpeed);
                     }, 100);
                 },
+                _autoCloseKey: false,
+                _autoCloseInterval: 0,
                 _startCountDown: function () {
-                    var that = this;
+                    var self = this;
                     if (typeof this.autoClose != 'string') return;
                     var opt = this.autoClose.split('|');
                     if (opt.length != 2) {
-                        $log.error('Invalid option for autoClose. example \'close|10000\'');
+                        $log.error("Invalid option for autoClose. example 'close|10000'");
                         return;
                     }
-                    this.autoCloseKey = opt[0];
+
+                    this._autoCloseKey = opt[0];
                     var time = opt[1];
                     var sec = time / 1000;
 
-                    if (!angular.isDefined(this.buttons[this.autoCloseKey])) {
-                        $log.error('Auto close button "' + that.autoCloseKey + '" not defined.');
+                    if (!angular.isDefined(this.buttons[this._autoCloseKey])) {
+                        $log.error('Auto close button "' + self._autoCloseKey + '" not defined.');
                         return;
                     }
 
-                    that.buttons[that.autoCloseKey].timer = sec;
-                    this.autoCloseInterval = $interval(function () {
-                        that.buttons[that.autoCloseKey].timer = --sec;
+                    var timer_el = angular.element('<span class="ng-confirm-timer"></span>');
+                    this.buttons[this._autoCloseKey].el.append(timer_el);
+
+                    this._autoCloseInterval = setInterval(function () {
+                        var s = sec ? " (" + (--sec) + ")" : "";
+                        timer_el.html(s);
                         if (sec < 1) {
-                            that._stopCountDown();
-                            that._buttonClick(that.autoCloseKey);
+                            self._stopCountDown();
+                            self._buttonClick(self._autoCloseKey);
                         }
                     }, 1000);
                 },
                 _stopCountDown: function () {
-                    if (angular.isDefined(this.autoCloseInterval)) {
-                        $interval.cancel(this.autoCloseInterval);
-                        this.autoCloseInterval = undefined;
-                        this.buttons[this.autoCloseKey].timer = false;
+                    if (this._autoCloseInterval) {
+                        clearInterval(this._autoCloseInterval);
                     }
                 },
                 closed: false,
@@ -823,28 +1058,29 @@ angular.module('cp.ngConfirm', [
                     return !this.closed;
                 },
                 close: function () {
-                    var that = this;
+                    var self = this;
                     if (typeof this.onClose === 'function')
                         this.onClose.apply(this, [this.scope]);
 
-                    this._unwatchContent();
                     this._unBindEvents();
                     this._stopCountDown();
 
-                    this.$confirmBox.addClass(this.closeAnimationParsed);
+                    this._setAnimationClass(this.closeAnimation);
                     this.$confirmBg.addClass('ng-confirm-bg-h');
                     var closeTimer = this.animationSpeed * .4;
 
-                    $timeout(function () {
-                        that._lastFocused.focus();
-                        that.closed = true;
-                        that.$el.remove();
-                        that._scope.$destroy();
+                    setTimeout(function () {
+                        self.$el.remove();
+                        self.closed = true;
+                        if (!self._providedScope)
+                            self.scope.$destroy();
 
-                        if (typeof that.onDestroy == 'function')
-                            that.onDestroy.apply(that, [that.scope]);
+                        if (typeof self.onDestroy == 'function')
+                            self.onDestroy.apply(self, [self.scope]);
 
-                        angular.element('body').removeClass('ng-confirm-no-scroll-' + that._id);
+                        angular.element('body').removeClass('ng-confirm-no-scroll-' + self._id);
+                        self._lastFocused.focus();
+                        self = undefined;
                     }, closeTimer);
 
                     return true;
