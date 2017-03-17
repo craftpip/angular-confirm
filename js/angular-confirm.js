@@ -36,6 +36,7 @@ angular.module('cp.ngConfirm', [
             '<div class="ng-confirm-scrollpane">' +
             '<div class="ng-bs3-container">' +
             '<div class="ng-bs3-row">' +
+            '<div class="ng-confirm-box-p">' +
             '<div class="ng-confirm-box" role="dialog" aria-labelledby="labelled" tabindex="-1">' +
             '<div class="ng-confirm-closeIcon"></div>' +
             '<div class="ng-confirm-title-c">' +
@@ -49,30 +50,6 @@ angular.module('cp.ngConfirm', [
             '</div>' +
             '<div class="ng-confirm-clear">' +
             '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '';
-        this.default2 = '<div class="ng-confirm">' +
-            '<div class="ng-confirm-bg ng-confirm-bg-h"></div>' +
-            '<div class="ng-confirm-scrollpane" data-ng-click="ngc._scrollPaneClick()">' +
-            '<div class="ng-bs3-container">' +
-            '<div class="ng-bs3-row">' +
-            '<div class="ng-confirm-box" data-ng-click="ngc._ngBoxClick()" data-ng-class="[{\'ng-confirm-hilight\': ngc.hiLight}]" role="dialog" aria-labelledby="labelled" tabindex="-1">' +
-            '<div class="ng-confirm-closeIcon" data-ng-show="ngc.closeIcon" data-ng-click="ngc._closeClick()"><span data-ng-if="!ngc.closeIconClass">&times;</span><i data-ng-class="ngc.closeIconClass" data-ng-if="ngc.closeIconClass"></i></div>' +
-            '<div class="ng-confirm-title-c" ng-if="ngc.icon || ngc.title">' +
-            '<span class="ng-confirm-icon-c" data-ng-if="ngc.icon"><i data-ng-class="ngc.icon"></i></span>' +
-            '<span class="ng-confirm-title" data-ng-show="ngc.title">{{ngc.title}}</span>' +
-            '</div>' +
-            '<div class="ng-confirm-content-pane" data-ng-style="ngc.styleContentPane">' +
-            '<div class="ng-confirm-content" data-ng-style="ngc.styleContent"></div>' +
-            '</div>' +
-            '<div class="ng-confirm-buttons">' +
-            '<button type="button" data-ng-repeat="(key, button) in buttons" data-ng-click="buttonClick(key)" class="btn" data-ng-class="button.btnClass" ng-show="button.show" ng-disabled="button.disabled">{{button.text}}<span data-ng-show="button.timer"> ({{button.timer}})</span></button>' +
-            '</div>' +
-            '<div class="ng-confirm-clear">' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -238,6 +215,7 @@ angular.module('cp.ngConfirm', [
 
                     // Dom elements
                     this.$confirmBox = this.$el.find('.ng-confirm-box');
+                    this.$confirmBoxParent = this.$el.find('.ng-confirm-box-p');
                     this.$titleContainer = this.$el.find('.ng-confirm-title-c');
                     this.$title = this.$el.find('.ng-confirm-title');
                     this.$icon = this.$el.find('.ng-confirm-icon-c');
@@ -466,7 +444,7 @@ angular.module('cp.ngConfirm', [
                             p = colClass;
                     }
 
-                    this.$confirmBox.removeClass(this._pSetColumnClass).addClass(p);
+                    this.$confirmBoxParent.removeClass(this._pSetColumnClass).addClass(p);
                     this._pSetColumnClass = p;
                 },
                 /**
@@ -644,10 +622,12 @@ angular.module('cp.ngConfirm', [
                             buttons[key].disabled = state;
                         };
                         buttons[key].setShow = function (state) {
+
                             if (state)
-                                button_el.addClass(this._hideClass);
+                                button_el.addClass(self._hideClass);
                             else
-                                button_el.removeClass(this._hideClass);
+                                button_el.removeClass(self._hideClass);
+
                             buttons[key].show = state;
                         };
 
@@ -658,7 +638,6 @@ angular.module('cp.ngConfirm', [
 
                         buttons[key].el = button_el;
 
-                        $log.log(button_el, self.$buttonContainer);
                         self.$buttonContainer.append(button_el);
                     });
 
@@ -744,11 +723,9 @@ angular.module('cp.ngConfirm', [
                         self._reactOnKey(e);
                     });
                     this.$scrollPane.on('click', function () {
-                        $log.log('scrollPanel clicked');
                         self._scrollPaneClick();
                     });
                     this.$confirmBox.on('click', function () {
-                        $log.log('box clicked');
                         self.boxClicked = true;
                     });
                 },
