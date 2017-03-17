@@ -265,7 +265,9 @@ angular.module('cp.ngConfirm', [
                     this.setTypeAnimated(this.typeAnimated);
                     if (this.useBootstrap) {
                         this.setColumnClass(this.columnClass);
-                        this.$el.find('.ng-bs3-row').addClass(this.bootstrapClasses.row);
+                        this.$el.find('.ng-bs3-row').addClass(this.bootstrapClasses.row)
+                            .addClass('justify-content-md-center justify-content-sm-center justify-content-xs-center justify-content-lg-center');
+
                         this.setContainerFluid(this.containerFluid);
                     } else {
                         this.setBoxWidth(this.boxWidth);

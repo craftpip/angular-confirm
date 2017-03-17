@@ -75,6 +75,8 @@ body[class*=ng-confirm-no-scroll-] {
   outline: none;
   padding: 15px 15px 0;
   overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
 }
 .ng-confirm .ng-confirm-box.ng-confirm-loading {
   min-height: 120px;
