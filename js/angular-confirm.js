@@ -92,7 +92,6 @@ angular.module('cp.ngConfirm', [
             autoClose: false,
             closeIcon: null,
             closeIconClass: false,
-            watchInterval: 100,
             columnClass: 'small',
             boxWidth: '50%',
             useBootstrap: true,
@@ -404,6 +403,8 @@ angular.module('cp.ngConfirm', [
                         this.$bs3Container.removeClass(this.bootstrapClasses.containerFluid)
                             .addClass(this.bootstrapClasses.container);
                     }
+
+                    this.containerFluid = state;
                 },
                 _pSetColumnClass: '',
                 /**
@@ -467,6 +468,8 @@ angular.module('cp.ngConfirm', [
                     } else {
                         this.$titleContainer.addClass(this._hideClass);
                     }
+
+                    this.icon = iconClass;
                 },
                 /**
                  * set the title of the modal
@@ -488,6 +491,8 @@ angular.module('cp.ngConfirm', [
                     } else {
                         this.$titleContainer.addClass(this._hideClass);
                     }
+
+                    this.title = str;
                 },
                 /**
                  * Set the visibility of the close icon
@@ -666,14 +671,16 @@ angular.module('cp.ngConfirm', [
                         this.$el.addClass(this._rtlClass);
                     else
                         this.$el.removeClass(this._rtlClass);
+
+                    this.rtl = state;
                 },
                 /**
                  * Sets the background opacity.
                  * @param opacity
                  */
                 setBgOpacity: function (opacity) {
-                    if (opacity)
-                        this.$confirmBg.css('opacity', opacity);
+                    this.$confirmBg.css('opacity', opacity);
+                    this.bgOpacity = opacity;
                 },
                 _cubic_bezier: '0.36, 0.55, 0.19',
                 _getCSS: function (speed, bounce) {

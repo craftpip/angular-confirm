@@ -146,7 +146,6 @@ body[class*=ng-confirm-no-scroll-] {
 .ng-confirm .ng-confirm-box div.ng-confirm-title-c .ng-confirm-icon-c {
   font-size: inherit;
   display: inline-block;
-  margin-right: 8px;
   vertical-align: top;
 }
 .ng-confirm .ng-confirm-box div.ng-confirm-title-c .ng-confirm-icon-c i {
@@ -638,6 +637,10 @@ body[class*=ng-confirm-no-scroll-] {
 .ng-confirm.ng-confirm-white .ng-confirm-bg {
   background-color: #444;
   opacity: .2;
+}
+.ng-confirm.ng-confirm-light .ng-confirm-icon-c,
+.ng-confirm.ng-confirm-white .ng-confirm-icon-c {
+  margin-right: 8px;
 }
 .ng-confirm.ng-confirm-light.ng-confirm-rtl .ng-confirm-closeIcon,
 .ng-confirm.ng-confirm-white.ng-confirm-rtl .ng-confirm-closeIcon {
