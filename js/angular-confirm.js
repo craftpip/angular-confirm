@@ -597,21 +597,13 @@ angular.module('cp.ngConfirm', [
                         });
 
                         var button_el = angular.element('<button type="button" class="btn"><span class="ng-confirm-btn-text"></span></button>');
-                        button_el.addClass(buttons[key].btnClass);
-                        if (buttons[key].disabled)
-                            button_el.attr('disabled', 'disabled');
-                        button_el.find('.ng-confirm-btn-text').html(buttons[key].text);
-                        if (!buttons[key].show) {
-                            button_el.css('display', 'none');
-                        } else {
-                            button_el.css('display', 'inline-block');
-                        }
+
 
                         buttons[key].setText = function (text) {
                             button_el.find('.ng-confirm-btn-text').html(text);
                         };
                         buttons[key].setBtnClass = function (btnClass) {
-                            button_el.removeClass(buttons[key].btnClass).addCass(btnClass);
+                            button_el.removeClass(buttons[key].btnClass).addClass(btnClass);
                             buttons[key].btnClass = btnClass;
                         };
                         buttons[key].setDisabled = function (state) {
@@ -622,14 +614,18 @@ angular.module('cp.ngConfirm', [
                             buttons[key].disabled = state;
                         };
                         buttons[key].setShow = function (state) {
-
                             if (state)
-                                button_el.addClass(self._hideClass);
-                            else
                                 button_el.removeClass(self._hideClass);
+                            else
+                                button_el.addClass(self._hideClass);
 
                             buttons[key].show = state;
                         };
+
+                        buttons[key].setText(buttons[key].text);
+                        buttons[key].setBtnClass(buttons[key].btnClass);
+                        buttons[key].setDisabled(buttons[key].disabled);
+                        buttons[key].setShow(buttons[key].show);
 
                         button_el.click(function (e) {
                             e.preventDefault();
