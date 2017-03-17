@@ -761,8 +761,10 @@ angular.module('cp.ngConfirm', [
                     var that = this;
 
                     var openedModals = angular.element('.ng-confirm');
-                    if (openedModals.eq(openedModals.length - 1)[0] !== this.$el[0])
+                    if (openedModals.eq(openedModals.length - 1)[0] !== this.$el[0]) {
+                        // if the event is called, and this modal is not the top most one, abort
                         return false;
+                    }
 
                     var key = e.which;
 
@@ -797,7 +799,7 @@ angular.module('cp.ngConfirm', [
                     angular.forEach(this.buttons, function (button, key) {
                         if (button.keys.indexOf(keyChar) != -1)
                             that._buttonClick(key);
-                    })
+                    });
                 },
                 _scrollPaneClick: function () {
                     if (this.boxClicked) {
