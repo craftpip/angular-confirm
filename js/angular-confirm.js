@@ -641,7 +641,7 @@ angular.module('cp.ngConfirm', [
                                 button_el.attr('disabled', 'disabled');
                             else
                                 button_el.removeAttr('disabled');
-                            buttons[key].disabled = disabled;
+                            buttons[key].disabled = state;
                         };
                         buttons[key].setShow = function (state) {
                             if (state)
