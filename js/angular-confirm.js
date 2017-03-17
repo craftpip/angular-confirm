@@ -648,7 +648,7 @@ angular.module('cp.ngConfirm', [
                                 button_el.addClass(this._hideClass);
                             else
                                 button_el.removeClass(this._hideClass);
-                            buttons[key].show = show;
+                            buttons[key].show = state;
                         };
 
                         button_el.click(function (e) {
