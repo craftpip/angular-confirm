@@ -329,9 +329,9 @@
                     <h3>Welcome to angular-confirm!</h3>
 
                     <p>
-                        Easy to use and highly flexible! <br/>
-                        A angular plugin that provides great set of features like,
-                        Auto-close, Ajax-loading, Themes, Animations and more. <br>
+                        The quickest way to build modals with angular <br/>
+                        angular-confirm manages the scope, you don't need to worry about anything, <br>
+                        so that you can throw in a template and render stuff right away. <br>
                         This project is a re-write of the <a href="https://github.com/craftpip/jquery-confirm">jquery-confirm</a> plugin
                     </p>
                     <a href="https://github.com/craftpip/angular-confirm/issues"
@@ -433,15 +433,13 @@
             </section>
 
 
-            <!--<section>-->
-            <!--<h2>Whats new <span style="color: #aaa">in v3.0.1</span></h2>-->
-            <!--<ul>-->
-            <!--<li>Support for namespaced bootstrap classes</li>-->
-            <!--<li>Jconfirm can be used without bootstrap</li>-->
-            <!--<li>Added type for modals (green/success, red/failure, orange/warning, etc)</li>-->
-            <!--</ul>-->
-            <!--</section>-->
-
+            <section>
+                <h2>Whats new <span style="color: #aaa">in v1.1.0</span></h2>
+                <ul>
+                    <li>Performance fixes</li>
+                    <li>Removed ngSanitize &amp; ngAnimate dependencies</li>
+                </ul>
+            </section>
 
             <!-- Installation -->
             <section id="getting-started">
@@ -456,20 +454,20 @@
                         Download the Latest version and use files in the <code>/dist/</code> folder.
                     </p>
 
-                    <!--<p>-->
-                        <!--<strong>via Bower:</strong>-->
-                        <!--<br>-->
-                        <!--<code>-->
-                            <!--$ bower install craftpip/angular-confirm-->
-                        <!--</code>-->
-                    <!--</p>-->
+                    <p>
+                        <strong>via Bower:</strong>
+                        <br>
+                        <code>
+                            $ bower install angular1-confirm
+                        </code>
+                    </p>
 
                     <!--<p>-->
-                        <!--<strong>via Npm:</strong>-->
-                        <!--<br>-->
-                        <!--<code>-->
-                            <!--$ npm install angular-confirm-->
-                        <!--</code>-->
+                    <!--<strong>via Npm:</strong>-->
+                    <!--<br>-->
+                    <!--<code>-->
+                    <!--$ npm install angular-confirm-->
+                    <!--</code>-->
                     <!--</p>-->
 
                     <p>
@@ -477,8 +475,6 @@
                     </p>
                     <ul>
                         <li>Angular >= 1.5</li>
-                        <li>Angular ngSanitize >= 1.5</li>
-                        <li>Angular ngAnimate >= 1.5</li>
                         <li>Bootstrap by Twitter >= v3 (optional, if you want to use responsive layouts)</li>
                         <li>jQuery library >= v1.8</li>
                     </ul>
@@ -515,8 +511,9 @@
                                 This pretty much explains how it works, content is the template that will be shown
                                 inside the popup.
                                 <br>
-                            <p class="text-warning">If $scope is not provided, ngConfirm will create a child scope from
-                                rootScope.</p>
+                            <p class="text-warning">
+                                If $scope is not provided, ngConfirm will create a child scope from
+                                rootScope & the created scope will be destroyed when modal is closed.</p>
                             </p>
                             <button ng-click="test()" class="btn btn-primary">test()</button>
                             <div class="space10"></div>
@@ -531,19 +528,19 @@
                 sayBoo: {
                     text: 'Say Booo',
                     btnClass: 'btn-blue',
-                    action: function($scope, button){
-                        $scope.name = 'Booo!!';
+                    action: function(scope, button){
+                        scope.name = 'Booo!!';
                         return false; // prevent close;
                     }
                 },
                 somethingElse: {
                     text: 'Something else',
                     btnClass: 'btn-orange',
-                    action: function($scope, button){
+                    action: function(scope, button){
                         $ngConfirm('You clicked on <strong>something else</strong>');
                     }
                 }
-                close: function($scope, button){
+                close: function(scope, button){
                     // closes the modal
                 },
             }
@@ -602,20 +599,20 @@ $ngConfirm('Content here', 'Title here', $scope);</code></pre>
                     </p>
                     <pre class="prettyprint linenums"><code class="html" ng-non-bindable>$ngConfirm({
     buttons: {
-        hello: function($scope, button){
+        hello: function(scope, button){
             // button action
         },
-        hey: function($scope, button){
-            button.disabled = true; // disable the current button.
-            button.text = 'heyyyy'; // change the current button text.
+        hey: function(scope, button){
+            button.setDisabled(true); // disable the current button.
+            button.setText('heyyyy'); // change the current button text.
             this.triggerButton('hello'); // this triggers the other button named hello.
-            this.buttons.heyThere.disabled = true; // disable the hello button.
+            this.buttons.heyThere.setDisabled(true); // disable the hello button.
         },
         heyThere: {
             text: 'Hey there!',
             btnClass: 'btn-blue',
             keys: ['enter', 'a'],
-            action: function($scope, button){
+            action: function(scope, button){
                 // button action
             }
         }
@@ -1847,10 +1844,10 @@ $ngConfirm({
     (function (i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
         i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
         a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
+            m = s.getElementsByTagName(o)[0];
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m)

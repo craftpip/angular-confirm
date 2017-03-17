@@ -11,9 +11,8 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirm',
         '$interval',
         '$ngConfirmDefaults',
-        '$ngConfirmGlobal',
         '$timeout',
-        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $timeout) {
             $scope.materialTheme = function () {
                 $ngConfirm({
                     title: 'Alert',
@@ -78,17 +77,16 @@ angular.module('application', ['cp.ngConfirm'])
                 $ngConfirm({
                     title: 'Alert alert!',
                     icon: 'fa fa-rocket',
-                    content: '<div>{{hey}}This is a simple alert <br>with some <strong>HTML</strong> contents</div>',
+                    content: '<div>This is a simple alert <br>with some <strong>HTML</strong> contents</div>' +
+                    '<div style="height: 10px;"></div>' +
+                    '<input type="text" class="form-control" placeholder="Type something" ng-model="textHere">' +
+                    '{{textHere}}',
                     animation: 'scale',
                     buttons: {
                         okay: {
                             btnClass: "btn-blue",
                         }
                     },
-                    scope: $scope,
-                    onOpen: function (scope) {
-                        scope.hey = "WOw";
-                    }
                 })
             };
             $scope.confirm = function () {
@@ -141,9 +139,10 @@ angular.module('application', ['cp.ngConfirm'])
                 $ngConfirm({
                     title: 'Oh no',
                     content: '<p>Something bad, bad happened.</p>' +
-                    'Select the alert type:' +
-                    ' <div class="form-group">' +
-                    '<select class="form-control" ng-model="ngc.type">' +
+                    '' +
+                    '<div class="form-group">' +
+                    '<label for="">Select the alert type:</label>' +
+                    '<select class="form-control" ng-change="applyType(type)" ng-model="type">' +
                     '<option value="default">Default</option>' +
                     '<option value="red">Red</option>' +
                     '<option value="blue">Blue</option>' +
@@ -151,7 +150,6 @@ angular.module('application', ['cp.ngConfirm'])
                     '<option value="purple">Purple</option>' +
                     '<option value="dark">Dark</option>' +
                     '</select>' +
-                    '<div class="checkbox"><label><input type="checkbox" ng-model="ngc.typeAnimated"> Animated</label></div>' +
                     '</div>',
                     type: 'red',
                     typeAnimated: true,
@@ -159,8 +157,12 @@ angular.module('application', ['cp.ngConfirm'])
                         ok: function () {
                         }
                     },
-                    onContentReady: function (scope) {
-
+                    onScopeReady: function (scope) {
+                        var self = this;
+                        scope.type = 'red';
+                        scope.applyType = function (type) {
+                            self.setType(type);
+                        }
                     }
                 })
             };
@@ -171,25 +173,23 @@ angular.module('application', ['cp.ngConfirm'])
                     buttons: {
                         sayMyName: {
                             text: 'Say my name',
-                            btnClass: 'btn-orange',
+                            disabled: true,
+                            btnClass: 'btn-green',
                             action: function (scope) {
-                                if (!scope.username) {
-                                    this.buttons.sayMyName.text = 'Please enter a valid name';
-                                    scope.error = 'Please don\'t keep the name field empty!';
-                                    var that = this;
-                                    $timeout(function () {
-                                        that.buttons.sayMyName.text = 'Say my name again';
-                                    }, 1000);
-                                    return false;
-                                }
                                 $ngConfirm('Hello <strong>' + scope.username + '</strong>, i hope you have a great day!');
                             }
                         },
                         later: function () {
                         }
                     },
-                    onContentReady: function (scope) {
-
+                    onScopeReady: function (scope) {
+                        var self = this;
+                        scope.textChange = function () {
+                            if (scope.username)
+                                self.buttons.sayMyName.setDisabled(false);
+                            else
+                                self.buttons.sayMyName.setDisabled(true);
+                        }
                     }
                 })
             };
@@ -317,7 +317,7 @@ angular.module('application', ['cp.ngConfirm'])
                             // lets the user close the modal.
                         }
                     },
-                    onOpen: function ($scope) {
+                    onScopeReady: function ($scope) {
                         $scope.content = [];
                         $scope.addContent = function () {
                             $scope.content.push('This is awesome!!!!');
@@ -329,7 +329,7 @@ angular.module('application', ['cp.ngConfirm'])
                 $ngConfirm({
                     title: 'Adding images',
                     content: 'Images from flickr <br>' +
-                    '<div ng-repeat="image in images"><img ng-src="{{image}}"></div>',
+                    '<div ng-repeat="image in images track by $index"><img ng-src="{{image}}"></div>',
                     animation: 'zoom',
                     animationClose: 'top',
                     buttons: {
@@ -345,7 +345,7 @@ angular.module('application', ['cp.ngConfirm'])
                             // lets the user close the modal.
                         }
                     },
-                    onOpen: function ($scope) {
+                    onScopeReady: function ($scope) {
                         $scope.images = ['https://c2.staticflickr.com/4/3891/14354989289_2eec0ba724_b.jpg'];
                     }
                 });
@@ -362,8 +362,8 @@ angular.module('application', ['cp.ngConfirm'])
                             text: 'Increase size',
                             btnClass: 'btn-green',
                             action: function (scope, button) {
-                                this.columnClass = 'medium';
-                                button.disabled = true;
+                                this.setColumnClass('medium');
+                                button.setDisabled(true);
                                 return false;
                             }
                         },
@@ -382,9 +382,8 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirm',
         '$interval',
         '$ngConfirmDefaults',
-        '$ngConfirmGlobal',
         '$timeout',
-        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $timeout) {
             $scope.test = function () {
                 $scope.name = 'Sia: cheap thrills';
                 $ngConfirm({
@@ -395,15 +394,15 @@ angular.module('application', ['cp.ngConfirm'])
                         sayBoo: {
                             text: 'Say Booo',
                             btnClass: 'btn-blue',
-                            action: function ($scope) {
-                                $scope.name = 'Booo!!';
+                            action: function (scope) {
+                                scope.name = 'Booo!!';
                                 return false; // prevent close;
                             }
                         },
                         somethingElse: {
                             text: 'Something else',
                             btnClass: 'btn-orange',
-                            action: function ($scope) {
+                            action: function (scope) {
                                 $ngConfirm('You clicked on <strong>something else</strong>');
                             }
                         },
@@ -419,9 +418,8 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirm',
         '$interval',
         '$ngConfirmDefaults',
-        '$ngConfirmGlobal',
         '$timeout',
-        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $timeout) {
             $scope.buttonText = function () {
                 $ngConfirm({
                     buttons: {
@@ -565,9 +563,8 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirm',
         '$interval',
         '$ngConfirmDefaults',
-        '$ngConfirmGlobal',
         '$timeout',
-        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $timeout) {
             $scope.errorDialog = function () {
                 $ngConfirm({
                     title: 'Encountered an error!',
@@ -734,9 +731,8 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirm',
         '$interval',
         '$ngConfirmDefaults',
-        '$ngConfirmGlobal',
         '$timeout',
-        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $timeout) {
             $scope.deleteUser = function () {
                 $ngConfirm({
                     title: 'Delete user?',
@@ -782,9 +778,8 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirm',
         '$interval',
         '$ngConfirmDefaults',
-        '$ngConfirmGlobal',
         '$timeout',
-        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $timeout) {
             $scope.allowBgDismiss = function () {
                 $ngConfirm({
                     backgroundDismiss: 'buttonName',
@@ -815,9 +810,8 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirm',
         '$interval',
         '$ngConfirmDefaults',
-        '$ngConfirmGlobal',
         '$timeout',
-        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $timeout) {
             $scope.escapeKey = function () {
                 $ngConfirm({
                     content: 'background dismiss is not allowed on this modal, thus the modal will make a backgroundDismissAnimation',
@@ -850,9 +844,8 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirm',
         '$interval',
         '$ngConfirmDefaults',
-        '$ngConfirmGlobal',
         '$timeout',
-        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $timeout) {
             $scope.rtl = function () {
                 $ngConfirm({
                     title: 'پیغام',
@@ -883,9 +876,8 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirm',
         '$interval',
         '$ngConfirmDefaults',
-        '$ngConfirmGlobal',
         '$timeout',
-        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $timeout) {
             $scope.callback = function () {
                 $ngConfirm({
                     title: false,
@@ -934,9 +926,8 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirm',
         '$interval',
         '$ngConfirmDefaults',
-        '$ngConfirmGlobal',
         '$timeout',
-        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $timeout) {
             $scope.animation = function (animationName) {
                 $ngConfirm({
                     animation: animationName,
@@ -986,9 +977,8 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirm',
         '$interval',
         '$ngConfirmDefaults',
-        '$ngConfirmGlobal',
         '$timeout',
-        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $ngConfirmGlobal, $timeout) {
+        function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $timeout) {
             $scope.theme = function (themeName) {
                 $ngConfirm({
                     icon: 'fa fa-check-circle',
