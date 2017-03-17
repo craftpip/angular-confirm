@@ -86,6 +86,9 @@ angular.module('cp.ngConfirm', [])
                 containerFluid: 'container-fluid',
                 row: 'row',
             },
+            onScopeReady: function () {
+
+            },
             onReady: function () {
 
             },
@@ -177,7 +180,9 @@ angular.module('cp.ngConfirm', [])
                         that.scope = $rootScope.$new();
                     }
 
-                    // Parse the options the user gave us.
+                    // scope is ready.
+                    if (typeof this.onScopeReady == 'function')
+                        this.onScopeReady.apply(this, [this.scope]);
 
                     // Dom elements
                     this.$confirmBox = this.$el.find('.ng-confirm-box');
