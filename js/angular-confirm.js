@@ -1,5 +1,5 @@
 /*!
- * angular-confirm v1.0.1 (http://craftpip.github.io/angular-confirm/)
+ * angular-confirm v1.1.0 (http://craftpip.github.io/angular-confirm/)
  * Author: Boniface Pereira
  * Website: www.craftpip.com
  * Contact: hey@craftpip.com
@@ -115,8 +115,6 @@ angular.module('cp.ngConfirm', [])
         '$ngConfirmDefaults',
         '$ngConfirmBase',
         function ($rootScope, $ngConfirmDefaults, $ngConfirmBase) {
-            var $ = jQuery; // using jquery.
-
             return function (options, options2, option3) {
                 if (typeof options == 'string') {
                     options = {
@@ -193,7 +191,6 @@ angular.module('cp.ngConfirm', [])
                     this.$content = this.$el.find('.ng-confirm-content');
                     this.$confirmBg = this.$el.find('.ng-confirm-bg');
                     this.$contentPane = this.$el.find('.ng-confirm-content-pane');
-                    this.$confirmContainer = this.$el.find('.ng-confirm-box-container');
                     this.$closeIcon = this.$el.find('.ng-confirm-closeIcon');
                     this.$bs3Container = this.$el.find('.ng-bs3-container');
                     this.$buttonContainer = this.$el.find('.ng-confirm-buttons');
@@ -668,7 +665,7 @@ angular.module('cp.ngConfirm', [])
                     var hash = 0;
                     if (string.length == 0) return hash;
                     for (var i = 0; i < string.length; i++) {
-                        var char = string.charCodeAt(i);
+                        var char = string.toString().charCodeAt(i);
                         hash = ((hash << 5) - hash) + char;
                         hash = hash & hash; // Convert to 32bit integer
                     }
