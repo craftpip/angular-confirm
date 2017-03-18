@@ -4,6 +4,8 @@ angular.module('application', ['cp.ngConfirm'])
         function ($ngConfirmDefaults) {
             // modify the defaults here.
             // $ngConfirmDefaults.theme = 'modern';
+
+
         }
     ])
     .controller('quickFeaturesController', [
