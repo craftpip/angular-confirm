@@ -882,15 +882,19 @@ angular.module('application', ['cp.ngConfirm'])
                 $ngConfirm({
                     title: false,
                     contentUrl: 'callback.html',
-                    onReady: function ($scope) {
-                        // when content is fetched & the modal is open
-                        alert('onReady');
+                    onScopeReady: function () {
+                        // when the scope is ready/created
+                        alert('Scope is ready');
                         var self = this;
                         this.buttons.ok.disabled = true;
                         $scope.fnClick = function () {
                             $scope.name = 'Chuck norris';
                             self.buttons.ok.disabled = false;
                         };
+                    },
+                    onReady: function ($scope) {
+                        // when content is fetched & the modal is open
+                        alert('onReady');
                     },
                     onOpenBefore: function () {
                         // before the modal is displayed.

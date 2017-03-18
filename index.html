@@ -288,16 +288,16 @@
                                 <a href="#api-scope"> .scope</a>
                             </li>
                             <li>
-                                <a href="#api-button-text"> .&lt;buttonName&gt;.text</a>
+                                <a href="#api-button-text"> .&lt;buttonName&gt;.setText</a>
                             </li>
                             <li>
-                                <a href="#api-button-class"> .&lt;buttonName&gt;.btnClass</a>
+                                <a href="#api-button-class"> .&lt;buttonName&gt;.setBtnClass</a>
                             </li>
                             <li>
-                                <a href="#api-button-disable"> .&lt;buttonName&gt;.disabled</a>
+                                <a href="#api-button-disable"> .&lt;buttonName&gt;.setDisabled</a>
                             </li>
                             <li>
-                                <a href="#api-button-show"> .&lt;buttonName&gt;.show</a>
+                                <a href="#api-button-show"> .&lt;buttonName&gt;.setShow</a>
                             </li>
                             <li>
                                 <a href="#api-close"> .close()</a>
@@ -316,6 +316,45 @@
                             </li>
                             <li>
                                 <a href="#api-confirm-box"> .$confirmBox</a>
+                            </li>
+                            <li>
+                                <a href="#api-set-theme"> .setTheme</a>
+                            </li>
+                            <li>
+                                <a href="#api-set-type"> .setType</a>
+                            </li>
+                            <li>
+                                <a href="#api-set-type-animated"> .setTypeAnimated</a>
+                            </li>
+                            <li>
+                                <a href="#api-set-title-class"> .setTitleClass</a>
+                            </li>
+                            <li>
+                                <a href="#api-set-box-width"> .setBoxWidth</a>
+                            </li>
+                            <li>
+                                <a href="#api-set-container-fluid"> .setContainerFluid</a>
+                            </li>
+                            <li>
+                                <a href="#api-set-column-class"> .setColumnClass</a>
+                            </li>
+                            <li>
+                                <a href="#api-set-icon"> .setIcon</a>
+                            </li>
+                            <li>
+                                <a href="#api-set-title"> .setTitle</a>
+                            </li>
+                            <li>
+                                <a href="#api-set-close-icon"> .setCloseIcon</a>
+                            </li>
+                            <li>
+                                <a href="#api-set-close-icon-class"> .setCloseIconClass</a>
+                            </li>
+                            <li>
+                                <a href="#api-trigger-button"> .triggerButton</a>
+                            </li>
+                            <li>
+                                <a href="#api-set-rtl"> .setRtl</a>
                             </li>
                         </ul>
                     </li>
@@ -1190,11 +1229,11 @@ $ngConfirm({
                     <button ng-click="bgDismissAnimation('glow')" class="btn btn-primary">Glow</button>
 
                     <div class="space10"></div>
-                    <pre class="prettyprint linenums"><code>$.confirm({
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
     backgroundDismiss: false,
     backgroundDismissAnimation: 'shake',
 });
-$.confirm({
+$ngConfirm({
     backgroundDismiss: false,
     backgroundDismissAnimation: 'glow',
 });</code></pre>
@@ -1248,7 +1287,7 @@ $ngConfirm({
                     </p>
                     <button ng-click="rtl()" class="btn btn-primary">Try RTL</button>
                     <div class="space10"></div>
-                    <pre class="prettyprint linenums"><code>$.alert({
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
     title: 'پیغام',
     content: 'این یک متن به زبان شیرین فارسی است',
     rtl: true,
@@ -1258,7 +1297,7 @@ $ngConfirm({
             text: 'تایید',
             btnClass: 'btn-blue',
             action: function () {
-                alert('تایید شد.');
+                $ngConfirm('تایید شد.');
             }
         },
         cancel: {
@@ -1285,17 +1324,21 @@ $ngConfirm({
                     <pre class="prettyprint linenums"><code>$ngConfirm({
     title: false,
     contentUrl: 'callback.html',
-    onReady: function ($scope) {
-        // when content is fetched & the modal is open
-        alert('onReady');
+    onScopeReady: function(scope){
+        // when the scope is ready/created
+        alert('Scope is ready');
         var self = this;
         this.buttons.ok.disabled = true;
-        $scope.fnClick = function () {
-            $scope.name = 'Chuck norris';
+        scope.fnClick = function () {
+            scope.name = 'Chuck norris';
             self.buttons.ok.disabled = false;
         };
     },
-    onOpenBefore: function ($scope) {
+    onReady: function (scope) {
+        // when content is fetched & the modal is open
+        alert('onReady');
+    },
+    onOpenBefore: function (scope) {
         // before the modal is displayed.
         alert('onOpenBefore');
     },
@@ -1311,7 +1354,7 @@ $ngConfirm({
         // when the modal is removed from DOM
         alert('onDestroy');
     },
-    onAction: function ($scope, btnName) {
+    onAction: function (scope, btnName) {
         // when a button is clicked, with the button name
         alert('onAction: ' + btnName);
     },
@@ -1607,6 +1650,15 @@ $ngConfirm({
                                 </td>
                             </tr>
                             <tr>
+                                <td>onScopeReady</td>
+                                <td>Function</td>
+                                <td><code>function(){}</code></td>
+                                <td>
+                                    is called when the scope is ready or is created.
+                                    Assigning properties to scope is to be done here.
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>onContentReady</td>
                                 <td>Function</td>
                                 <td><code>function(){}</code></td>
@@ -1655,15 +1707,6 @@ $ngConfirm({
                                     is called when any of the button is clicked. buttonName is provided as argument.
                                 </td>
                             </tr>
-                            <tr>
-                                <td>watchInterval</td>
-                                <td>Number</td>
-                                <td><code>100</code></td>
-                                <td>
-                                    Watch the modal for changes and is centered on screen. <br>
-                                    <i class="fa fa-info"></i> Added in v 2.5.0
-                                </td>
-                            </tr>
                         </table>
                     </div>
                 </div>
@@ -1678,7 +1721,7 @@ $ngConfirm({
                 </p>
                 <pre class="prettyprint linenums"><code>var jc = $ngConfirm({
     title: 'awesome',
-    onContentReady: function(){
+    onScopeReady: function(){
         // this === jc
     }
 });</code></pre>
@@ -1701,10 +1744,10 @@ $ngConfirm({
                 </div>
                 <div>
                     <h4 id="api-button-text">
-                        <code>jc.buttons.&lt;buttonName&gt;.text</code>
+                        <code>jc.buttons.&lt;buttonName&gt;.setText(String|Function)</code>
                     </h4>
                     <p>
-                        <span class="label label-default">Property</span>
+                        <span class="label label-default">Function</span>
                     </p>
                     <div class="section">
                         <p>Set text for a button</p>
@@ -1712,10 +1755,10 @@ $ngConfirm({
                 </div>
                 <div>
                     <h4 id="api-button-class">
-                        <code>jc.buttons.&lt;buttonName&gt;.btnClass</code>
+                        <code>jc.buttons.&lt;buttonName&gt;.setBtnClass(String)</code>
                     </h4>
                     <p>
-                        <span class="label label-default">Property</span>
+                        <span class="label label-default">Function</span>
                     </p>
                     <div class="section">
                         <p>Set class to the button</p>
@@ -1723,10 +1766,10 @@ $ngConfirm({
                 </div>
                 <div>
                     <h4 id="api-button-disable">
-                        <code>jc.buttons.&lt;buttonName&gt;.disabled</code>
+                        <code>jc.buttons.&lt;buttonName&gt;.setDisabled(Boolean)</code>
                     </h4>
                     <p>
-                        <span class="label label-default">Property</span>
+                        <span class="label label-default">Function</span>
                     </p>
                     <div class="section">
                         <p>Disables the button with attribute <code>disabled='disabled'</code></p>
@@ -1734,10 +1777,10 @@ $ngConfirm({
                 </div>
                 <div>
                     <h4 id="api-button-show">
-                        <code>jc.buttons.&lt;buttonName&gt;.show</code>
+                        <code>jc.buttons.&lt;buttonName&gt;.setShow(Boolean)</code>
                     </h4>
                     <p>
-                        <span class="label label-default">Property</span>
+                        <span class="label label-default">Function</span>
                     </p>
                     <div class="section">
                         <p>Show or hide the button using ng-hide</p>
@@ -1747,7 +1790,7 @@ $ngConfirm({
                     <h4 id="api-close">
                         <code>jc.close()</code>
                     </h4>
-                    <p><span class="label label-default">function</span></p>
+                    <p><span class="label label-default">Function</span></p>
                     <div class="section">
                         <p>The close method closes/destroys the dialog.</p>
                     </div>
@@ -1757,7 +1800,7 @@ $ngConfirm({
                         <code>jc.isClosed()</code>
                     </h4>
 
-                    <p><span class="label label-default">function</span></p>
+                    <p><span class="label label-default">Function</span></p>
 
                     <div class="section">
                         <p>
@@ -1770,7 +1813,7 @@ $ngConfirm({
                         <code>jc.isOpen()</code>
                     </h4>
 
-                    <p><span class="label label-default">function</span></p>
+                    <p><span class="label label-default">Function</span></p>
 
                     <div class="section">
                         <p>
@@ -1783,7 +1826,7 @@ $ngConfirm({
                         <code>jc.setDialogCenter()</code>
                     </h4>
 
-                    <p><span class="label label-default">function</span></p>
+                    <p><span class="label label-default">Function</span></p>
 
                     <div class="section">
                         <p>Centers the dialog on screen. This is done for you by the watch timer when the content
@@ -1812,6 +1855,159 @@ $ngConfirm({
 
                     <div class="section">
                         <p>The box element</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-set-theme">
+                        <code>jc.setTheme(String)</code>
+                    </h4>
+
+                    <p><span class="label label-default">Function</span></p>
+
+                    <div class="section">
+                        <p>Set the theme of the modal.</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-set-type">
+                        <code>jc.setType(String)</code>
+                    </h4>
+
+                    <p><span class="label label-default">Function</span></p>
+
+                    <div class="section">
+                        <p>Set the type for the modal</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-set-type-animated">
+                        <code>jc.setTypeAnimated(String)</code>
+                    </h4>
+
+                    <p><span class="label label-default">Function</span></p>
+
+                    <div class="section">
+                        <p>Set if the type decoration should animate.</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-set-title-class">
+                        <code>jc.setTitleClass(String)</code>
+                    </h4>
+
+                    <p><span class="label label-default">Function</span></p>
+
+                    <div class="section">
+                        <p>Set the class for the title div.</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-set-box-width">
+                        <code>jc.setBoxWidth(String)</code>
+                    </h4>
+
+                    <p><span class="label label-default">Function</span></p>
+
+                    <div class="section">
+                        <p>
+                            Set the box width for the modal,
+                            Will only work for <code>useBootstrap: false</code>.
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 id="api-set-container-fluid">
+                        <code>jc.setContainerFluid(Boolean)</code>
+                    </h4>
+
+                    <p><span class="label label-default">Function</span></p>
+
+                    <div class="section">
+                        <p>Set if the container class should be fluid or not</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-set-column-class">
+                        <code>jc.setColumnClass(String)</code>
+                    </h4>
+
+                    <p><span class="label label-default">Function</span></p>
+
+                    <div class="section">
+                        <p>Set the column class for the modal
+                            will only work if <code>useBoostrap: true</code></p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 id="api-set-icon">
+                        <code>jc.setIcon(String)</code>
+                    </h4>
+
+                    <p><span class="label label-default">Function</span></p>
+
+                    <div class="section">
+                        <p>Set the icon</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 id="api-set-title">
+                        <code>jc.setTitle(String)</code>
+                    </h4>
+
+                    <p><span class="label label-default">Function</span></p>
+
+                    <div class="section">
+                        <p>Set the title of the modal.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 id="api-set-close-icon">
+                        <code>jc.setCloseIcon(String)</code>
+                    </h4>
+
+                    <p><span class="label label-default">Function</span></p>
+
+                    <div class="section">
+                        <p>Set the close icon for the modal.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 id="api-set-close-icon-class">
+                        <code>jc.setCloseIconClass(String)</code>
+                    </h4>
+
+                    <p><span class="label label-default">Function</span></p>
+
+                    <div class="section">
+                        <p>Choose weather to set a class name or use <code>&times;</code> as the close icon.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 id="api-trigger-button">
+                        <code>jc.triggerButton(String)</code>
+                    </h4>
+
+                    <p><span class="label label-default">Function</span></p>
+
+                    <div class="section">
+                        <p>Pass in the button key that you want to trigger.</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-set-rtl">
+                        <code>jc.setRtl(Boolean)</code>
+                    </h4>
+
+                    <p><span class="label label-default">Function</span></p>
+
+                    <div class="section">
+                        <p>Set the modal for RTL or not.</p>
                     </div>
                 </div>
             </section>
