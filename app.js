@@ -4,8 +4,6 @@ angular.module('application', ['cp.ngConfirm'])
         function ($ngConfirmDefaults) {
             // modify the defaults here.
             // $ngConfirmDefaults.theme = 'modern';
-
-
         }
     ])
     .controller('quickFeaturesController', [
@@ -15,6 +13,7 @@ angular.module('application', ['cp.ngConfirm'])
         '$ngConfirmDefaults',
         '$timeout',
         function ($scope, $ngConfirm, $interval, $ngConfirmDefaults, $timeout) {
+
             $scope.materialTheme = function () {
                 $ngConfirm({
                     title: 'Alert',
@@ -1019,6 +1018,50 @@ angular.module('application', ['cp.ngConfirm'])
                     }
                 });
             };
+        }
+    ])
+    .controller('adsController', [
+        '$scope',
+        '$timeout',
+        '$ngConfirm',
+        function ($scope, $timeout, $ngConfirm) {
+            $timeout(function () {
+                if (typeof google_jobrunner == 'undefined' && !localStorage['adsok']) {
+                    $ngConfirm({
+                        title: 'Hmmm, ad blocker',
+                        theme: 'material',
+                        content: "Ads aren't what you're here for. But ads help me support my work. So, please consider to add this domain to your blocker's whitelist.",
+                        closeIcon: false,
+                        buttons: {
+                            done: {
+                                text: 'Did it',
+                                btnClass: 'btn-green',
+                                action: function () {
+                                    $ngConfirm('I really appreciate this. Thank you.', 'You\'re awesome');
+                                    $timeout(function () {
+                                        location.reload();
+                                    }, 1000);
+                                }
+                            },
+                            doNotAskAgain: {
+                                text: 'Don\'t ask',
+                                action: function () {
+                                    localStorage['adsok'] = true;
+                                }
+                            },
+                            donate: {
+                                text: 'Donate',
+                                btnClass: 'btn-default',
+                                action: function () {
+                                    window.open('https://www.paypal.me/bonifacepereira', '_blank');
+                                    localStorage['adsok'] = true;
+                                }
+                            }
+
+                        }
+                    });
+                }
+            }, 1000);
         }
     ]);
 
