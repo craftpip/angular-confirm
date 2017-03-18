@@ -6,7 +6,8 @@
         <div class="form-group">
             <label class="control-label">Modal type</label>
             <select name="" class="form-control"
-                    ng-model="ngc.type">
+                    ng-change="typeChange()"
+                    ng-model="type">
                 <option value="default">default</option>
                 <option value="blue">blue</option>
                 <option value="orange">orange</option>
@@ -19,7 +20,8 @@
         <div class="form-group">
             <label class="control-label">Theme</label>
             <select name="" class="form-control"
-                    ng-model="ngc.theme">
+                    ng-change="themeChange()"
+                    ng-model="theme">
                 <option value="light">light</option>
                 <option value="dark">dark</option>
                 <option value="supervan">supervan</option>
@@ -32,19 +34,19 @@
     <div class="col-md-6">
         <div class="form-group">
             <label class="control-label">Icon</label>
-            <input type="text" class="form-control" ng-model="ngc.icon">
+            <input type="text" class="form-control" ng-model="icon" ng-change="iconChange()">
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
             <label class="control-label">Title</label>
-            <input type="text" class="form-control" ng-model="ngc.title">
+            <input type="text" class="form-control" ng-model="title" ng-change="titleChange()">
         </div>
     </div>
     <div class="col-md-4">
         <div class="checkbox">
             <label>
-                <input type="checkbox" ng-model="ngc.closeIcon">
+                <input type="checkbox" ng-model="closeIcon" ng-change="closeIconChange()">
                 Close icon
             </label>
         </div>
@@ -52,15 +54,15 @@
     <div class="col-md-4">
         <div class="checkbox">
             <label>
-                <input type="checkbox" ng-model="ngc.rtl">
-                Rtl {{ngc.rtl}}
+                <input type="checkbox" ng-model="rtl" ng-change="rtlChange()">
+                Rtl
             </label>
         </div>
     </div>
     <div class="col-md-12">
         <div class="form-group">
             <label class="control-label">Close icon class</label>
-            <input type="text" class="form-control" ng-model="ngc.closeIconClass">
+            <input type="text" class="form-control" ng-model="closeIconClass" ng-change="closeIconClassChange()">
         </div>
     </div>
 </div>

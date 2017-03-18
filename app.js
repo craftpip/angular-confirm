@@ -1007,14 +1007,42 @@ angular.module('application', ['cp.ngConfirm'])
                             btnClass: 'btn-orange',
                         },
                     },
-                    onOpen: function ($scope) {
-                        var that = this;
-                        $scope.showLoading = function () {
-                            that.loading(true);
-                            $timeout(function () {
-                                that.loading(false);
-                            }, 2000)
-                        }
+                    onScopeReady: function (scope) {
+                        var self = this;
+                        scope.type = 'default';
+                        scope.typeChange = function () {
+                            self.setType(scope.type);
+                        };
+
+                        scope.theme = 'light';
+                        scope.themeChange = function () {
+                            self.setTheme(scope.theme);
+                        };
+
+                        scope.icon = self.icon;
+                        scope.iconChange = function () {
+                            self.setIcon(scope.icon);
+                        };
+
+                        scope.title = self.title;
+                        scope.titleChange = function () {
+                            self.setTitle(scope.title);
+                        };
+
+                        scope.closeIcon = self.closeIcon;
+                        scope.closeIconChange = function () {
+                            self.setCloseIcon(scope.closeIcon);
+                        };
+
+                        scope.rtl = self.rtl;
+                        scope.rtlChange = function () {
+                            self.setRtl(scope.rtl);
+                        };
+
+                        scope.closeIconClass = self.closeIconClass;
+                        scope.closeIconClassChange = function () {
+                            self.setCloseIconClass(scope.closeIconClass);
+                        };
                     }
                 });
             };
