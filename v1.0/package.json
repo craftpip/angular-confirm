@@ -1,0 +1,35 @@
+{
+  "name": "angular-confirm",
+  "version": "1.0.0",
+  "title": "angular-confirm.js | A multipurpose alert and confirm plugin",
+  "description": "A angular plugin that provides great set of features like, Auto-close, Ajax-loading, background-dismiss, themes and more.",
+  "homepage": "http://craftpip.github.io/angular-confirm/",
+  "author": "Boniface Periera (http://github.com/craftpip/)",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/craftpip/angular-confirm/blob/master/LICENSE"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/craftpip/angular-confirm.git"
+  },
+  "main": "dist/angular-confirm.min.js",
+  "dependencies": {},
+  "bugs": {
+    "url": "https://github.com/craftpip/angular-confirm/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "angular-plugin",
+    "angular",
+    "confirm",
+    "alert",
+    "dialog"
+  ],
+  "license": "MIT"
+}
+

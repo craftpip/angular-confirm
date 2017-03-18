@@ -1,0 +1,1897 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="chrome=1"> -->
+    <title>angular-confirm.js | The multipurpose alert & confirm</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="description"
+          content="A multipurpose alert, confirm plugin, alternative to the native alert() and confirm() functions. Supports features like auto-close, themes, animations, and more.">
+    <link rel="canonical"
+          href="https://craftpip.github.io/angular-confirm"/>
+    <link rel="icon"
+          type="img/png"
+          href="http://craftpip.com/i/assets/img/fav.png">
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=UTF-8"/>
+    <meta name="robots"
+          content="index,follow,noodp,noydir"/>
+    <meta name="google-site-verification"
+          content="T_M_Ym5DQ-cEQQhx_jswyCBTssIdgtewICcvb3sgh8g"/>
+    <meta name="Keywords"
+          content="angular.confirm, angular confirm, angular alert, angular prompt, angular dialog, javascript, bootstrap"/>
+    <link rel="apple-touch-icon"
+          sizes="57x57"
+          href="http://craftpip.com/i/apple-touch-icon-57x57.png"/>
+    <link rel="apple-touch-icon"
+          sizes="72x72"
+          href="http://craftpip.com/i/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon"
+          sizes="114x114"
+          href="http://craftpip.com/i/apple-touch-icon-114x114.png"/>
+    <link rel="apple-touch-icon"
+          sizes="144x144"
+          href="http://craftpip.com/i/apple-touch-icon-144x144.png"/>
+    <link rel="apple-touch-icon"
+          href="http://craftpip.com/i/apple-touch-icon-57x57.png"/>
+    <meta property="og:title"
+          content="angular-confirm.js | The multipurpose alert &amp; confirm"/>
+    <meta property="og:type"
+          content="website"/>
+    <meta property="og:image"
+          content="http://craftpip.com/i/apple-touch-icon-57x57.png"/>
+    <meta property="og:url"
+          content="https://craftpip.github.io/angular-confirm"/>
+    <meta property="og:description"
+          content="A multipurpose alert & confirm plugin, alternative to the native alert() and confirm() functions. Supports features like auto-close, themes, animations, and more."/>
+    <meta property="og:site_name"
+          content="craftpip.github.io"/>
+
+    <link rel="stylesheet"
+          href="demo/libs/bundled.css">
+    <script src="demo/libs/bundled.js"></script>
+
+    <link rel="stylesheet"
+          href="demo/demo.css">
+
+    <script>
+        var version = '1.0.0';
+    </script>
+
+    <!-- Add the minified version of files from the /dist/ folder. -->
+    <!-- angular-confirm files -->
+    <link rel="stylesheet"
+          type="text/css"
+          href="css/angular-confirm.css"/>
+    <script type="text/javascript"
+            src="js/angular-confirm.js"></script>
+    <!--END angular-confirm files-->
+
+</head>
+<body data-spy="scroll"
+      data-target=".navbar">
+<header class="navbar navbar-static-top navbar-default navheader">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#bs-navbar"
+                    aria-controls="bs-navbar"
+                    aria-expanded="false"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
+                <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+            <a class="navbar-brand aconfirm-logo"
+               href="http://craftpip.github.io/angular-confirm">
+            </a>
+        </div>
+        <nav id="bs-navbar"
+             class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class=""><a href="http://github.com/craftpip/angular-confirm"><i class="fa fa-github"></i> Project
+                    home</a></li>
+                <li class=""><a href="http://github.com/craftpip/angular-confirm/issues/new">Suggest feature</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown hide">
+                    <a href="#"
+                       class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false">Versions <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://craftpip.github.io/angular-confirm/v1.0">v1.0</a></li>
+                    </ul>
+                </li>
+                <li class="hide">
+                    <a class="github-button"
+                       href="https://github.com/craftpip/angular-confirm"
+                       data-style="mega"
+                       data-count-href="/craftpip/angular-confirm/stargazers"
+                       data-count-api="/repos/craftpip/angular-confirm#stargazers_count"
+                       data-count-aria-label="# stargazers on GitHub"
+                       aria-label="Star craftpip/angular-confirm on GitHub">Star</a>
+                </li>
+                <li>
+                    <a class="twitter-follow-button"
+                       data-show-count="false"
+                       data-size="large"
+                       href="https://twitter.com/craftpip"
+                       data-show-count="false"
+                       data-lang="en">
+                        Follow @craftpip
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="header"
+     id="content"
+     tabindex="-1">
+    <div class="container">
+        <h1 style="margin-top: 7px;"
+            class="text-center">
+            <img src="angular-confirm.png"
+                 alt="ANGULAR-CONFIRM"/>
+        </h1>
+
+        <p>
+            <em>alerts</em>, <em>confirms</em> and <em>dialogs</em> in <strong>one</strong>.
+        </p>
+        <div class="row download-btns">
+            <div class="col-md-12">
+                <div style="height: 15px;"></div>
+                <a href="https://github.com/craftpip/angular-confirm/releases/download/v1.0.0/angular-confirm-v1.0.0.zip"
+                   class="btn btn-lg">Download v1
+                </a>
+                <a href="https://github.com/craftpip/angular-confirm"
+                   class="btn btn-lg"><i class="fa fa-github"></i> View on GitHub
+                </a>
+                <div style="height: 15px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container"
+     ng-app="application">
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <div class="space10"></div>
+            <div class="space10"></div>
+            <p>
+                <strong>angular-confirm v<span class="version"></span> docs</strong><br>
+                <a href="https://github.com/craftpip/angular-confirm">
+                    view on <i class="fa fa-github"></i> Github
+                </a>
+            </p>
+            <div class="spacer15"></div>
+            <div id="my-nav">
+                <ul class="nav nav-list">
+                    <li>
+                        <a href="#quickfeatures"> Features</a>
+                    </li>
+                    <li>
+                        <a href="#getting-started"> Getting started</a>
+                        <ul class="nav nav-list">
+                            <li>
+                                <a href="#installation"> Installation</a>
+                            </li>
+                            <li>
+                                <a href="#usage"> Basic usage</a>
+                            </li>
+                            <li>
+                                <a href="#using-templates"> Using templates</a>
+                            </li>
+                            <li>
+                                <a href="#shorthand"> Shorthand usage</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#buttons">Buttons</a>
+                        <ul class="nav nav-list">
+                            <li>
+                                <a href="#defining-buttons">Defining buttons</a>
+                            </li>
+                            <li>
+                                <a href="#buttontext">Text</a>
+                            </li>
+                            <li>
+                                <a href="#buttonstyle">Styles</a>
+                            </li>
+                            <li>
+                                <a href="#button-keys">Keys</a>
+                            </li>
+                            <li>
+                                <a href="#button-properties">Properties</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#customizing">Customizing</a>
+                        <ul class="nav nav-list">
+                            <li>
+                                <a href="#dialog-type"> Dialog type</a>
+                            </li>
+                            <li>
+                                <a href="#icons"> Icons</a>
+                            </li>
+                            <li>
+                                <a href="#close-icon"> Close icon</a>
+                            </li>
+                            <li>
+                                <a href="#custom-width"> Custom width</a>
+                            </li>
+                            <li>
+                                <a href="#custom-width-without-bootstrap"> Custom width w/o bootstrap</a>
+                            </li>
+                            <li>
+                                <a href="#namespaced-bootstrap"> Namespaced bootstrap</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="animations.html"> Animations <span style="margin-left: 5px;"><i class="fa fa-external-link"></i></span></a>
+                        <ul class="nav nav-list">
+                            <li>
+                                <a href="#animations">Animations</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="themes.html"> Themes <span style="margin-left: 5px;"><i class="fa fa-external-link"></i></span></a>
+                        <ul class="nav nav-list">
+                            <li>
+                                <a href="#themes">Themes</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--<li>-->
+                        <!--<a href="#ajaxloading"> Ajax loading</a>-->
+                        <!--<ul class="nav nav-list">-->
+                            <!--<li>-->
+                                <!--<a href="#urlprefix">URL: prefix method</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#ajaxpromise">Ajax promise method</a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                                <!--<a href="#content-loaded">Ajax complete callback</a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
+                    <li>
+                        <a href="#autoclose"> Auto close</a>
+                    </li>
+                    <li>
+                        <a href="#backgrounddismiss"> Background dismiss</a>
+                        <ul class="nav nav-list">
+                            <li>
+                                <a href="#backgrounddismiss"> Background dismiss</a>
+                            </li>
+                            <li>
+                                <a href="#backgrounddismiss-animations">Dismiss animations</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#escape-key"> Escape key</a>
+                    </li>
+                    <li>
+                        <a href="#rtl"> RTL Support</a>
+                    </li>
+                    <li>
+                        <a href="#callbacks"> Callbacks</a>
+                    </li>
+                    <li>
+                        <a href="#globaldefaults"> Global defaults</a>
+                    </li>
+                    <li>
+                        <a href="#options"> Options</a>
+                    </li>
+                    <li>
+                        <a href="#api"> Api</a>
+                        <ul class="nav nav-list">
+                            <li>
+                                <a href="#api-scope"> .scope</a>
+                            </li>
+                            <li>
+                                <a href="#api-button-text"> .&lt;buttonName&gt;.text</a>
+                            </li>
+                            <li>
+                                <a href="#api-button-class"> .&lt;buttonName&gt;.btnClass</a>
+                            </li>
+                            <li>
+                                <a href="#api-button-disable"> .&lt;buttonName&gt;.disabled</a>
+                            </li>
+                            <li>
+                                <a href="#api-button-show"> .&lt;buttonName&gt;.show</a>
+                            </li>
+                            <li>
+                                <a href="#api-close"> .close()</a>
+                            </li>
+                            <li>
+                                <a href="#api-isclosed"> .isClosed()</a>
+                            </li>
+                            <li>
+                                <a href="#api-isopen"> .isOpen()</a>
+                            </li>
+                            <li>
+                                <a href="#api-setdialogcenter"> .setDialogCenter()</a>
+                            </li>
+                            <li>
+                                <a href="#api-el"> .$el</a>
+                            </li>
+                            <li>
+                                <a href="#api-confirm-box"> .$confirmBox</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9 col-sm-12">
+            <!-- introduction -->
+            <section>
+                <header>
+                    <h3>Welcome to angular-confirm!</h3>
+
+                    <p>
+                        Easy to use and highly flexible! <br/>
+                        A angular plugin that provides great set of features like,
+                        Auto-close, Ajax-loading, Themes, Animations and more. <br>
+                        This project is a re-write of the <a href="https://github.com/craftpip/jquery-confirm">jquery-confirm</a> plugin
+                    </p>
+                    <a href="https://github.com/craftpip/angular-confirm/issues"
+                       target="empty"
+                       class="btn btn-success"><i class="fa fa-bug fa-fw"></i> Please post your Suggestions here.</a>
+                </header>
+            </section>
+            <hr>
+            <section id="quickfeatures" ng-controller="quickFeaturesController">
+                <h2>Features</h2>
+
+                <p>These features can practically be used like so.</p>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <button ng-click="alert()" class="btn btn-primary btn-block">Alerts</button>
+                        <p class="text-success">Elegant Alerts.</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <button ng-click="confirm()" class="btn btn-primary btn-block ">Confirmation</button>
+                        <p class="text-success">Stacked Confirmations</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="type()" class="btn btn-primary btn-block">Alert types
+                        </button>
+                        <p class="text-success">Success, error, warning</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="prompt()" class="btn btn-primary btn-block">Prompt</button>
+                        <p class="text-success">Need input?</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <button ng-click="dialog()" class="btn btn-primary btn-block">Dialogs</button>
+                        <p class="text-success">Its also a Dialog.</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="bgDismiss()" class="btn btn-primary btn-block">Background
+                            dismiss
+                        </button>
+                        <p class="text-success">Not so important modal</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="asyncContent()" class="btn btn-primary btn-block">Asynchronous
+                            content
+                        </button>
+                        <p class="text-success">Loading from remote places</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="autoClose()" class="btn btn-primary btn-block">Auto-close</button>
+                        <p class="text-success">Some actions maybe critical</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <button ng-click="keyStrokes()" class="btn btn-primary btn-block">Keystrokes
+                        </button>
+                        <p class="text-success">Responds to keystrokes</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="centerAlign()" class="btn btn-primary btn-block">Alignment
+                        </button>
+                        <p class="text-success">Automatically centered</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="imageLoading()" class="btn btn-primary btn-block">Images</button>
+                        <p class="text-success">Loading images</p>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="videos()" class="btn btn-primary btn-block">Videos</button>
+                        <p class="text-success">Youtube videos</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Themes</h3>
+                        <p>
+                            angular-confirm comes loaded with 7 different themes, for all common use cases.
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="materialTheme()" class="btn btn-info btn-block">Material theme
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="modernTheme()" class="btn btn-info btn-block">Modern theme
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="supervanTheme()" class="btn btn-info btn-block">Supervan theme
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="themes.html" class="btn btn-default btn-block">more themes</a>
+                    </div>
+                </div>
+            </section>
+
+
+            <!--<section>-->
+            <!--<h2>Whats new <span style="color: #aaa">in v3.0.1</span></h2>-->
+            <!--<ul>-->
+            <!--<li>Support for namespaced bootstrap classes</li>-->
+            <!--<li>Jconfirm can be used without bootstrap</li>-->
+            <!--<li>Added type for modals (green/success, red/failure, orange/warning, etc)</li>-->
+            <!--</ul>-->
+            <!--</section>-->
+
+
+            <!-- Installation -->
+            <section id="getting-started">
+                <h2>Getting started</h2>
+                <h3 id="installation">
+                    Installation
+                </h3>
+                <div class="section">
+                    <p>
+                        <strong>Download</strong>
+                        <br>
+                        Download the Latest version and use files in the <code>/dist/</code> folder.
+                    </p>
+
+                    <p>
+                        <strong>via Bower:</strong>
+                        <br>
+                        <code>
+                            $ bower install craftpip/angular-confirm
+                        </code>
+                    </p>
+
+                    <p>
+                        <strong>via Npm:</strong>
+                        <br>
+                        <code>
+                            $ npm install angular-confirm
+                        </code>
+                    </p>
+
+                    <p>
+                        <strong>Dependencies:</strong>
+                    </p>
+                    <ul>
+                        <li>Angular >= 1.5</li>
+                        <li>Angular ngSanitize >= 1.5</li>
+                        <li>Angular ngAnimate >= 1.5</li>
+                        <li>Bootstrap by Twitter >= v3 (optional, if you want to use responsive layouts)</li>
+                        <li>jQuery library >= v1.8</li>
+                    </ul>
+                    <div class="alert alert-info">
+                        <i class="fa fa-info fa-fw"></i> to use ngConfirm without bootstrap set <code>useBootstrap:
+                        false</code>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- basic usage -->
+            <section id="usage" ng-controller="quickUseController">
+                <h3>Basic Usage</h3>
+
+                <div class="section">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4 id="module_dependency">
+                                Add the module dependency in your app
+                            </h4>
+                        </div>
+                        <div class="col-md-12">
+                            <pre class="prettyprint linenums"><code class="js">angular.module('myModule', ['cp.ngConfirm'])</code></pre>
+                        </div>
+                        <div class="col-md-12">
+                            <h4 id="confirm">
+                                $ngConfirm
+                            </h4>
+                        </div>
+                        <div class="col-md-12">
+                            <p>
+                                A basic usage of ngConfirm, <br>
+                                This pretty much explains how it works, content is the template that will be shown
+                                inside the popup.
+                                <br>
+                            <p class="text-warning">If $scope is not provided, ngConfirm will create a child scope from
+                                rootScope.</p>
+                            </p>
+                            <button ng-click="test()" class="btn btn-primary">test()</button>
+                            <div class="space10"></div>
+                            <pre class="prettyprint linenums"><code class="js" ng-non-bindable>.controller('myController', function ($scope, $ngConfirm) {
+    $scope.test = function(){
+        $scope.name = 'Sia: cheap thrills';
+        $ngConfirm({
+            title: 'Confirm!',
+            content: '&lt;strong&gt;{{name}}&lt;/strong&gt; is my favourite song',
+            scope: $scope,
+            buttons: {
+                sayBoo: {
+                    text: 'Say Booo',
+                    btnClass: 'btn-blue',
+                    action: function($scope, button){
+                        $scope.name = 'Booo!!';
+                        return false; // prevent close;
+                    }
+                },
+                somethingElse: {
+                    text: 'Something else',
+                    btnClass: 'btn-orange',
+                    action: function($scope, button){
+                        $ngConfirm('You clicked on <strong>something else</strong>');
+                    }
+                }
+                close: function($scope, button){
+                    // closes the modal
+                },
+            }
+        });
+    }
+});</code></pre>
+                        </div>
+                        <div class="col-md-12">
+                            <h4 id="using-templates">
+                                using templates (contentUrl)
+                            </h4>
+                        </div>
+                        <div class="col-md-12">
+                            <p>
+                                contentUrl is basically templateUrl, which is fetched and compiled with scope. <br>
+                                if contentUrl is provided content property is ignored.
+                            </p>
+                            <pre class="prettyprint linenums"><code class="js" ng-non-bindable>.controller('myController', function ($scope, $ngConfirm) {
+    $scope.usingTemplates = function(){
+        $ngConfirm({
+            title: 'Confirm!',
+            contentUrl: 'my_template.html',
+            scope: $scope,
+            ...
+        });
+    }
+});</code></pre>
+                        </div>
+                        <div class="col-md-12">
+                            <h4 id="shorthand">Shorthand usage</h4>
+
+                            <p>
+                                The shorthand thingy is made so that you don't need to define everything again. <br>
+                                There are 4 variants for passing the arguments.
+                            </p>
+                            <pre class="prettyprint linenums"><code class="js">$ngConfirm('Content here');
+$ngConfirm('Content here', $scope);
+$ngConfirm('Content here', 'Title here');
+$ngConfirm('Content here', 'Title here', $scope);</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="buttons" ng-controller="buttonController">
+                <h2>Buttons</h2>
+                <p>
+                    Its all what you need to know about buttons in ngConfirm.
+                </p>
+                <h4 id="defining-buttons">
+                    Definition
+                </h4>
+                <div class="section">
+                    <p>
+                        Buttons can be defined in the following fashion, pretty self explanatory.
+                    </p>
+                    <pre class="prettyprint linenums"><code class="html" ng-non-bindable>$ngConfirm({
+    buttons: {
+        hello: function($scope, button){
+            // button action
+        },
+        hey: function($scope, button){
+            button.disabled = true; // disable the current button.
+            button.text = 'heyyyy'; // change the current button text.
+            this.triggerButton('hello'); // this triggers the other button named hello.
+            this.buttons.heyThere.disabled = true; // disable the hello button.
+        },
+        heyThere: {
+            text: 'Hey there!',
+            btnClass: 'btn-blue',
+            keys: ['enter', 'a'],
+            action: function($scope, button){
+                // button action
+            }
+        }
+    }
+});</code></pre>
+                </div>
+                <h4 id="buttontext">Button text</h4>
+                <div class="section">
+                    <button ng-click="buttonText()" class="btn btn-primary">click me!</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code class="html" ng-non-bindable>$ngConfirm({
+    buttons: {
+        something: function(){
+            // here the key 'something' will be used as the text.
+            $ngConfirm('You clicked on something.');
+        },
+        somethingElse: {
+            text: 'Something else &*', // Some Non-Alphanumeric characters
+            action: function(){
+                $ngConfirm('You clicked on something else');
+            }
+        }
+    }
+})</code></pre>
+                </div>
+                <h4 id="buttonstyle">Button style</h4>
+
+                <div class="section">
+                    <p>Simply applying classes to buttons.</p>
+                    <p class="text-info">
+                        ngConfirm comes bundled with <code>btn-blue</code> <code>btn-green</code> <code>btn-red</code>
+                        <code>btn-orange</code> <code>btn-purple</code> <code>btn-default</code> <code>btn-dark</code>
+                    </p>
+                    <p class="text-info">
+                        Other bootstrap options are <code>btn-primary</code> <code>btn-inverse</code>
+                        <code>btn-warning</code>
+                        <code>btn-info</code> <code>btn-danger</code> <code>btn-success</code>
+                    </p>
+                    <button ng-click="usingNgConfirmButtons()" class="btn btn-primary">Using buttons that come with
+                        ngConfirm!
+                    </button>
+                    <button ng-click="usingBootstrapButtons()" class="btn btn-primary">Using bootstrap buttons!</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code class="html">$ngConfirm({
+    buttons: {
+        default: {
+            btnClass: 'btn-default',
+            ...
+        },
+        blue: {
+            btnClass: 'btn-blue',
+            ...
+        },
+        green: {
+            btnClass: 'btn-green',
+            ...
+        },
+    }
+});</code></pre>
+                </div>
+
+                <h4 id="button-keys">Button keys</h4>
+
+                <div class="section">
+                    <p>
+                        Listen to keyup events for individual buttons. A button can listen for multiple keys at a time.
+                    </p>
+                    <div class="alert alert-info">
+                        Available options are: <br>
+                        a to Z, tilde, enter, shift, tab, capslock, ctrl, win, alt, esc, space.
+                    </div>
+                    <button ng-click="buttonKeys()" class="btn btn-primary">Click me!</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code class="html">$ngConfirm({
+    buttons: {
+        specialKey: {
+            text: 'On behalf of shift',
+            keys: ['shift', 'alt'],
+            action: function(){
+                $ngConfirm('Shift or Alt was pressed');
+            }
+        },
+        alphabet: {
+            text: 'A, B',
+            keys: ['a', 'b'],
+            action: function(){
+                $ngConfirm('A or B was pressed');
+            }
+        }
+    }
+});</code></pre>
+
+                    <button type="button"
+                            ng-click="buttonKeysExample()"
+                            class="btn btn-primary">Another important example
+                    </button>
+                    <div class="space10"></div>
+                    <p>
+                        In this example, the YES button is hidden using bootstrap's hide class, thus the user can only
+                        use keys to proceed.
+                    </p>
+                    <pre class="prettyprint linenums"><code class="html">$ngConfirm({
+    title: false,
+    content: 'A very very critical action here! &lt;br&gt; ' +
+             'the proceed button is hidden.' +
+             'The only way to proceed is to press the &lt;strong&gt;Y&lt;/strong&gt; key.&lt;br&gt;' +
+             'Press &lt;span style="font-size: 20px;"&gt;Y&lt;/span&gt; to proceed.',
+    buttons: {
+        yes: {
+            show: false, // hides the button using display: none
+            keys: ['y'],
+            action: function ($scope, button) {
+                $ngConfirm('Critical action &lt;strong&gt;was performed&lt;/strong&gt;.');
+            }
+        },
+        no: {
+            keys: ['N'],
+            action: function ($scope, button) {
+                $ngConfirm('You clicked No.');
+            }
+        },
+    }
+});</code></pre>
+                </div>
+
+                <h4 id="button-properties">Button properties</h4>
+                <div class="section">
+                    <p>
+                        Button properties provide a nice and clean way to alter your buttons in run-time.
+                    </p>
+                    <button ng-click="buttonProperties()" class="btn btn-primary">Try me</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code class="html">$ngConfirm({
+    buttons: {
+        buttonA: {
+            text: 'button a',
+            action: function ($scope, button) {
+                button.text = 'Oh yeah'; // the current button
+                this.buttons.buttonB.text = 'Changed it!';
+                return false;
+            }
+        },
+        buttonB: {
+            text: 'button b',
+            action: function ($scope, button) {
+                this.buttons.buttonA.disabled = true;
+                return false;
+            }
+        },
+        reset: function ($scope, button) {
+            this.buttons.buttonA.disabled = false;
+            this.buttons.buttonA.text = 'button a';
+            this.buttons.buttonB.text = 'button b';
+            return false;
+        },
+        closeIcon: true, // let the user close the modal
+    }
+});</code></pre>
+                    <p>
+                        A full list of functions for buttons.
+                    </p>
+                    <table class="table table-bordered table-condensed">
+                        <tr>
+                            <td>
+                                Property
+                            </td>
+                            <td>
+                                Code
+                            </td>
+                            <td>
+                                Description
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                text
+                            </td>
+                            <td>
+                                this.buttons.&lt;buttonName&gt;.text = 'text'
+                            </td>
+                            <td>
+                                The text you want to set.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                btnClass
+                            </td>
+                            <td>
+                                this.buttons.&lt;buttonName&gt;.btnClass = 'btn-info'
+                            </td>
+                            <td>
+                                Change the button's class.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                disabled
+                            </td>
+                            <td>
+                                this.buttons.&lt;buttonName&gt;.disabled
+                            </td>
+                            <td>
+                                enable or disable a button
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                show
+                            </td>
+                            <td>
+                                this.buttons.&lt;buttonName&gt;.show
+                            </td>
+                            <td>
+                                Show or hide the button via CSS
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+
+            <section id="customizing" ng-controller="customizationController">
+                <h2>Customizing</h2>
+
+                <h4 id="dialog-type">Dialog type</h4>
+
+                <div class="section">
+                    <p>
+                        Dialog types helps give the user a hint as to what the dialog is about
+                    </p>
+
+                    <button ng-click="errorDialog()" class="btn btn-primary">Error/Red dialog</button>
+                    <button ng-click="successDialog()" class="btn btn-primary">Success/Green dialog</button>
+                    <button ng-click="errorDialogNoAnimation()" class="btn btn-primary">Non animated type dialog
+                    </button>
+                    <div class="space10"></div>
+                    <button ng-click="dialogType('orange')" class="btn btn-primary">orange</button>
+                    <button ng-click="dialogType('blue')" class="btn btn-primary">blue</button>
+                    <button ng-click="dialogType('purple')" class="btn btn-primary">purple</button>
+                    <button ng-click="dialogType('dark')" class="btn btn-primary">dark</button>
+
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    title: 'Encountered an error!',
+    content: 'Something went downhill, this may be serious',
+    type: 'red',
+    typeAnimated: true,
+    buttons: {
+        tryAgain: {
+            text: 'Try again',
+            btnClass: 'btn-red',
+            action: function(){
+            }
+        },
+        close: function () {
+        }
+    }
+});</code></pre>
+                </div>
+
+                <h4 id="icons">Icons</h4>
+
+                <div class="section">
+                    <p>Give meaning to your dialog with custom icons.<br>
+                        Read about Font Awesome
+                        <a href="http://fortawesome.github.io/Font-Awesome">here</a>
+                        .
+                    </p>
+
+                    <button ng-click="iconFA()" class="btn btn-primary">Using font-awesome</button>
+                    <button ng-click="iconAnimatedFA()" class="btn btn-primary">Animated font-awesome</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    icon: 'glyphicon glyphicon-heart',
+    title: 'glyphicon'
+});
+$ngConfirm({
+    icon: 'fa fa-warning',
+    title: 'font-awesome'
+});
+$ngConfirm({
+    icon: 'fa fa-spinner fa-spin',
+    title: 'Working!',
+    content: 'Sit back, we are processing your request!'
+});</code></pre>
+                </div>
+
+                <h4 id="close-icon">Close icon</h4>
+
+                <div class="section">
+                    <p>
+                        ngConfirm confirm uses <code>&amp;times;</code> html entity for this close symbol, however you
+                        can
+                        use Any icon of your choice (fa, glyphicon, zmdi)
+                    </p>
+
+                    <div class="alert alert-info">
+                        By default <code>closeIcon</code> is set to <code>null</code>.
+                        That means, if buttons are not defined the closeIcon will be shown, else will not be shown.
+                        <br>
+                        To explicitly show <code>closeIcon</code> set it to a truthy value and vise versa.
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>
+                                Turn on closeIcon explicitly
+                            </p>
+                            <button ng-click="closeIcon()" class="btn btn-primary">With closeIcon</button>
+                            <div class="space10"></div>
+                            <pre class="prettyprint linenums"><code>$ngConfirm({
+    closeIcon: true
+});</code></pre>
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                Using other libraries for icons
+                            </p>
+                            <button ng-click="closeIconFa()" class="btn btn-primary">Using font awesome</button>
+                            <div class="space10"></div>
+                            <pre class="prettyprint linenums"><code>$ngConfirm({
+    closeIcon: true,
+    closeIconClass: 'fa fa-close'
+});</code></pre>
+                        </div>
+                    </div>
+
+                    <h4>
+                        <i class="fa fa-info"></i> Handle closeIcon's callback
+                    </h4>
+                    <p>
+                        Control what happens when close icon is clicked. <br>
+                        closeIcon can take in function to handle the button click or you can return a button name.
+                    </p>
+                    <button ng-click="closeIconCallback()" class="btn btn-primary">Test it</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    closeIcon: function(){
+        return false; // to prevent close the modal.
+        // or
+        return 'aRandomButton'; // set a button handler, 'aRandomButton' prevents close.
+    },
+    // or
+    closeIcon: 'aRandomButton', // set a button handler
+    buttons: {
+        aRandomButton: function(){
+            $.alert('A random button is called, and i prevent closing the modal');
+            return false; // you shall not pass
+        },
+        close: function(){
+        }
+    }
+});</code></pre>
+                </div>
+                <h4 id="custom-width">Custom width</h4>
+
+                <div class="section">
+                    <p>
+                        ngConfirm uses bootstrap's grid system for its layout by default.
+                        You can simply provide column classes to adjust the modal's width.
+                    </p>
+
+                    <p class="text-info"><i class="fa fa-magic fa-fw"></i> You can also set responsive layouts.
+                        <a href="http://getbootstrap.com/examples/grid/"
+                           target="_empty">Bootstrap grid docs
+                        </a>
+                    </p>
+
+                    <p>
+                        instead of typing the whole thing, provide keywords like <br>
+                        <code>xlarge</code>/<code>xl</code></code> equivalent to <code>col-md-12</code> <br>
+                        <code>large</code>/<code>l</code></code> equivalent to <code>col-md-8 col-md-offset-2</code>
+                        <br>
+                        <code>medium</code>/<code>m</code></code> equivalent to <code>col-md-6 col-md-offset-3</code>
+                        <br>
+                        <code>small</code>/<code>s</code></code> equivalent to <code>col-md-4 col-md-offset-4</code>
+                        <br>
+                        <code>xsmall</code>/<code>xs</code></code> equivalent to <code>col-md-2 col-md-offset-5</code>
+                    </p>
+
+                    <button ng-click="columnClass('medium')" class="btn btn-primary ">medium</button>
+                    <button ng-click="columnClass('small')" class="btn btn-primary ">small (default)</button>
+                    <button ng-click="columnClass('col-md-4')" class="btn btn-primary ">col-md-4</button>
+                    <button ng-click="columnClass('col-md-4 col-md-offset-8')" class="btn btn-primary ">col-md-4
+                        col-md-offset-8
+                    </button>
+                    <button ng-click="columnClass('xlarge')" class="btn btn-primary ">xlarge</button>
+                    <button ng-click="columnClass('xlarge', true)" class="btn btn-primary ">xlarge (fluid)</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    columnClass: 'small'
+});
+$ngConfirm({
+    columnClass: 'col-md-4'
+});
+$ngConfirm({
+    columnClass: 'col-md-4 col-md-offset-8 col-xs-4 col-xs-offset-8'
+});
+$ngConfirm({
+    columnClass: 'col-md-4 col-md-offset-8 col-xs-4 col-xs-offset-8',
+    containerFluid: true, // this will add 'container-fluid' instead of 'container'
+});</code></pre>
+                </div>
+
+                <h4 id="custom-width-without-bootstrap">Custom width without Bootstrap</h4>
+
+                <div class="section">
+                    <p>
+                        Many have a different taste, who wont be using bootstrap in their projects. <br>
+                        You can simply provide the width of the modal, in px or any metric you want.
+                    </p>
+
+                    <div class="alert alert-warning">
+                        <code>useBootstrap</code> must be set to <code>false</code> to use this feature
+                    </div>
+
+                    <button ng-click="boxWidth('30%')" class="btn btn-primary">30%</button>
+                    <button ng-click="boxWidth('500px')" class="btn btn-primary">500px</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    boxWidth: '30%',
+    useBootstrap: false,
+});
+$ngConfirm({
+    boxWidth: '500px',
+    useBootstrap: false,
+});</code></pre>
+                </div>
+
+                <h4 id="namespaced-bootstrap">Namespaced bootstrap</h4>
+
+                <div class="section">
+                    <p>
+                        Namespacing is basically isolating the bootstrap classes names, like turning '.row' to
+                        '.custom-row'
+                        <br>
+                        If you're using a namespaced bootstrap library, this option is for you.
+                    </p>
+                    <p>
+                        <i class="fa fa-info fa-fw"></i> it is ideal to set this in defaults
+                    </p>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    bootstrapClasses: {
+        container: 'container',
+        containerFluid: 'container-fluid',
+        row: 'row',
+    },
+});</code></pre>
+                </div>
+            </section>
+
+            <section id="animations">
+                <h2>Animations</h2>
+                <div class="well">
+                    <p>
+                        The animations section is moved to the animations.html page.
+                    </p>
+                    <a class="btn btn-warning" href="animations.html">see Animations</a>
+                </div>
+            </section>
+
+            <section id="themes">
+                <h2>Themes</h2>
+                <div class="well">
+                    <p>
+                        The themes section is moved to the themes.html page
+                    </p>
+                    <a class="btn btn-warning" href="themes.html">see Themes</a>
+                </div>
+            </section>
+
+
+            <section ng-controller="autoCloseController">
+                <h2 id="autoclose">Auto close</h2>
+
+                <p>
+                    Do a action if the user does not respond within the specified time. <br>
+                    This comes in handly when the user is about to do something critical. <br/>
+                    The <code>autoClose</code> option takes in a string, like <code>'confirm|4000'</code> where confirm
+                    is the action to trigger after 4000 milliseconds.
+                    <br>
+                    <i class="fa fa-info"></i> Practical examples of autoClose
+                </p>
+
+                <div class="section">
+                    <button ng-click="deleteUser()" class="btn btn-primary">Delete user</button>
+                    <button ng-click="logoutMyself()" class="btn btn-primary">Logout myself</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    title: 'Delete user?',
+    content: 'This dialog will automatically trigger \'cancel\' in 6 seconds if you don\'t respond.',
+    autoClose: 'cancel|8000',
+    buttons: {
+        deleteUser: {
+            text: 'delete user',
+            btnClass: 'btn-red',
+            action: function () {
+               $ngConfirm('Deleted the user!');
+            }
+        },
+        cancel: function () {
+           $ngConfirm('action is canceled');
+        }
+    }
+});
+$ngConfirm({
+   title: 'Logout?',
+    content: 'Your time is out, you will be automatically logged out in 10 seconds.',
+    autoClose: 'logoutUser|10000',
+    buttons: {
+        logoutUser: {
+            text: 'logout myself',
+            btnClass: 'btn-green',
+            action: function () {
+               $ngConfirm('The user was logged out');
+            }
+        },
+        cancel: function () {
+           $ngConfirm('canceled');
+        }
+    }
+});</code></pre>
+                </div>
+            </section>
+
+
+            <section id="backgrounddismiss" ng-controller="bgDismissController">
+                <h2>
+                    Background dismiss
+                </h2>
+
+                <div class="section">
+                    <p>
+                        Control what happens if the user clicks outside the modal. <br/>
+                    </p>
+                    <div class="alert alert-warning">
+                        backgroundDismiss is set to false by default.
+                    </div>
+                    <button class="btn btn-primary" ng-click="allowBgDismiss()">Allow backgroundDismiss</button>
+
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    backgroundDismiss: true, // this will just close the modal
+});
+$ngConfirm({
+    backgroundDismiss: function(){
+        return false; // modal wont close.
+    },
+});
+$ngConfirm({
+    backgroundDismiss: function(){
+        return 'buttonName'; // the button will handle it
+    },
+});
+$ngConfirm({
+    backgroundDismiss: 'buttonName',
+    content: 'Click outside the box to close the modal',
+    buttons: {
+        buttonName: function () {
+            $ngConfirm('Button name was clicked');
+        },
+        close: function () {
+        }
+    }
+});</code></pre>
+                </div>
+
+                <h4 id="backgrounddismiss-animations">Background dismiss animation</h4>
+                <div class="section">
+                    <p>
+                        Fancy animations to grab users attention. Click outside the modal to see the animation.
+                    </p>
+                    <button ng-click="bgDismissAnimation('shake')" class="btn btn-primary">Shake (default)</button>
+                    <button ng-click="bgDismissAnimation('glow')" class="btn btn-primary">Glow</button>
+
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$.confirm({
+    backgroundDismiss: false,
+    backgroundDismissAnimation: 'shake',
+});
+$.confirm({
+    backgroundDismiss: false,
+    backgroundDismissAnimation: 'glow',
+});</code></pre>
+
+                </div>
+            </section>
+
+
+            <section id="escape-key" ng-controller="escapeKeyController">
+                <h2>
+                    Escape key
+                </h2>
+
+                <p>
+                    Control what happens when the escape key is pressed. This is enabled by default. <br>
+                    backgroundDismiss is called when escape key is pressed. if backgroundDismiss is false, it will make
+                    the backgroundDismissAnimation
+                </p>
+
+                <div class="section">
+                    <button ng-click="escapeKey()" class="btn btn-primary">Escape key</button>
+                    <button ng-click="escapeKeyHandler()" class="btn btn-primary">Escape key handled with button
+                    </button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    content: 'background dismiss is not allowed on this modal, thus the modal will make a backgroundDismissAnimation',
+    escapeKey: true,
+    backgroundDismiss: false,
+});
+$ngConfirm({
+    escapeKey: 'buttonName',
+    buttons: {
+        buttonName: function(){
+            $.alert('Button name was called');
+        },
+        close: function(){
+
+        }
+    }
+});</code></pre>
+                </div>
+            </section>
+
+
+            <section id="rtl" ng-controller="rtlController">
+                <h2>RTL support</h2>
+
+                <div class="section">
+                    <p>
+                        If you need to show the confirm box in rtl then you should set the rtl option to true.
+                    </p>
+                    <button ng-click="rtl()" class="btn btn-primary">Try RTL</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$.alert({
+    title: 'پیغام',
+    content: 'این یک متن به زبان شیرین فارسی است',
+    rtl: true,
+    closeIcon: true,
+    buttons: {
+        confirm: {
+            text: 'تایید',
+            btnClass: 'btn-blue',
+            action: function () {
+                alert('تایید شد.');
+            }
+        },
+        cancel: {
+            text: 'انصراف',
+            action: function () {
+
+            }
+        }
+    }
+});</code></pre>
+                </div>
+            </section>
+
+
+            <section id="callbacks" ng-controller="callbackController">
+                <h2>Callbacks</h2>
+
+                <div class="section">
+                    <p>
+                        Get more control over the modal, mainly important for binding events for the modal elements.
+                    </p>
+                    <button class="btn btn-primary" ng-click="callback()">Test Callbacks</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    title: false,
+    contentUrl: 'callback.html',
+    onReady: function ($scope) {
+        // when content is fetched & the modal is open
+        alert('onReady');
+        var self = this;
+        this.buttons.ok.disabled = true;
+        $scope.fnClick = function () {
+            $scope.name = 'Chuck norris';
+            self.buttons.ok.disabled = false;
+        };
+    },
+    onOpenBefore: function ($scope) {
+        // before the modal is displayed.
+        alert('onOpenBefore');
+    },
+    onOpen: function () {
+        // after the modal is displayed.
+        alert('onOpen');
+    },
+    onClose: function () {
+        // before the modal is hidden.
+        alert('onClose');
+    },
+    onDestroy: function () {
+        // when the modal is removed from DOM
+        alert('onDestroy');
+    },
+    onAction: function ($scope, btnName) {
+        // when a button is clicked, with the button name
+        alert('onAction: ' + btnName);
+    },
+    buttons: {
+        ok: function () {
+
+        }
+    }
+});</code></pre>
+                </div>
+            </section>
+
+            <section id="globaldefaults">
+                <h2>Global defaults</h2>
+
+                <div class="section">
+                    <p>
+                        You can setup global settings for your ngConfirm.
+                    </p>
+                    <pre class="prettyprint linenums"><code>angular.module('myApp', ['cp.ngConfirm'])
+    .run([
+        '$ngConfirmDefaults',
+        function($ngConfirmDefaults){
+            $ngConfirmDefaults.useBootstrap = false; // this is globally set.
+        }
+    ]);</code></pre>
+                </div>
+            </section>
+
+
+            <section id="options">
+                <h2>Options</h2>
+
+                <div class="section">
+                    <p>Options, their defaults, possibilities and explanations.</p>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                            <tr>
+                                <td>title</td>
+                                <td>String</td>
+                                <td>
+                                    <code>'Hello'</code>
+                                </td>
+                                <td>
+                                    Title of the dialog. <br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>type</td>
+                                <td>String</td>
+                                <td>
+                                    <code>'default'</code>
+                                </td>
+                                <td>
+                                    Colors the modal to give the user a hint of success/failure/warning, <br>
+                                    available options are: 'blue, green, red, orange, purple & dark'
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>scope</td>
+                                <td>Angular scope</td>
+                                <td>
+                                    <code>false</code>
+                                </td>
+                                <td>
+                                    If a scope is provided, the content will be compiled with that scope, if not, a new
+                                    child scope will be created from rootScope.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>typeAnimated</td>
+                                <td>Boolean</td>
+                                <td>
+                                    <code>true</code>
+                                </td>
+                                <td>
+                                    Adds a little animation to the colors.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>content</td>
+                                <td>String</td>
+                                <td><code>'Are you sure to continue?'</code></td>
+                                <td>
+                                    Template/Content for the dialog,
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>contentUrl</td>
+                                <td>String</td>
+                                <td><code>false</code></td>
+                                <td>
+                                    Template/Content url form where the template will be fetched. <br>
+                                    This template is cached in $templateCache
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>icon</td>
+                                <td>String</td>
+                                <td><code>''</code></td>
+                                <td>
+                                    Icon class prepended before the title.
+                                    ex: 'fa fa-icon'
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>bgOpacity</td>
+                                <td>Float</td>
+                                <td><code>null</code></td>
+                                <td>
+                                    if null, the theme's default bg opacity is applied.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>theme</td>
+                                <td>String</td>
+                                <td><code>'light'</code></td>
+                                <td>Color theme for the dialog.<br>
+                                    possible options are 'light', 'dark', 'material' &amp; 'bootstrap'
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>animation</td>
+                                <td>String</td>
+                                <td><code>'zoom'</code></td>
+                                <td>
+                                    The Open animation for the dialog.<br>
+                                    possible options are right, left, bottom, top, rotate, none, opacity, scale, zoom,
+                                    scaleY, scaleX, rotateY, rotateYR (reverse), rotateX, rotateXR (reverse)
+                                    <br>
+                                    <span class="text-info">The 'blur' animation was removed in v1.1.2</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>closeAnimation</td>
+                                <td>String</td>
+                                <td><code>'scale'</code></td>
+                                <td>
+                                    The close animation for the dialog. Same options as animation.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>animationSpeed</td>
+                                <td>Number</td>
+                                <td><code>400</code></td>
+                                <td>Animation duration in milliseconds.</td>
+                            </tr>
+                            <tr>
+                                <td>animationBounce</td>
+                                <td>Float</td>
+                                <td><code>1.2</code></td>
+                                <td>Adds a Bounce open animation, <br>1 = No bounce</td>
+                            </tr>
+                            <tr>
+                                <td>escapeKey</td>
+                                <td>Boolean, String</td>
+                                <td><code>false</code></td>
+                                <td>
+                                    if false, escapeKey wont work, <br>
+                                    if true, will work, but no callbacks, <br>
+                                    if string, will be assigned to button.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>rtl</td>
+                                <td>Boolean</td>
+                                <td><code>false</code></td>
+                                <td>
+                                    Use the Right to left text layout.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>container</td>
+                                <td>String</td>
+                                <td><code>'body'</code></td>
+                                <td>
+                                    Specify where the generated HTML content for jconfirm should append. <br>
+                                    By default it appends in the document's &lt;body&gt;.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>containerFluid</td>
+                                <td>Boolean</td>
+                                <td><code>false</code></td>
+                                <td>
+                                    If true, will use the container-fluid layout, to use the full browser width. <br>
+                                    Only applicable if useBootstrap is <code>true</code>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>backgroundDismiss</td>
+                                <td>Boolean, String, Function</td>
+                                <td><code>false</code></td>
+                                <td>
+                                    If false, user wont be able to exit by clicking out. <br>
+                                    If true, user will be able to click out, no callback. <br>
+                                    If string, will be assigned to button. <br>
+                                    If function, will be used as callback.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>backgroundDismissAnimation</td>
+                                <td>String</td>
+                                <td><code>'shake'</code></td>
+                                <td>
+                                    Animation to perform to grab the user's attention when user clicks out of the box.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>autoClose</td>
+                                <td>String</td>
+                                <td><code>false</code></td>
+                                <td>
+                                    Auto-close the dialog within a specified time, if the user doesn't respond.<br>
+                                    possible option <code>'buttonName|400'</code> <br>
+
+                                    <p class="text-info">
+                                        the string is divided in two halves with pipe <code>'|'</code>, the first part
+                                        specifies the button name to trigger. The other
+                                        half specifies the wait time in milliseconds.
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>closeIcon</td>
+                                <td>Boolean</td>
+                                <td><code>null</code></td>
+                                <td>
+                                    By default closeIcon is visible if both buttons are false. (dialog mode). <br>
+                                    closeIcon can be shown by setting this value to true.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>closeIconClass</td>
+                                <td>String</td>
+                                <td><code>false</code></td>
+                                <td>
+                                    By default jQuery confirm uses &times; html entity for this close symbol. You can
+                                    provide icon class here to change it. <br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>columnClass</td>
+                                <td>String</td>
+                                <td><code>'col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10
+                                    col-xs-offset-1'</code></td>
+                                <td>
+                                    Provides a better way to set Custom width and is responsive.<br>
+                                    You can also set custom widths for different display sizes using the Bootstraps
+                                    grid.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>useBootstrap</td>
+                                <td>Boolean</td>
+                                <td><code>true</code></td>
+                                <td>
+                                    if true, bootstrap classes will be set on the modal. columnClass wil be set on the
+                                    box.
+                                    if false, bootstrap classes will not be set, instead boxWidth will be set on the
+                                    box.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>boxWidth</td>
+                                <td>String</td>
+                                <td><code>'50%'</code></td>
+                                <td>
+                                    This options sets the width of the box, when you're not planning to use bootstrap in
+                                    your project
+                                    <br>
+                                    <i class="fa fa-info"></i> Will only work if useBootstrap is set to false,
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>bootstrapClasses</td>
+                                <td>object</td>
+                                <td><code>{
+                                    container: 'container',
+                                    containerFluid: 'container-fluid',
+                                    row: 'row',
+                                    }</code></td>
+                                <td>
+                                    These are the default classes that are set when bootstrap is used,
+                                    this option is available to folks who use namespaced bootstrap classes.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>onContentReady</td>
+                                <td>Function</td>
+                                <td><code>function(){}</code></td>
+                                <td>
+                                    is called when the content is put in DOM and the modal is open. (When the modal is
+                                    completed ready.)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>onOpenBefore</td>
+                                <td>Function</td>
+                                <td><code>function(){}</code></td>
+                                <td>
+                                    is called when the modal is going to be opened.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>onOpen</td>
+                                <td>Function</td>
+                                <td><code>function(){}</code></td>
+                                <td>
+                                    is called when the modal has finished opening.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>onClose</td>
+                                <td>Function</td>
+                                <td><code>function(){}</code></td>
+                                <td>
+                                    is called when the modal is going to be closed.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>onDestroy</td>
+                                <td>Function</td>
+                                <td><code>function(){}</code></td>
+                                <td>
+                                    is called after the modal element is removed from the DOM.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>onAction</td>
+                                <td>Function</td>
+                                <td><code>function(buttonName){}</code></td>
+                                <td>
+                                    is called when any of the button is clicked. buttonName is provided as argument.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>watchInterval</td>
+                                <td>Number</td>
+                                <td><code>100</code></td>
+                                <td>
+                                    Watch the modal for changes and is centered on screen. <br>
+                                    <i class="fa fa-info"></i> Added in v 2.5.0
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="api">
+                <h2>Api</h2>
+                <p>
+                    These are a few stuff, that will let you interact and make changes in your modal on run time. <br>
+                    The function <code>$ngConfirm()</code> returns an object on execution. <br>
+                </p>
+                <pre class="prettyprint linenums"><code>var jc = $ngConfirm({
+    title: 'awesome',
+    onContentReady: function(){
+        // this === jc
+    }
+});</code></pre>
+                <div class="alert">
+                    All of the properties in jc are two-way binded, all you have to do is asign a new value to the
+                    property.
+                </div>
+                <div>
+                    <h4 id="api-scope">
+                        <code>jc.scope</code>
+                    </h4>
+
+                    <p><span class="label label-default">Angular scope object</span> <span class="label label-info"
+                                                                                           title="Updating this property will not affect the modal">Read only</span>
+                    </p>
+
+                    <div class="section">
+                        <p>The content is compiled with this scope</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-button-text">
+                        <code>jc.buttons.&lt;buttonName&gt;.text</code>
+                    </h4>
+                    <p>
+                        <span class="label label-default">Property</span>
+                    </p>
+                    <div class="section">
+                        <p>Set text for a button</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-button-class">
+                        <code>jc.buttons.&lt;buttonName&gt;.btnClass</code>
+                    </h4>
+                    <p>
+                        <span class="label label-default">Property</span>
+                    </p>
+                    <div class="section">
+                        <p>Set class to the button</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-button-disable">
+                        <code>jc.buttons.&lt;buttonName&gt;.disabled</code>
+                    </h4>
+                    <p>
+                        <span class="label label-default">Property</span>
+                    </p>
+                    <div class="section">
+                        <p>Disables the button with attribute <code>disabled='disabled'</code></p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-button-show">
+                        <code>jc.buttons.&lt;buttonName&gt;.show</code>
+                    </h4>
+                    <p>
+                        <span class="label label-default">Property</span>
+                    </p>
+                    <div class="section">
+                        <p>Show or hide the button using ng-hide</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-close">
+                        <code>jc.close()</code>
+                    </h4>
+                    <p><span class="label label-default">function</span></p>
+                    <div class="section">
+                        <p>The close method closes/destroys the dialog.</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-isclosed">
+                        <code>jc.isClosed()</code>
+                    </h4>
+
+                    <p><span class="label label-default">function</span></p>
+
+                    <div class="section">
+                        <p>
+                            returns true if the modal is closed, else false.
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-isopen">
+                        <code>jc.isOpen()</code>
+                    </h4>
+
+                    <p><span class="label label-default">function</span></p>
+
+                    <div class="section">
+                        <p>
+                            returns true if the modal is open, else false.
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-setdialogcenter">
+                        <code>jc.setDialogCenter()</code>
+                    </h4>
+
+                    <p><span class="label label-default">function</span></p>
+
+                    <div class="section">
+                        <p>Centers the dialog on screen. This is done for you by the watch timer when the content
+                            changes.</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-el">
+                        <code>jc.$el</code>
+                    </h4>
+
+                    <p><span class="label label-default">DOM element</span></p>
+
+                    <div class="section">
+                        <p>
+                            is the modal body that includes buttons content title and stuff.
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <h4 id="api-confirm-box">
+                        <code>jc.$confirmBox</code>
+                    </h4>
+
+                    <p><span class="label label-default">DOM element</span></p>
+
+                    <div class="section">
+                        <p>The box element</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="text-right footer">
+                <div class="spacer15"></div>
+                <p>
+                    Thanks for making it to the end of the document. <br>
+                    Your support and suggestions matter the most!
+                </p>
+                <a href="https://github.com/craftpip/angular-confirm/issues/new"
+                   target="empty"
+                   class="btn btn-success">Please post your <br> Questions / Suggestions / Issues.</a>
+                <h4>Made by <a href="http://twitter.com/craftpip">@craftpip</a></h4>
+
+                <div class="spacer15"></div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"
+        src="demo/demo.js"></script>
+
+<script type="text/javascript"
+        src="app.js"></script>
+
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-53264350-2', 'auto');
+    ga('send', 'pageview');
+</script>
+
+<script async
+        defer
+        id="github-bjs"
+        src="https://buttons.github.io/buttons.js"></script>
+<script> window.twttr = (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
+    if (d.getElementById(id))
+        return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+    t._e = [];
+    t.ready = function (f) {
+        t._e.push(f);
+    };
+    return t;
+}(document, "script", "twitter-wjs"));
+</script>
+</body>
+</html>

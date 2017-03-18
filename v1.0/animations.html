@@ -1,0 +1,431 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="chrome=1"> -->
+    <title>angular-confirm.js | The multipurpose alert & confirm</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="description"
+          content="A multipurpose alert, confirm plugin, alternative to the native alert() and confirm() functions. Supports features like auto-close, themes, animations, and more.">
+    <link rel="canonical"
+          href="https://craftpip.github.io/angular-confirm"/>
+    <link rel="icon"
+          type="img/png"
+          href="http://craftpip.com/i/assets/img/fav.png">
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=UTF-8"/>
+    <meta name="robots"
+          content="index,follow,noodp,noydir"/>
+    <meta name="google-site-verification"
+          content="T_M_Ym5DQ-cEQQhx_jswyCBTssIdgtewICcvb3sgh8g"/>
+    <meta name="Keywords"
+          content="angular.confirm, angular confirm, angular alert, angular prompt, angular dialog, javascript, bootstrap"/>
+    <link rel="apple-touch-icon"
+          sizes="57x57"
+          href="http://craftpip.com/i/apple-touch-icon-57x57.png"/>
+    <link rel="apple-touch-icon"
+          sizes="72x72"
+          href="http://craftpip.com/i/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon"
+          sizes="114x114"
+          href="http://craftpip.com/i/apple-touch-icon-114x114.png"/>
+    <link rel="apple-touch-icon"
+          sizes="144x144"
+          href="http://craftpip.com/i/apple-touch-icon-144x144.png"/>
+    <link rel="apple-touch-icon"
+          href="http://craftpip.com/i/apple-touch-icon-57x57.png"/>
+    <meta property="og:title"
+          content="angular-confirm.js | The multipurpose alert &amp; confirm"/>
+    <meta property="og:type"
+          content="website"/>
+    <meta property="og:image"
+          content="http://craftpip.com/i/apple-touch-icon-57x57.png"/>
+    <meta property="og:url"
+          content="https://craftpip.github.io/angular-confirm"/>
+    <meta property="og:description"
+          content="A multipurpose alert & confirm plugin, alternative to the native alert() and confirm() functions. Supports features like auto-close, themes, animations, and more."/>
+    <meta property="og:site_name"
+          content="craftpip.github.io"/>
+
+    <link rel="stylesheet"
+          href="demo/libs/bundled.css">
+    <script src="demo/libs/bundled.js"></script>
+
+    <link rel="stylesheet"
+          href="demo/demo.css">
+
+    <script>
+        var version = '1.0.0';
+    </script>
+
+    <!-- Add the minified version of files from the /dist/ folder. -->
+    <!-- angular-confirm files -->
+    <link rel="stylesheet"
+          type="text/css"
+          href="css/angular-confirm.css"/>
+    <script type="text/javascript"
+            src="js/angular-confirm.js"></script>
+    <!--END angular-confirm files-->
+
+</head>
+<body data-spy="scroll"
+      data-target=".navbar">
+<header class="navbar navbar-static-top navbar-default navheader">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#bs-navbar"
+                    aria-controls="bs-navbar"
+                    aria-expanded="false"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
+                <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+            <a class="navbar-brand aconfirm-logo"
+               href="http://craftpip.github.io/angular-confirm">
+            </a>
+        </div>
+        <nav id="bs-navbar"
+             class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class=""><a href="http://github.com/craftpip/angular-confirm"><i class="fa fa-github"></i> Project
+                    home</a></li>
+                <li class=""><a href="http://github.com/craftpip/angular-confirm/issues/new">Suggest feature</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown hide">
+                    <a href="#"
+                       class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false">Versions <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://craftpip.github.io/angular-confirm/v1.0">v1.0</a></li>
+                    </ul>
+                </li>
+                <li class="hide">
+                    <a class="github-button"
+                       href="https://github.com/craftpip/angular-confirm"
+                       data-style="mega"
+                       data-count-href="/craftpip/angular-confirm/stargazers"
+                       data-count-api="/repos/craftpip/angular-confirm#stargazers_count"
+                       data-count-aria-label="# stargazers on GitHub"
+                       aria-label="Star craftpip/angular-confirm on GitHub">Star</a>
+                </li>
+                <li>
+                    <a class="twitter-follow-button"
+                       data-show-count="false"
+                       data-size="large"
+                       href="https://twitter.com/craftpip"
+                       data-show-count="false"
+                       data-lang="en">
+                        Follow @craftpip
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="header"
+     id="content"
+     tabindex="-1">
+    <div class="container">
+        <h1 style="margin-top: 7px;"
+            class="text-center">
+            <img src="angular-confirm.png"
+                 alt="ANGULAR-CONFIRM"/>
+        </h1>
+
+        <p>
+            Animations - <em>Use one, or define your own</em>.
+        </p>
+    </div>
+</div>
+<div class="container"
+     ng-app="application">
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <div class="space10"></div>
+            <div class="space10"></div>
+            <p>
+                <strong>angular-confirm v<span class="version"></span> docs</strong><br>
+                <a href="https://github.com/craftpip/angular-confirm">
+                    view on <i class="fa fa-github"></i> Github
+                </a>
+            </p>
+            <div class="spacer15"></div>
+            <div id="my-nav">
+                <ul class="nav nav-list">
+                    <li class="no-b-l">
+                        <a href="index.html"> <span class="v"><i class="fa fa-arrow-circle-left"></i></span> back to
+                            Main Docs</a>
+                    </li>
+                    <li>
+                        <a href="#open-close-animations"> Open/Close Animations</a>
+                        <ul class="nav nav-list">
+                            <li>
+                                <a href="#open-close-animations"> Animations</a>
+                            </li>
+                            <li>
+                                <a href="#animationbounce"> Bounce Effect</a>
+                            </li>
+                            <li>
+                                <a href="#animationspeed"> Animation Speed</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#custom-open-close-animations"> Define Open/Close Animation</a>
+                    </li>
+                    <li>
+                        <a href="#background-dismiss-animation"> Background Dismiss Animations</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9 col-sm-12">
+
+
+            <section id="open-close-animations" ng-controller="openCloseAnimationController">
+                <h2>Open/Close Animations</h2>
+
+                <p>
+                    Impression lies in what we see.<br>
+                    Different animations can be set for open and close events.
+                </p>
+                <div class="section">
+                    <p>2D animations:</p>
+                    <button ng-click="animation('right')" class="btn btn-primary">right</button>
+                    <button ng-click="animation('left')" class="btn btn-primary">left</button>
+                    <button ng-click="animation('bottom')" class="btn btn-primary">bottom</button>
+                    <button ng-click="animation('top')" class="btn btn-primary">top</button>
+                    <button ng-click="animation('rotate')" class="btn btn-primary">Rotate</button>
+                    <button ng-click="animation('none')" class="btn btn-primary">none</button>
+                    <button ng-click="animation('opacity')" class="btn btn-primary">opacity</button>
+                    <div class="space10"></div>
+                    <p>3D animations:</p>
+                    <button ng-click="animation('scale')" class="btn btn-primary">scale (default)</button>
+                    <button ng-click="animation('zoom')" class="btn btn-primary">zoom</button>
+                    <button ng-click="animation('scaley')" class="btn btn-primary">scaleY</button>
+                    <button ng-click="animation('scalex')" class="btn btn-primary">scaleX</button>
+                    <button ng-click="animation('rotateY')" class="btn btn-primary">RotateY</button>
+                    <button ng-click="animation('rotateyr')" class="btn btn-primary">RotateYR</button>
+                    <button ng-click="animation('rotateX')" class="btn btn-primary">RotateX</button>
+                    <button ng-click="animation('rotatexr')" class="btn btn-primary">RotateXR</button>
+                    <div class="space10"></div>
+                    <p>
+                        You can also <a href="#custom-open-close-animations">create/define your own animations</a>
+                    </p>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    animation: 'zoom',
+    closeAnimation: 'scale'
+});
+// Available animations:
+// right, left, bottom, top, rotate, none, opacity, scale, zoom,
+// scaleY, scaleX, rotateY, rotateYR (reverse), rotateX, rotateXR (reverse)</code></pre>
+                </div>
+
+                <h4 id="animationbounce">Animation bounce</h4>
+
+                <div class="section">
+                    <p>Some eye candy thats in fashion.</p>
+                    <button ng-click="bounce(1)" class="btn btn-primary">No bounce</button>
+                    <button ng-click="bounce(1.5)" class="btn btn-primary">1.5 bounce</button>
+                    <button ng-click="bounce(2)" class="btn btn-primary">2 bounce</button>
+                    <button ng-click="bounce(2.5)" class="btn btn-primary">2.5 bounce</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code class="html">$ngConfirm({
+    animationBounce: 1.5, // default is 1.2 whereas 1 is no bounce.
+});</code></pre>
+                </div>
+
+                <h4 id="animationspeed">Animation speed</h4>
+
+                <div class="section">
+                    <p>Adjust the duration of animation.</p>
+                    <button ng-click="speed(2000)" class="btn btn-primary">I'm too Late</button>
+                    <button ng-click="speed(200)" class="btn btn-primary">I'm too Quick</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$.confirm({
+    animationSpeed: 2000 // 2 seconds
+});
+$.confirm({
+    animationSpeed: 200 // 0.2 seconds
+});</code></pre>
+                </div>
+            </section>
+
+            <section id="custom-open-close-animations" ng-controller="openCloseAnimationController">
+                <h2>Define your custom animations</h2>
+                <p>
+                    Defining your custom animations lets you match your existing user interface.
+                </p>
+                <div class="section">
+                    <p>Example for a newsflash animation. <br>These animations are define the starting point of the
+                        openAnimation and ending point of the closeAnimation</p>
+                    <button ng-click="animation('news')" class="btn btn-primary">Custom animation</button>
+                </div>
+                <style>
+                    .ng-confirm .ng-confirm-box.ng-confirm-animation-news {
+                        transform: rotate(400deg) scale(0);
+                    }
+                </style>
+                <div class="space10"></div>
+                <div class="row">
+                    <div class="col-md-7">
+                <pre class="prettyprint linenums"><code>.ng-confirm .ng-confirm-box.ng-confirm-animation-news{
+    transform: rotate(400deg) scale(0);
+}</code></pre>
+                    </div>
+                    <div class="col-md-5">
+                <pre class="prettyprint linenums"><code>$ngConfirm({
+    animation: 'news',
+    closeAnimation: 'news',
+});</code></pre>
+                    </div>
+                </div>
+                <p>
+                    The animation name should be lowercase, or they wont work.
+                </p>
+                <ul>
+                    <li>
+                        <code>.ng-confirm-animation-animation-name</code> translates to 'animation-name'
+                    </li>
+                    <li>
+                        <code>.ng-confirm-animation-animationhere</code> translates to 'animationhere'
+                    </li>
+                </ul>
+            </section>
+
+            <section id="background-dismiss-animation" ng-controller="openCloseAnimationController">
+                <h2>Background dismiss animation</h2>
+                <p>
+                    This animation takes place when backgroundDismiss is false, or returns a falsy value.
+                </p>
+                <div class="section">
+                    <p>Example for a newsflash animation. <br>These animations are define the starting point of the
+                        openAnimation and ending point of the closeAnimation</p>
+                    <button ng-click="bgDismissAnimation('random')" class="btn btn-primary">Custom animation</button>
+                </div>
+                <style>
+                    .ng-confirm .ng-confirm-box.ng-confirm-hilight.ng-confirm-hilight-random {
+                        /*the animation name is bob*/
+                        transform: translate3d(0, 0, 0);
+                        animation: random 1s;
+                    }
+
+                    @keyframes random {
+                        10%, 90% {
+                            transform: rotate(-2deg);
+                        }
+                        20%, 80% {
+                            transform: rotate(4deg);
+                        }
+                        30%, 50%, 70% {
+                            transform: rotate(-8deg);
+                        }
+                        40%, 60% {
+                            transform: rotate(8deg);
+                        }
+                    }
+                </style>
+                <div class="space10"></div>
+                <div class="row">
+                    <div class="col-md-7">
+                <pre class="prettyprint linenums"><code>.ng-confirm .ng-confirm-box.ng-confirm-hilight.ng-confirm-hilight-random {
+    /*the animation name is bob*/
+    transform: translate3d(0, 0, 0);
+    animation: random 1s;
+}
+
+@keyframes random {
+    10%, 90% {
+        transform: rotate(-2deg);
+    }
+    20%, 80% {
+        transform: rotate(4deg);
+    }
+    30%, 50%, 70% {
+        transform: rotate(-8deg);
+    }
+    40%, 60% {
+        transform: rotate(8deg);
+    }
+}</code></pre>
+                    </div>
+                    <div class="col-md-5">
+                <pre class="prettyprint linenums"><code>$ngConfirm({
+    backgroundDismissAnimation: 'random',
+});</code></pre>
+                    </div>
+                </div>
+                <p>
+                    The animation name should be lowercase, or they wont work.
+                </p>
+            </section>
+
+            <section class="text-right footer">
+                <div class="spacer15"></div>
+                <p>
+                    Thanks for making it to the end of the document. <br>
+                    Your support and suggestions matter the most!
+                </p>
+                <a href="https://github.com/craftpip/angular-confirm/issues/new"
+                   target="empty"
+                   class="btn btn-success">Please post your <br> Questions / Suggestions / Issues.</a>
+                <h4>Made by <a href="http://twitter.com/craftpip">@craftpip</a></h4>
+
+                <div class="spacer15"></div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"
+        src="demo/demo.js"></script>
+
+<script type="text/javascript"
+        src="app.js"></script>
+
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-53264350-2', 'auto');
+    ga('send', 'pageview');
+</script>
+
+<script async
+        defer
+        id="github-bjs"
+        src="https://buttons.github.io/buttons.js"></script>
+<script> window.twttr = (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
+    if (d.getElementById(id))
+        return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+    t._e = [];
+    t.ready = function (f) {
+        t._e.push(f);
+    };
+    return t;
+}(document, "script", "twitter-wjs"));
+</script>
+</body>
+</html>

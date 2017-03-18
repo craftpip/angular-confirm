@@ -1,0 +1,416 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="chrome=1"> -->
+    <title>angular-confirm.js | The multipurpose alert & confirm</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="description"
+          content="A multipurpose alert, confirm plugin, alternative to the native alert() and confirm() functions. Supports features like auto-close, themes, animations, and more.">
+    <link rel="canonical"
+          href="https://craftpip.github.io/angular-confirm"/>
+    <link rel="icon"
+          type="img/png"
+          href="http://craftpip.com/i/assets/img/fav.png">
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=UTF-8"/>
+    <meta name="robots"
+          content="index,follow,noodp,noydir"/>
+    <meta name="google-site-verification"
+          content="T_M_Ym5DQ-cEQQhx_jswyCBTssIdgtewICcvb3sgh8g"/>
+    <meta name="Keywords"
+          content="angular.confirm, angular confirm, angular alert, angular prompt, angular dialog, javascript, bootstrap"/>
+    <link rel="apple-touch-icon"
+          sizes="57x57"
+          href="http://craftpip.com/i/apple-touch-icon-57x57.png"/>
+    <link rel="apple-touch-icon"
+          sizes="72x72"
+          href="http://craftpip.com/i/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon"
+          sizes="114x114"
+          href="http://craftpip.com/i/apple-touch-icon-114x114.png"/>
+    <link rel="apple-touch-icon"
+          sizes="144x144"
+          href="http://craftpip.com/i/apple-touch-icon-144x144.png"/>
+    <link rel="apple-touch-icon"
+          href="http://craftpip.com/i/apple-touch-icon-57x57.png"/>
+    <meta property="og:title"
+          content="angular-confirm.js | The multipurpose alert &amp; confirm"/>
+    <meta property="og:type"
+          content="website"/>
+    <meta property="og:image"
+          content="http://craftpip.com/i/apple-touch-icon-57x57.png"/>
+    <meta property="og:url"
+          content="https://craftpip.github.io/angular-confirm"/>
+    <meta property="og:description"
+          content="A multipurpose alert & confirm plugin, alternative to the native alert() and confirm() functions. Supports features like auto-close, themes, animations, and more."/>
+    <meta property="og:site_name"
+          content="craftpip.github.io"/>
+
+    <link rel="stylesheet"
+          href="demo/libs/bundled.css">
+    <script src="demo/libs/bundled.js"></script>
+
+    <link rel="stylesheet"
+          href="demo/demo.css">
+
+    <script>
+        var version = '1.0.0';
+    </script>
+
+    <!-- Add the minified version of files from the /dist/ folder. -->
+    <!-- angular-confirm files -->
+    <link rel="stylesheet"
+          type="text/css"
+          href="css/angular-confirm.css"/>
+    <script type="text/javascript"
+            src="js/angular-confirm.js"></script>
+    <!--END angular-confirm files-->
+
+</head>
+<body data-spy="scroll"
+      data-target=".navbar">
+<header class="navbar navbar-static-top navbar-default navheader">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#bs-navbar"
+                    aria-controls="bs-navbar"
+                    aria-expanded="false"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
+                <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+            <a class="navbar-brand aconfirm-logo"
+               href="http://craftpip.github.io/angular-confirm">
+            </a>
+        </div>
+        <nav id="bs-navbar"
+             class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class=""><a href="http://github.com/craftpip/angular-confirm"><i class="fa fa-github"></i> Project
+                    home</a></li>
+                <li class=""><a href="http://github.com/craftpip/angular-confirm/issues/new">Suggest feature</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown hide">
+                    <a href="#"
+                       class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false">Versions <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://craftpip.github.io/angular-confirm/v1.0">v1.0</a></li>
+                    </ul>
+                </li>
+                <li class="hide">
+                    <a class="github-button"
+                       href="https://github.com/craftpip/angular-confirm"
+                       data-style="mega"
+                       data-count-href="/craftpip/angular-confirm/stargazers"
+                       data-count-api="/repos/craftpip/angular-confirm#stargazers_count"
+                       data-count-aria-label="# stargazers on GitHub"
+                       aria-label="Star craftpip/angular-confirm on GitHub">Star</a>
+                </li>
+                <li>
+                    <a class="twitter-follow-button"
+                       data-show-count="false"
+                       data-size="large"
+                       href="https://twitter.com/craftpip"
+                       data-show-count="false"
+                       data-lang="en">
+                        Follow @craftpip
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="header"
+     id="content"
+     tabindex="-1">
+    <div class="container">
+        <h1 style="margin-top: 7px;"
+            class="text-center">
+            <img src="angular-confirm.png"
+                 alt="ANGULAR-CONFIRM"/>
+        </h1>
+
+        <p>
+            Themes - <em>Use one, or make your own</em>.
+        </p>
+    </div>
+</div>
+<div class="container"
+     ng-app="application">
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <div class="space10"></div>
+            <div class="space10"></div>
+            <p>
+                <strong>angular-confirm v<span class="version"></span> docs</strong><br>
+                <a href="https://github.com/craftpip/angular-confirm">
+                    view on <i class="fa fa-github"></i> Github
+                </a>
+            </p>
+            <div class="spacer15"></div>
+            <div id="my-nav">
+                <ul class="nav nav-list">
+                    <li class="no-b-l">
+                        <a href="index.html"> <span class="v"><i class="fa fa-arrow-circle-left"></i></span> back to
+                            Main Docs</a>
+                    </li>
+                    <li>
+                        <a href="#themes"> Themes</a>
+                    </li>
+                    <li>
+                        <a href="#custom-themes"> Custom themes</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9 col-sm-12">
+
+            <section id="themes" ng-controller="themesController">
+                <h2>Themes</h2>
+
+                <p>
+                    The Light &amp; Dark themes that suit any website design, <br>
+                </p>
+
+                <div class="section">
+
+                    <button ng-click="theme('light')" class="btn btn-primary">Light theme</button>
+                    <button ng-click="theme('dark')" class="btn btn-primary">Dark theme</button>
+                    <button ng-click="theme('supervan')" class="btn btn-primary">Supervan</button>
+                    <button ng-click="theme('material')" class="btn btn-primary">Material</button>
+                    <button ng-click="theme('bootstrap')" class="btn btn-primary">Bootstrap</button>
+                    <button ng-click="theme('modern')" class="btn btn-primary">Modern</button>
+                    <button ng-click="theme('seamless')" class="btn btn-primary">Seamless</button>
+                    <div class="space10"></div>
+                    <pre class="prettyprint linenums"><code>$ngConfirm({
+    theme: 'light'
+});
+$.confirm({
+    theme: 'dark'
+});
+$.confirm({
+    theme: 'supervan' // 'material', 'bootstrap'
+});</code></pre>
+                </div>
+            </section>
+
+            <section id="custom-themes">
+                <h2>Make your own themes</h2>
+
+                <p>
+                    Why not? A unique design must have a unique confirm box<br>
+                </p>
+
+                <div class="section">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p>
+                                This is a CSS boilerplate for defining a theme.
+                            </p>
+                            <div class="btn-group">
+                                <button type="button" ng-init="showLess = true" ng-click="showLess = true" ng-class="{active: showLess}" class="btn btn-primary">LESS</button>
+                                <button type="button" ng-click="showLess = false" ng-class="{active: !showLess}" class="btn btn-primary">CSS</button>
+                            </div>
+                            <div class="space10"></div>
+                            <pre class="prettyprint linenums" ng-show="showLess"><code>.ng-confirm.ng-confirm-my-theme {
+  .ng-confirm-bg {
+    &.ng-confirm-bg-h {
+    }
+  }
+  .ng-confirm-scrollpane {
+  }
+  .ng-confirm-box {
+    &.ng-confirm-loading {
+      &:before {
+      }
+      &:after {
+      }
+    }
+    div.ng-confirm-closeIcon {
+      &:empty {
+      }
+      .fa, .glyphicon, .zmdi {
+      }
+      &:hover {
+      }
+    }
+    div.ng-confirm-title-c {
+      .ng-confirm-icon-c {
+        i {
+        }
+        &:empty {
+        }
+      }
+      .ng-confirm-title {
+        &:empty {
+        }
+      }
+    }
+    div.ng-confirm-content-pane {
+      .ng-confirm-content {
+        img {
+        }
+        &:empty {
+        }
+      }
+    }
+    .ng-confirm-buttons {
+      button{
+      }
+    }
+  }
+  .ng-confirm-clear {
+  }
+  &.ng-confirm-rtl {
+    .ng-confirm-closeIcon {
+    }
+  }
+}</code></pre>
+                            <pre class="prettyprint linenums" ng-show="!showLess"><code>.ng-confirm.ng-confirm-my-theme {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-bg {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-bg.ng-confirm-bg-h {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-scrollpane {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box.ng-confirm-loading {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box.ng-confirm-loading:before {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box.ng-confirm-loading:after {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-closeIcon {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-closeIcon:empty {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-closeIcon .fa,
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-closeIcon .glyphicon,
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-closeIcon .zmdi {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-closeIcon:hover {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-title-c {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-title-c .ng-confirm-icon-c {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-title-c .ng-confirm-icon-c i {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-title-c .ng-confirm-icon-c:empty {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-title-c .ng-confirm-title {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-title-c .ng-confirm-title:empty {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-content-pane {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-content-pane .ng-confirm-content {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-content-pane .ng-confirm-content img {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box div.ng-confirm-content-pane .ng-confirm-content:empty {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box .ng-confirm-buttons {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-box .ng-confirm-buttons button {
+}
+.ng-confirm.ng-confirm-my-theme .ng-confirm-clear {
+}
+.ng-confirm.ng-confirm-my-theme.ng-confirm-rtl {
+}
+.ng-confirm.ng-confirm-my-theme.ng-confirm-rtl .ng-confirm-closeIcon {
+}</code></pre>
+                        </div>
+                        <div class="col-md-4">
+                            <p>
+                                JS part of it
+                            </p>
+                            <pre class="prettyprint linenums"><code>$ngConfirm({
+    theme: 'my-theme'
+});</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="modal-layout">
+                <h2>Layout</h2>
+                <p>
+                    This visualizes the layout for quicker understanding for creating themes.
+                </p>
+                <img src="themelayout.png" alt="" style="width: 100%">
+            </section>
+
+            <section class="text-right footer">
+                <div class="spacer15"></div>
+                <p>
+                    Thanks for making it to the end of the document. <br>
+                    Your support and suggestions matter the most!
+                </p>
+                <a href="https://github.com/craftpip/angular-confirm/issues/new"
+                   target="empty"
+                   class="btn btn-success">Please post your <br> Questions / Suggestions / Issues.</a>
+                <h4>Made by <a href="http://twitter.com/craftpip">@craftpip</a></h4>
+
+                <div class="spacer15"></div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"
+        src="demo/demo.js"></script>
+
+<script type="text/javascript"
+        src="app.js"></script>
+
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-53264350-2', 'auto');
+    ga('send', 'pageview');
+</script>
+
+<script async
+        defer
+        id="github-bjs"
+        src="https://buttons.github.io/buttons.js"></script>
+<script> window.twttr = (function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0], t = window.twttr || {};
+    if (d.getElementById(id))
+        return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+    t._e = [];
+    t.ready = function (f) {
+        t._e.push(f);
+    };
+    return t;
+}(document, "script", "twitter-wjs"));
+</script>
+</body>
+</html>
