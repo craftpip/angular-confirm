@@ -35,7 +35,8 @@ angular.module('myApp', ['cp.ngConfirm'])
         contentUrl: 'template.html', // if contentUrl is provided, 'content' is ignored.
         scope: $scope,
         buttons: {   
-            ok: {
+            // long hand button definition
+            ok: { 
                 text: "ok!",
                 btnClass: 'btn-primary',
                 keys: ['enter'], // will trigger when enter is pressed
@@ -43,6 +44,7 @@ angular.module('myApp', ['cp.ngConfirm'])
                      $ngConfirm('the user clicked ok');
                 }
             },
+            // short hand button definition
             close: function(scope){
                 $ngConfirm('the user clicked close');
             }
