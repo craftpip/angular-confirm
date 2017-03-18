@@ -39,12 +39,12 @@ angular.module('myApp', ['cp.ngConfirm'])
                 text: "ok!",
                 btnClass: 'btn-primary',
                 keys: ['enter'], // will trigger when enter is pressed
-                action: function($scope){
-                     console.log('the user clicked ok');
+                action: function(scope){
+                     $ngConfirm('the user clicked ok');
                 }
             },
-            close: function($scope){
-                console.log('the user clicked close');
+            close: function(scope){
+                $ngConfirm('the user clicked close');
             }
         },
     });
@@ -58,6 +58,25 @@ See Detailed Docs + Example [here](http://craftpip.github.io/angular-confirm).
 ## Issues
 
 Please post issues and feature request here [Github issues](https://github.com/craftpip/angular-confirm/issues)
+
+## Version changes
+
+(coming in 1.11.0)
+* remove jquery as dependency
+
+(new in 1.1.0)
+* Major performance fixes
+* Fix memory leaks
+* Removed ngAnimate and ngSanitize as dependencies
+* added set methods to modal
+* watchInterval property removed, content watch is now done with $digest
+* button functions added
+* theme fixes
+* onScopeReady callback added
+
+(new in 1.0.1)
+* Added project to bower
+
 
 ## Copyright and license
 
