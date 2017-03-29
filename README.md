@@ -20,7 +20,11 @@ View detailed features here [Documentation & Examples](http://craftpip.github.io
 
 Download the latest release [here](https://github.com/craftpip/jquery-confirm/archive/master.zip) and use the files within the `dist` directory
 
-* bower, npm are coming soon.
+via Bower:  
+`$ bower install angular-confirm1`
+
+via NPM:  
+`$ npm install angular-confirm1`
 
 ##Basic usage
 
